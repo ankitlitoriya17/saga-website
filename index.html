@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SAGA | Smart rentals for modern cities</title>
-  <meta name="description" content="SAGA by ApnaSheher unifies property and car rentals with verified owners, smart discovery, and seamless onboarding." />
-  <meta property="og:title" content="SAGA | Smart rentals for modern cities" />
-  <meta property="og:description" content="Unified rentals for homes, PGs, shops, and cars with trusted owners and effortless onboarding." />
+  <title>SAGA | Operational rentals, orchestrated</title>
+  <meta name="description" content="SAGA by ApnaSheher orchestrates rentals for homes, PGs, shops, and cars with verified owners, guided flows, and telemetry-grade clarity." />
+  <meta property="og:title" content="SAGA | Operational rentals, orchestrated" />
+  <meta property="og:description" content="Unified rentals for homes, PGs, shops, and cars with verified owners, guided flows, and telemetry-grade clarity." />
   <meta property="og:url" content="https://saga.apnasheher.com" />
   <meta property="og:image" content="https://saga.apnasheher.com/og-image.png" />
   <link rel="stylesheet" href="styles.css">
@@ -25,12 +25,8 @@
         <span></span>
       </label>
       <div class="nav__links">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#owners">For owners</a>
-        <a href="#tenants">For tenants</a>
-        <a href="career.html">Careers</a>
-        <a href="#contact">Contact</a>
+        <a href="#store">Play Store</a>
+        <a href="#features">Core features</a>
       </div>
     </nav>
   </header>
@@ -39,28 +35,52 @@
     <section class="hero" id="top">
       <div class="container hero__content">
         <div class="hero__text">
-          <p class="eyebrow">Launching soon · Selected cities</p>
-          <h1>Smart rentals for modern cities.</h1>
-          <p class="subtitle">SAGA brings property and car rentals into one trusted platform with verified owners, streamlined onboarding, and effortless discovery.</p>
+          <p class="eyebrow">Built for rental clarity</p>
+          <h1>Just what you need to run rentals cleanly.</h1>
+          <p class="subtitle">SAGA keeps listings, documents, and updates organized so owners and renters stay in sync without the noise.</p>
           <div class="cta-group">
-            <a class="btn btn-primary" href="mailto:hello@apnasheher.com?subject=Stay%20updated%20about%20SAGA">Stay updated</a>
-            <a class="btn btn-secondary" href="#features">View upcoming features</a>
-            <a class="btn btn-ghost" href="career.html">Explore careers</a>
+            <button class="btn btn-primary btn-store" data-playstore-link>
+              <span class="icon-dot"></span>
+              Get it on Google Play
+            </button>
+            <a class="btn btn-ghost" href="#features">View core features</a>
           </div>
-          <p class="muted">Built inside the ApnaSheher ecosystem to make renting fair, transparent, and fast.</p>
         </div>
         <div class="hero__card">
-          <div class="status-pill">Unified rentals</div>
-          <h3>Homes, PGs, shops, and cars—managed in one place.</h3>
-          <ul class="hero-list">
-            <li><span class="dot"></span>Verified owners & tenants</li>
-            <li><span class="dot"></span>Smart filters tuned to each city</li>
-            <li><span class="dot"></span>Guided onboarding with instant previews</li>
-          </ul>
-          <div class="progress">
-            <div class="progress__label">Early access</div>
-            <div class="progress__bar"><span style="width: 68%"></span></div>
+          <div class="status-pill">Smart redirect</div>
+          <h3>Send Android visitors straight to the Play Store.</h3>
+          <p class="muted">Detects Android devices and opens the SAGA listing in a new tab. Other devices see the same link without breaking flow.</p>
+          <div class="hero__grid compact">
+            <div class="hero__metric">
+              <p class="metric__label">Verified listings</p>
+              <p class="metric__value">Homes · PGs · Shops · Cars</p>
+            </div>
+            <div class="hero__metric">
+              <p class="metric__label">Organized docs</p>
+              <p class="metric__value">IDs · Agreements · Receipts</p>
+            </div>
+            <div class="hero__metric">
+              <p class="metric__label">Live updates</p>
+              <p class="metric__value">Status · Visits · Alerts</p>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section store" id="store">
+      <div class="container store__content">
+        <div>
+          <p class="eyebrow">Play Store</p>
+          <h2>Ready on Android.</h2>
+          <p class="muted">Install SAGA to keep applications, documents, and owners organized from day one.</p>
+        </div>
+        <div class="store__actions">
+          <button class="btn btn-primary btn-store" data-playstore-link>
+            <span class="icon-dot"></span>
+            Open on Google Play
+          </button>
+          <a class="btn btn-secondary" href="mailto:hello@apnasheher.com?subject=Keep%20me%20posted%20about%20SAGA">Keep me posted</a>
         </div>
       </div>
     </section>
@@ -68,112 +88,23 @@
     <section class="section" id="features">
       <div class="container">
         <div class="section__header">
-          <p class="eyebrow">Features</p>
-          <h2>Everything you need to rent smarter.</h2>
-          <p class="muted">Designed for both property and car rentals with trust, speed, and clarity at the core.</p>
+          <p class="eyebrow">Core features</p>
+          <h2>Simple blocks that cover the essentials.</h2>
+          <p class="muted">Everything focused on staying verified, organized, and up to date.</p>
         </div>
         <div class="feature-grid">
           <article class="card">
-            <h3>Unified rentals</h3>
-            <p>List homes, PGs, shops, or cars side by side with shared insights and consistent workflows.</p>
-          </article>
-          <article class="card">
             <h3>Verified network</h3>
-            <p>Identity and document verification keeps owners and tenants confident at every step.</p>
+            <p>Trusted owners, tenants, and service partners with clear profiles and checks.</p>
           </article>
           <article class="card">
-            <h3>Smart discovery</h3>
-            <p>City-aware filters, saved searches, and alerts help renters find the right match quickly.</p>
+            <h3>Guided applications</h3>
+            <p>Document upload, visit scheduling, and approvals in one clean track.</p>
           </article>
           <article class="card">
-            <h3>Effortless management</h3>
-            <p>Onboarding flows, status tracking, and messaging streamline coordination without friction.</p>
+            <h3>Live status</h3>
+            <p>One view for requests, timelines, and alerts so no one has to guess.</p>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="how-it-works">
-      <div class="container">
-        <div class="section__header">
-          <p class="eyebrow">How it works</p>
-          <h2>From search to signed in three steps.</h2>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step__badge">1</div>
-            <h3>Discover</h3>
-            <p>Browse verified listings with tailored filters for locality, amenities, commute, and more.</p>
-          </div>
-          <div class="step">
-            <div class="step__badge">2</div>
-            <h3>Connect</h3>
-            <p>Message owners or renters, share documents securely, and schedule visits without back-and-forth.</p>
-          </div>
-          <div class="step">
-            <div class="step__badge">3</div>
-            <h3>Close the deal</h3>
-            <p>Track applications, confirm terms, and finalize with transparent timelines you both can see.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section split" id="owners">
-      <div class="container split__grid">
-        <div class="panel">
-          <p class="eyebrow">For Owners & Landlords</p>
-          <h2>List once, manage with clarity.</h2>
-          <ul class="bullet-list">
-            <li>Publish property or car listings with guided templates.</li>
-            <li>Manage leads, documents, and visits from a single view.</li>
-            <li>Track interest and applications in real time.</li>
-            <li>Share secure access with co-owners or managers.</li>
-          </ul>
-        </div>
-        <div class="panel" id="tenants">
-          <p class="eyebrow">For Tenants & Renters</p>
-          <h2>Find the right fit faster.</h2>
-          <ul class="bullet-list">
-            <li>Browse verified listings with commute-ready filters.</li>
-            <li>Apply with saved profiles and document vault.</li>
-            <li>Follow up with owners inside SAGA—no lost chats.</li>
-            <li>Stay informed with clear status updates.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="cities">
-      <div class="container">
-        <div class="section__header">
-          <p class="eyebrow">Cities & rollout</p>
-          <h2>Built with the ApnaSheher ecosystem.</h2>
-          <p class="muted">Starting with select cities and expanding soon—join the waitlist to bring SAGA to your neighborhood.</p>
-        </div>
-        <div class="info-card">
-          <div>
-            <h3>Local-first approach</h3>
-            <p>City-level insights for pricing, availability, and regulations help everyone stay aligned.</p>
-          </div>
-          <div>
-            <h3>Partner-ready</h3>
-            <p>Integrate with ApnaSheher services for payments, paperwork, and verified support.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section cta" id="contact">
-      <div class="container cta__content">
-        <div>
-          <p class="eyebrow">Contact</p>
-          <h2>Want to partner, list properties, or integrate with SAGA?</h2>
-          <p class="muted">We are onboarding early partners and city ambassadors. Let’s build smarter rentals together.</p>
-        </div>
-        <div class="cta__actions">
-          <a class="btn btn-primary" href="mailto:contact@apnasheher.com?subject=Partner%20with%20SAGA">Contact us</a>
-          <a class="btn btn-secondary" href="mailto:hello@apnasheher.com?subject=SAGA%20Updates">Stay in the loop</a>
         </div>
       </div>
     </section>
@@ -193,6 +124,16 @@
   <script>
     const yearEl = document.getElementById('year');
     yearEl.textContent = new Date().getFullYear();
+
+    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.apnasheher.saga&ref=website_launch';
+
+    document.querySelectorAll('[data-playstore-link]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const isAndroid = /Android|Pixel|Samsung/i.test(navigator.userAgent);
+        const targetUrl = isAndroid ? playStoreUrl : `${playStoreUrl}&utm_medium=web`;
+        window.open(targetUrl, '_blank', 'noopener');
+      });
+    });
   </script>
 </body>
 </html>
