@@ -1,6 +1,6 @@
-# Saga Landing Page
+# SAGA Landing Page
 
-A static, production-ready marketing page for **Saga** by **ApnaSheher**, covering property and car rentals with a unified, trustworthy experience.
+A static, production-ready marketing page for **SAGA** by **ApnaSheher**, covering property and car rentals with a unified, trustworthy experience.
 
 ## Run locally
 - Clone or download the repository.
