@@ -201,6 +201,17 @@ img {
   transform: translateY(-1px);
 }
 
+.btn-ghost {
+  border-color: transparent;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
 .hero__card {
   background: var(--color-surface);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -234,6 +245,10 @@ img {
   margin: 0 0 1.2rem;
   display: grid;
   gap: 0.5rem;
+}
+
+.hero-list.compact {
+  gap: 0.35rem;
 }
 
 .hero-list li {
@@ -372,6 +387,68 @@ img {
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.link {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: rgba(249, 115, 22, 0.6);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.career-hero {
+  padding-bottom: 2rem;
+  background: radial-gradient(circle at 30% 20%, rgba(249, 115, 22, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.08), transparent 34%),
+    var(--color-bg);
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.role-card {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.role-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: rgba(249, 115, 22, 0.16);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+.pill-muted {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-muted);
+}
+
+.role-points {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--color-muted);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.apply-grid {
+  align-items: start;
 }
 
 .cta {
