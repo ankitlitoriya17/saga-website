@@ -43,6 +43,12 @@ body {
   text-decoration: none;
 }
 
+.logo__image {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
 .btn-action {
   background: rgba(255, 255, 255, 0.1);
   color: white;
