@@ -1,38 +1,31 @@
-<svg width="500" height="500" viewBox="0 0 500 500"
-    xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <filter id="glow">
-            <feGaussianBlur stdDeviation="6" result="blur"/>
-            <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-        </filter>
-    </defs>
+<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title>SAGA Rentals minimal crest</title>
+  <desc>Simple circular crest for SAGA Rentals with serif S and dual rings in transparent layout.</desc>
+  <defs>
+    <linearGradient id="ringGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66BB6A" />
+      <stop offset="100%" stop-color="#1B5E20" />
+    </linearGradient>
+    <linearGradient id="accentAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFB74D" />
+      <stop offset="100%" stop-color="#FB8C00" />
+    </linearGradient>
+    <radialGradient id="innerTint" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#E8F5E9" stop-opacity="0.16" />
+      <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0.3" />
+    </radialGradient>
+  </defs>
 
-    <!-- Transparent background -->
-    <rect x="0" y="0" width="500" height="500" fill="none"/>
+  <g transform="translate(160 160)">
+    <circle r="140" fill="none" stroke="url(#ringGreen)" stroke-width="14" />
+    <circle r="116" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="6" />
+    <circle r="96" fill="url(#innerTint)" stroke="url(#accentAmber)" stroke-width="8" />
 
-    <!-- Main logo text -->
-    <text x="50%" y="44%"
-        text-anchor="middle"
-        font-family="Poppins, Montserrat, system-ui"
-        font-size="140"
-        font-weight="900"
-        fill="#d7d994"
-        filter="url(#glow)">
-        SAGA
+    <text x="0" y="12" text-anchor="middle" font-family="'Times New Roman', 'Georgia', serif" font-size="108" fill="#E8F5E9" letter-spacing="1">
+      S
     </text>
-
-    <!-- Tagline (shifted upward) -->
-    <text x="50%" y="49%"
-        text-anchor="middle"
-        font-family="Poppins, Montserrat, system-ui"
-        font-size="16"
-        font-weight="500"
-        letter-spacing="4"
-        fill="#d7d994"
-        filter="url(#glow)">
-        RENTAL SOLUTION
+    <text x="0" y="48" text-anchor="middle" font-family="'Inter', system-ui" font-size="18" fill="#A5D6A7" letter-spacing="6" aria-hidden="true">
+      SAGA
     </text>
+  </g>
 </svg>
