@@ -7,6 +7,7 @@
   <meta name="description" content="Join SAGA by ApnaSheher to build unified rentals. Explore open roles and apply via email with your resume." />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="styles/shared.css" rel="stylesheet">
   <style>
     :root {
       --bg-black: #050505;
@@ -15,20 +16,13 @@
       --accent-glow: #2E7D32;
       --accent-secondary: #E65100;
       --border-color: #1e1e1e;
+      --header-bg: rgba(5,5,5,0.8);
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--bg-black);
-      color: var(--text-white);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      line-height: 1.5;
     }
 
     #starfield {
@@ -39,60 +33,6 @@
       height: 100%;
       z-index: -1;
       opacity: 0.6;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 5%;
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      background: rgba(5,5,5,0.8);
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-items {
-      display: flex;
-      gap: 30px;
-    }
-
-    .nav-items a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .nav-items a:hover { color: var(--text-white); }
-
-    .btn-action {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.3s;
-    }
-
-    .btn-action:hover {
-      background: white;
-      color: black;
     }
 
     .hero {
@@ -257,34 +197,18 @@
 
     .pill.accent { color: #E65100; border-color: #E65100; }
 
-    .footer {
-      text-align: center;
-      padding: 50px;
-      color: #666;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-    }
-
     @media (max-width: 768px) {
-      header { padding: 16px 5%; }
       h1 { font-size: 2.6rem; }
-      .nav-items { display: none; }
     }
   </style>
 </head>
 <body>
   <canvas id="starfield"></canvas>
 
-  <header>
+  <header class="site-header">
     <div class="logo">
       <div style="width: 20px; height: 20px; background: white; border-radius: 50%;"></div>
       SAGA
-    </div>
-    <div class="nav-items">
-      <a href="index.html">Platform</a>
-      <a href="career.html">Careers</a>
-      <a href="index.html#">Car Rentals</a>
-      <a href="index.html#">Docs</a>
     </div>
     <a href="#" class="btn-action">Go to Playstore</a>
   </header>
@@ -381,6 +305,9 @@
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> ApnaSheher · SAGA. Made with <span aria-label="love">❤️</span> India.</p>
+    <div class="footer__nav">
+      <a href="career.html">Careers</a>
+    </div>
   </footer>
 
   <script>
