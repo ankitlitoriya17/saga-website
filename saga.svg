@@ -1,0 +1,38 @@
+<svg width="500" height="500" viewBox="0 0 500 500"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+
+    <!-- Transparent background -->
+    <rect x="0" y="0" width="500" height="500" fill="none"/>
+
+    <!-- Main logo text -->
+    <text x="50%" y="44%"
+        text-anchor="middle"
+        font-family="Poppins, Montserrat, system-ui"
+        font-size="140"
+        font-weight="900"
+        fill="#d7d994"
+        filter="url(#glow)">
+        SAGA
+    </text>
+
+    <!-- Tagline (shifted upward) -->
+    <text x="50%" y="49%"
+        text-anchor="middle"
+        font-family="Poppins, Montserrat, system-ui"
+        font-size="16"
+        font-weight="500"
+        letter-spacing="4"
+        fill="#d7d994"
+        filter="url(#glow)">
+        RENTAL SOLUTION
+    </text>
+</svg>
