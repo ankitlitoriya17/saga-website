@@ -88,6 +88,9 @@
             font-weight: 600;
             border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-action:hover {
@@ -320,12 +323,12 @@
             <a href="#">Car Rentals</a>
             <a href="#">Docs</a>
         </div>
-        <a href="#" class="btn-action">Go to Playstore</a>
+        <a href="#" class="btn-action" id="playstore-btn"><i class="fab fa-google-play"></i> Download from Playstore</a>
     </header>
 
     <div class="hero">
         <h1>Reliable Rentals<br>for the <span class="gradient-text">Modern Era.</span></h1>
-        <p>Orchestrate your properties and fleet with SAGA. The open-source platform that guarantees consistency across your rental business.</p>
+        <p>Orchestrate your properties and fleet with SAGA. The unified platform that guarantees consistency across your rental business.</p>
         
         <div class="cta-buttons">
             <a href="#" class="btn-primary">Property Rental</a>
@@ -452,14 +455,14 @@
                 <p>Automated rent receipt generation. Share professionally formatted PDFs directly via WhatsApp.</p>
             </div>
             <div class="card">
-                <h3>Ecosystem</h3>
-                <p>Open Source and built with Jetpack Compose. Customize the code to fit your specific needs.</p>
+                <h3>Managed Platform</h3>
+                <p>Expert support, reliable updates, and a secure roadmap so you can focus on growing your rentals.</p>
             </div>
         </div>
     </div>
 
     <footer style="text-align: center; padding: 50px; color: #666; font-size: 0.9rem; border-top: 1px solid #222;">
-        <p>&copy; 2024 SAGA Inc. Made with <span aria-label="love">❤️</span> India.</p>
+        <p>&copy; 2024 SAGA Inc. Made with <span aria-label="love">❤️</span> in India.</p>
         <div style="margin-top: 20px;">
             <i class="fab fa-github" style="font-size: 1.5rem; margin: 0 10px; cursor: pointer;"></i>
             <i class="fab fa-twitter" style="font-size: 1.5rem; margin: 0 10px; cursor: pointer;"></i>
@@ -470,6 +473,14 @@
         // Starfield Animation Script
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
+
+        const playstoreBtn = document.getElementById('playstore-btn');
+        if (playstoreBtn) {
+            playstoreBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                alert('Coming soon');
+            });
+        }
         
         let width = window.innerWidth;
         let height = window.innerHeight;
