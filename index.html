@@ -3,107 +3,132 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SAGA | Operational rentals, orchestrated</title>
-  <meta name="description" content="SAGA by ApnaSheher orchestrates rentals for homes, PGs, shops, and cars with verified owners, guided flows, and telemetry-grade clarity." />
-  <meta property="og:title" content="SAGA | Operational rentals, orchestrated" />
-  <meta property="og:description" content="Unified rentals for homes, PGs, shops, and cars with verified owners, guided flows, and telemetry-grade clarity." />
-  <meta property="og:url" content="https://saga.apnasheher.com" />
-  <meta property="og:image" content="https://saga.apnasheher.com/og-image.png" />
+  <title>SAGA | Rentals that stay organized</title>
+  <meta name="description" content="SAGA by ApnaSheher keeps rentals and documents organized with verified owners, guided workflows, and clear updates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav">
-      <div class="nav__brand">
-        <div class="logo">SAGA</div>
-        <a class="brand-sub" href="https://apnasheher.com" target="_blank" rel="noreferrer">by ApnaSheher</a>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-label="SAGA">SAGA</div>
+        <a class="brand__tag" href="https://apnasheher.com" target="_blank" rel="noreferrer">by ApnaSheher</a>
       </div>
-      <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation" />
-      <label for="menu-toggle" class="menu-button" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-      <div class="nav__links">
+      <nav class="nav__links" aria-label="Primary">
         <a href="#store">Play Store</a>
         <a href="#features">Core features</a>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </header>
 
   <main>
     <section class="hero" id="top">
-      <div class="container hero__content">
-        <div class="hero__text">
-          <p class="eyebrow">Built for rental clarity</p>
-          <h1>Just what you need to run rentals cleanly.</h1>
-          <p class="subtitle">SAGA keeps listings, documents, and updates organized so owners and renters stay in sync without the noise.</p>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow">Production-ready for rentals</p>
+          <h1>One clean space to list, vet, and track every rental.</h1>
+          <p class="lede">SAGA keeps owners, documents, and updates in one reliable flow so you can move faster and stay verified without clutter.</p>
+          <div class="pill-row" role="list">
+            <span class="pill" role="listitem">Homes &amp; PGs</span>
+            <span class="pill" role="listitem">Shops &amp; cars</span>
+            <span class="pill" role="listitem">ID &amp; agreement vault</span>
+          </div>
           <div class="cta-group">
-            <button class="btn btn-primary btn-store" data-playstore-link>
-              <span class="icon-dot"></span>
-              Get it on Google Play
+            <button class="btn btn-primary" data-playstore-link>
+              <span class="btn__icon" aria-hidden="true"></span>
+              Open on Google Play
             </button>
-            <a class="btn btn-ghost" href="#features">View core features</a>
+            <a class="btn btn-outline" href="#features">View core features</a>
+          </div>
+          <div class="assurance">
+            <span class="dot" aria-hidden="true"></span>
+            Smart Android redirect. Opens the listing in a new tab.
           </div>
         </div>
-        <div class="hero__card">
-          <div class="status-pill">Smart redirect</div>
-          <h3>Send Android visitors straight to the Play Store.</h3>
-          <p class="muted">Detects Android devices and opens the SAGA listing in a new tab. Other devices see the same link without breaking flow.</p>
-          <div class="hero__grid compact">
-            <div class="hero__metric">
-              <p class="metric__label">Verified listings</p>
-              <p class="metric__value">Homes · PGs · Shops · Cars</p>
+        <div class="hero__panel" aria-label="Product snapshot">
+          <div class="panel__header">
+            <span class="badge">Live</span>
+            <span class="muted">Operational overview</span>
+          </div>
+          <div class="panel__body">
+            <div class="panel__row">
+              <div>
+                <p class="meta">Verified owners</p>
+                <p class="value">All onboarded</p>
+              </div>
+              <div class="status status--ok">Pass</div>
             </div>
-            <div class="hero__metric">
-              <p class="metric__label">Organized docs</p>
-              <p class="metric__value">IDs · Agreements · Receipts</p>
+            <div class="panel__row">
+              <div>
+                <p class="meta">Documents</p>
+                <p class="value">Agreements, IDs, receipts</p>
+              </div>
+              <div class="status status--glow">Synced</div>
             </div>
-            <div class="hero__metric">
-              <p class="metric__label">Live updates</p>
-              <p class="metric__value">Status · Visits · Alerts</p>
+            <div class="panel__row">
+              <div>
+                <p class="meta">Updates</p>
+                <p class="value">Visits scheduled · Alerts muted</p>
+              </div>
+              <div class="status">On track</div>
+            </div>
+            <div class="progress">
+              <div class="progress__label">Launch readiness</div>
+              <div class="progress__bar" role="presentation">
+                <span style="width: 92%"></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section store" id="store">
-      <div class="container store__content">
+    <section class="store" id="store">
+      <div class="container store__grid">
         <div>
           <p class="eyebrow">Play Store</p>
-          <h2>Ready on Android.</h2>
-          <p class="muted">Install SAGA to keep applications, documents, and owners organized from day one.</p>
+          <h2>Built for Android first.</h2>
+          <p class="muted">Tap once to open SAGA on Google Play. Android visitors are redirected automatically; everyone else lands on the listing without breaking flow.</p>
         </div>
-        <div class="store__actions">
-          <button class="btn btn-primary btn-store" data-playstore-link>
-            <span class="icon-dot"></span>
-            Open on Google Play
+        <div class="store__card" aria-label="Google Play call to action">
+          <div class="store__meta">
+            <span class="badge badge--soft">Production build</span>
+            <p class="muted">Updated for latest Android releases.</p>
+          </div>
+          <button class="btn btn-primary btn-wide" data-playstore-link>
+            <span class="btn__icon" aria-hidden="true"></span>
+            Go to Google Play
           </button>
-          <a class="btn btn-secondary" href="mailto:hello@apnasheher.com?subject=Keep%20me%20posted%20about%20SAGA">Keep me posted</a>
+          <p class="hint">Opens in a new tab. No installs triggered without consent.</p>
         </div>
       </div>
     </section>
 
-    <section class="section" id="features">
+    <section class="features" id="features">
       <div class="container">
-        <div class="section__header">
+        <div class="section__head">
           <p class="eyebrow">Core features</p>
-          <h2>Simple blocks that cover the essentials.</h2>
-          <p class="muted">Everything focused on staying verified, organized, and up to date.</p>
+          <h2>Operational blocks you can rely on.</h2>
+          <p class="muted">Everything needed to manage rentals clearly, with separation of concerns baked into each module.</p>
         </div>
-        <div class="feature-grid">
-          <article class="card">
+        <div class="feature__grid">
+          <article class="feature">
+            <div class="feature__icon" aria-hidden="true">✓</div>
             <h3>Verified network</h3>
-            <p>Trusted owners, tenants, and service partners with clear profiles and checks.</p>
+            <p>Owners and tenants are vetted with profiles, ID proofs, and status flags to keep every listing trusted.</p>
           </article>
-          <article class="card">
+          <article class="feature">
+            <div class="feature__icon" aria-hidden="true">⇢</div>
             <h3>Guided applications</h3>
-            <p>Document upload, visit scheduling, and approvals in one clean track.</p>
+            <p>From documents to visits, every step is guided and auditable so handoffs stay smooth.</p>
           </article>
-          <article class="card">
-            <h3>Live status</h3>
-            <p>One view for requests, timelines, and alerts so no one has to guess.</p>
+          <article class="feature">
+            <div class="feature__icon" aria-hidden="true">◎</div>
+            <h3>Live updates</h3>
+            <p>Real-time status, alerts, and receipts in one feed so teams know exactly what changed and when.</p>
           </article>
         </div>
       </div>
@@ -111,13 +136,18 @@
   </main>
 
   <footer class="footer">
-    <div class="container footer__content">
-      <p>© <span id="year"></span> ApnaSheher · SAGA</p>
+    <div class="container footer__grid">
+      <div>
+        <div class="logo">SAGA</div>
+        <p class="muted">Operational rentals with clarity from day one.</p>
+      </div>
       <div class="footer__links">
-        <a href="#">Privacy Policy</a>
+        <a href="#top">Back to top</a>
+        <a href="#">Privacy</a>
         <a href="#">Terms</a>
         <a href="https://apnasheher.com" target="_blank" rel="noreferrer">ApnaSheher.com</a>
       </div>
+      <p class="muted">© <span id="year"></span> ApnaSheher · SAGA</p>
     </div>
   </footer>
 
@@ -127,8 +157,8 @@
 
     const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.apnasheher.saga&ref=website_launch';
 
-    document.querySelectorAll('[data-playstore-link]').forEach((button) => {
-      button.addEventListener('click', () => {
+    document.querySelectorAll('[data-playstore-link]').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
         const isAndroid = /Android|Pixel|Samsung/i.test(navigator.userAgent);
         const targetUrl = isAndroid ? playStoreUrl : `${playStoreUrl}&utm_medium=web`;
         window.open(targetUrl, '_blank', 'noopener');
