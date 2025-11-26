@@ -30,6 +30,80 @@
             line-height: 1.5;
         }
 
+        /* --- Toast Notifications --- */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 200;
+        }
+
+        .toast {
+            min-width: 260px;
+            max-width: 320px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--text-white);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: slide-in 250ms ease, fade-out 250ms ease 4000ms forwards;
+        }
+
+        .toast.is-dismissing {
+            animation: fade-out 180ms ease forwards;
+        }
+
+        .toast__icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.35), rgba(255, 152, 0, 0.35));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .toast__content {
+            flex: 1;
+        }
+
+        .toast__title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .toast__message {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fade-out {
+            to {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+        }
+
         /* --- Animated Starfield Background --- */
         #starfield {
             position: fixed;
@@ -481,11 +555,50 @@
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
 
+        // Toast system for non-blocking notifications
+        const toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container';
+        toastContainer.id = 'toast-container';
+        toastContainer.setAttribute('role', 'status');
+        toastContainer.setAttribute('aria-live', 'polite');
+        toastContainer.setAttribute('aria-atomic', 'true');
+        document.body.appendChild(toastContainer);
+
+        function showToast({ title, message, duration = 4500 }) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast__icon" aria-hidden="true">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="toast__content">
+                    <div class="toast__title">${title}</div>
+                    <div class="toast__message">${message}</div>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            const removeToast = () => {
+                toast.classList.add('is-dismissing');
+                toast.addEventListener('animationend', () => toast.remove(), { once: true });
+            };
+
+            const timeoutId = setTimeout(removeToast, duration);
+            toast.addEventListener('click', () => {
+                clearTimeout(timeoutId);
+                removeToast();
+            });
+        }
+
         const playstoreBtn = document.getElementById('playstore-btn');
         if (playstoreBtn) {
             playstoreBtn.addEventListener('click', (event) => {
                 event.preventDefault();
-                alert('Coming soon');
+                showToast({
+                    title: 'Coming soon',
+                    message: 'We are putting the finishing touches on the Play Store release.',
+                });
             });
         }
         
