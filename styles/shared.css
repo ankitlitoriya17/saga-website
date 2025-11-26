@@ -4,6 +4,7 @@
   --text-muted: #A1A1AA;
   --accent-glow: #2E7D32;
   --accent-secondary: #E65100;
+  --logo-height: 88px;
   --footer-text-color: #666;
   --footer-border-color: #222;
   --footer-link-color: inherit;
@@ -24,6 +25,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 24px 5%;
+  gap: 20px;
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
@@ -39,14 +41,20 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
   color: inherit;
   text-decoration: none;
 }
 
 .logo__image {
-  height: 36px;
+  height: var(--logo-height);
   width: auto;
   display: block;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
 }
 
 .btn-action {
@@ -101,5 +109,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .site-header { padding: 16px 5%; }
+  .site-header { padding: 16px 5%; gap: 12px; }
+  .logo__image { height: 64px; }
 }
