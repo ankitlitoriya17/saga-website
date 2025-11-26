@@ -39,6 +39,8 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .btn-action {
