@@ -50,11 +50,13 @@ body {
   text-decoration: none;
 }
 
-.logo__image {
-  height: var(--logo-height);
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+.logo__text {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  background: linear-gradient(135deg, #ffffff 20%, #bdbdbd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .btn-action {
@@ -110,5 +112,4 @@ body {
 
 @media (max-width: 768px) {
   .site-header { padding: 16px 5%; gap: 12px; }
-  .logo__image { height: 64px; }
 }

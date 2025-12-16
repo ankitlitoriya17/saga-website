@@ -1,6 +1,6 @@
 <svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title>SAGA Rentals minimal crest</title>
-  <desc>Simple circular crest for SAGA Rentals with serif S and dual rings in transparent layout.</desc>
+  <title>SPoT Rentals minimal crest</title>
+  <desc>Simple circular crest for SPoT Rentals with serif S and dual rings in transparent layout.</desc>
   <defs>
     <linearGradient id="ringGreen" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#66BB6A" />
@@ -24,8 +24,8 @@
     <text x="0" y="12" text-anchor="middle" font-family="'Times New Roman', 'Georgia', serif" font-size="108" fill="#E8F5E9" letter-spacing="1">
       S
     </text>
-    <text x="0" y="48" text-anchor="middle" font-family="'Inter', system-ui" font-size="18" fill="#A5D6A7" letter-spacing="6" aria-hidden="true">
-      SAGA
+    <text x="0" y="48" text-anchor="middle" font-family="'Inter', system-ui" font-size="22" fill="#A5D6A7" letter-spacing="6" aria-hidden="true">
+      SPoT
     </text>
   </g>
 </svg>
