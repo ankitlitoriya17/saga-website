@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPoT Privacy Policy</title>
+  <meta name="description" content="Read the SPoT privacy policy directly from the official PDF.">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="styles/shared.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-black: #050505;
+      --text-white: #ffffff;
+      --text-muted: #A1A1AA;
+      --accent-glow: #2E7D32;
+      --accent-secondary: #E65100;
+      --header-bg: rgba(5,5,5,0.82);
+      --panel-border: rgba(255,255,255,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    .page {
+      padding: 110px 5% 80px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    h1 {
+      font-size: 3.4rem;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 30%, #c7c7c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-glow);
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .lead {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+
+    .meta-line {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 13px 24px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--text-white);
+      color: black;
+      box-shadow: 0 12px 30px rgba(255,255,255,0.18);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-white);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .btn-secondary:hover { border-color: var(--text-white); }
+
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .panel__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 6px 12px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .viewer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .viewer-frame {
+      position: relative;
+      background: radial-gradient(circle at 20% 20%, rgba(46,125,50,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    .viewer-frame object {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #0c0c0c;
+    }
+
+    .status {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status strong { color: var(--text-white); }
+
+    .status.hidden { display: none; }
+
+    .fallback {
+      padding: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.6rem; }
+      .page { padding-top: 90px; }
+      .panel { padding: 16px; }
+      .viewer-frame { min-height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+
+  <header class="site-header">
+    <a href="index.html" class="logo" aria-label="Return to the SPoT home page">
+      <span class="logo__text" aria-hidden="true">SPoT</span>
+    </a>
+    <a href="#" class="btn-action"><i class="fas fa-mobile-screen-button"></i> Download app</a>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Policies</p>
+        <h1>Privacy Policy</h1>
+        <p class="lead">This page renders the official privacy policy PDF so you always read the latest signed copy.</p>
+        <div class="cta-buttons">
+          <a class="btn-primary" href="#policy-viewer" id="open-pdf-btn"><i class="fas fa-book-open"></i> Read the policy</a>
+          <a class="btn-secondary" id="download-pdf-btn" target="_blank" rel="noreferrer" download><i class="fas fa-file-arrow-down"></i> Download PDF</a>
+        </div>
+        <p class="meta-line">If you update the policy, replace <code>resource/privacy-policy.pdf</code> and this page will reflect it automatically.</p>
+      </div>
+      <div class="panel">
+        <div class="mini-title" style="color: var(--text-white); font-weight: 700; margin-bottom: 8px;">How it works</div>
+        <ul style="list-style: none; display: grid; gap: 10px; color: var(--text-muted); padding-left: 0;">
+          <li><i class="fas fa-file-pdf" aria-hidden="true"></i> We embed the PDF in-browser for quick reading.</li>
+          <li><i class="fas fa-cloud-arrow-down" aria-hidden="true"></i> Download link always points to the latest file.</li>
+          <li><i class="fas fa-shield-halved" aria-hidden="true"></i> PDF lives at <code>resource/privacy-policy.pdf</code> so you control distribution.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="viewer" id="policy-viewer">
+      <div class="panel">
+        <div class="panel__header">
+          <div>
+            <p class="eyebrow" style="margin-bottom: 6px;">Official PDF</p>
+            <h2 style="margin: 0; font-size: 1.4rem;">Embedded view</h2>
+          </div>
+          <span class="pill"><i class="fas fa-lock"></i> Latest version</span>
+        </div>
+
+        <div class="viewer-frame">
+          <div class="status" id="pdf-status"><strong>Loading</strong> privacy policy...</div>
+          <object id="policy-object" data="" type="application/pdf" aria-label="Privacy policy PDF">
+            <p style="padding: 18px; color: var(--text-muted);">
+              We couldn't display the PDF inside the page. You can still
+              <a href="#" id="download-fallback">download it here</a> and open it in your PDF reader.
+            </p>
+          </object>
+        </div>
+        <div class="fallback" id="fallback-hint" hidden>
+          Can't see the embed? The PDF might be missing or blocked by your browser. Use the download button above to read it directly.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> SPoT by Apna Sheher.</p>
+    <div class="footer__nav">
+      <a href="career.html">Careers</a>
+      <span style="margin: 0 8px; color: var(--footer-text-color);">ú</span>
+      <a href="privacy.html" aria-current="page">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    const yearEl = document.getElementById('year');
+    yearEl.textContent = new Date().getFullYear();
+
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    const stars = [];
+    const numStars = 200;
+
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.5 + 0.1
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'white';
+      stars.forEach(star => {
+        ctx.globalAlpha = Math.random() * 0.5 + 0.3;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+        star.y -= star.speed;
+        if (star.y < 0) star.y = height;
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    animate();
+
+    const pdfUrl = 'resource/privacy-policy.pdf';
+    const objectEl = document.getElementById('policy-object');
+    const statusEl = document.getElementById('pdf-status');
+    const fallbackHint = document.getElementById('fallback-hint');
+    const downloadBtn = document.getElementById('download-pdf-btn');
+    const downloadFallback = document.getElementById('download-fallback');
+    const ctaBtn = document.getElementById('open-pdf-btn');
+
+    [downloadBtn, downloadFallback].forEach(link => {
+      if (link) {
+        link.href = pdfUrl;
+        link.download = 'SPoT-Privacy-Policy.pdf';
+      }
+    });
+
+    ctaBtn?.addEventListener('click', (event) => {
+      if (objectEl.getAttribute('data')) return;
+      event.preventDefault();
+      loadPdf();
+      document.getElementById('policy-viewer').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function showStatus(message, isError = false) {
+      if (!message) {
+        statusEl.classList.add('hidden');
+        return;
+      }
+      statusEl.textContent = message;
+      statusEl.style.color = isError ? '#ffb199' : 'var(--text-muted)';
+      statusEl.classList.remove('hidden');
+    }
+
+    async function loadPdf() {
+      objectEl.setAttribute('data', pdfUrl + '#toolbar=0&navpanes=0&view=FitH');
+      showStatus('Loading privacy policy...');
+      try {
+        const response = await fetch(pdfUrl, { method: 'HEAD' });
+        if (!response.ok) throw new Error('Missing PDF');
+        showStatus('');
+      } catch (error) {
+        objectEl.style.display = 'none';
+        fallbackHint.hidden = false;
+        showStatus('We could not load the PDF here. Use the download button instead.', true);
+      }
+    }
+
+    loadPdf();
+  </script>
+</body>
+</html>
