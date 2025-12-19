@@ -3,12 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPoT Privacy Policy</title>
-  <meta name="description" content="Read the SPoT privacy policy directly from the official PDF.">
+  <title>SPoT — Privacy Policy</title>
+  <meta name="description" content="SPoT privacy policy — summary, data collected, use, cookies, third-party services, and how to contact us. Read or download the full PDF.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#050505">
+  <link rel="canonical" href="https://yourdomain.com/privacy.html">
+  <meta property="og:title" content="SPoT — Privacy Policy">
+  <meta property="og:description" content="Summary of our privacy practices and the official privacy policy PDF.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com/privacy.html">
+  <meta name="twitter:card" content="summary">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link href="styles/shared.css" rel="stylesheet">
   <style>
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      left: 8px;
+      top: 8px;
+      width: auto;
+      height: auto;
+      padding: 8px 12px;
+      background: #fff;
+      color: #000;
+      z-index: 9999;
+      border-radius: 4px;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      height: 1px; width: 1px; overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px); white-space: nowrap;
+      border: 0; padding: 0; margin: -1px;
+    }
+
+    .content-summary { gap: 18px; }
+    .content-summary p, .content-summary li { color: var(--text-muted); }
+
     :root {
       --bg-black: #050505;
       --text-white: #ffffff;
@@ -202,6 +240,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <canvas id="starfield"></canvas>
 
   <header class="site-header">
@@ -211,7 +250,7 @@
     <a href="#" class="btn-action"><i class="fas fa-mobile-screen-button"></i> Download app</a>
   </header>
 
-  <main class="page">
+  <main id="main-content" class="page">
     <section class="hero">
       <div>
         <p class="eyebrow">Policies</p>
@@ -231,6 +270,19 @@
           <li><i class="fas fa-shield-halved" aria-hidden="true"></i> PDF lives at <code>resource/privacy-policy.pdf</code> so you control distribution.</li>
         </ul>
       </div>
+    </section>
+
+    <section class="content-summary panel" aria-labelledby="summary-heading">
+      <h2 id="summary-heading">Privacy policy — summary</h2>
+      <p>This page includes a short, human-friendly summary of our privacy practices and an embedded PDF containing the full, signed policy. Replace the PDF at <code>resource/privacy-policy.pdf</code> to update the official copy.</p>
+      <ul>
+        <li><strong>Data we collect:</strong> account details, contact info, usage logs, cookies, and analytics data.</li>
+        <li><strong>How we use data:</strong> to provide and improve services, communicate updates, personalize experience, and for security.</li>
+        <li><strong>Third parties:</strong> we use trusted analytics and payment providers; check the full policy for details.</li>
+        <li><strong>Your choices:</strong> you may request access, correction, or deletion of your personal data; contact us below.</li>
+        <li><strong>Cookies:</strong> essential cookies are used for functionality; analytics cookies may be used for product improvement.</li>
+      </ul>
+      <p>If you need the policy in another format or have questions, contact us: <a href="mailto:privacy@yourdomain.com">privacy@yourdomain.com</a>. Replace this address with your support/contact email.</p>
     </section>
 
     <section class="viewer" id="policy-viewer">
@@ -265,6 +317,8 @@
       <a href="career.html">Careers</a>
       <span style="margin: 0 8px; color: var(--footer-text-color);">ú</span>
       <a href="privacy.html" aria-current="page">Privacy Policy</a>
+      <span style="margin: 0 8px; color: var(--footer-text-color);">ú</span>
+      <a href="mailto:privacy@yourdomain.com" aria-label="Contact us about privacy">Contact</a>
     </div>
   </footer>
 
