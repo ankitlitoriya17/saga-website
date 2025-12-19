@@ -47,6 +47,32 @@
     .content-summary { gap: 18px; }
     .content-summary p, .content-summary li { color: var(--text-muted); }
 
+    /* Readable policy styles (text unchanged) */
+    .policy {
+      padding: 18px 6px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .policy h2 {
+      color: var(--text-white);
+      font-size: 1.6rem;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.4px;
+    }
+    .policy h3 {
+      color: var(--text-white);
+      font-size: 1.05rem;
+      margin: 18px 0 8px 0;
+      font-weight: 700;
+    }
+    .policy p { margin: 8px 0; }
+    .policy ul { margin: 6px 0 12px 1.2rem; }
+    .policy li { margin: 6px 0; }
+    .policy strong { color: var(--text-white); }
+    .policy time { color: var(--text-white); font-weight: 600; }
+    .policy a { color: #9fe3a9; text-decoration: underline; }
+
     :root {
       --bg-black: #050505;
       --text-white: #ffffff;
@@ -193,7 +219,9 @@
       border: 1px solid rgba(255,255,255,0.04);
       border-radius: 12px;
       overflow: hidden;
-      min-height: 520px;
+      min-height: 60vh;
+      height: 60vh;
+      max-height: 85vh;
     }
 
     .viewer-frame object {
@@ -203,6 +231,37 @@
       display: block;
       background: #0c0c0c;
     }
+
+    .viewer-frame.fullscreen {
+      position: fixed;
+      top: 4vh;
+      left: 4vw;
+      width: 92vw;
+      height: 92vh;
+      z-index: 99999;
+      border-radius: 8px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+    }
+
+    .viewer-frame.fullscreen object { height: 100%; }
+
+    .viewer-actions {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-white);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .icon-btn:focus { outline: 3px solid rgba(46,125,50,0.18); }
 
     .status {
       position: absolute;
@@ -258,108 +317,110 @@
         <p class="lead">This page renders the official privacy policy PDF so you always read the latest signed copy.</p>
         <div class="cta-buttons">
           <a class="btn-primary" href="#policy-viewer" id="open-pdf-btn"><i class="fas fa-book-open"></i> Read the policy</a>
-          <a class="btn-secondary" id="download-pdf-btn" target="_blank" rel="noreferrer" download><i class="fas fa-file-arrow-down"></i> Download PDF</a>
+          <a class="btn-secondary" id="download-pdf-btn" target="_blank" rel="noopener noreferrer" download><i class="fas fa-file-arrow-down"></i> Download PDF</a>
         </div>
-        <p class="meta-line">If you update the policy, replace <code>resource/privacy-policy.pdf</code> and this page will reflect it automatically.</p>
+        <p class="meta-line">By using SPoT, you agree to our privacy practices as outlined in this policy.</p> 
       </div>
       <div class="panel">
-        <div class="mini-title" style="color: var(--text-white); font-weight: 700; margin-bottom: 8px;">How it works</div>
-        <ul style="list-style: none; display: grid; gap: 10px; color: var(--text-muted); padding-left: 0;">
-          <li><i class="fas fa-file-pdf" aria-hidden="true"></i> We embed the PDF in-browser for quick reading.</li>
-          <li><i class="fas fa-cloud-arrow-down" aria-hidden="true"></i> Download link always points to the latest file.</li>
-          <li><i class="fas fa-shield-halved" aria-hidden="true"></i> PDF lives at <code>resource/privacy-policy.pdf</code> so you control distribution.</li>
-        </ul>
+        <div class="mini-title" style="color: var(--text-white); font-weight: 700; margin-bottom: 8px;">Release</div>
+        <p style="color: var(--text-muted); margin-bottom: 6px;">Version: <strong id="release-version">v0.0.1</strong> <span class="sr-only">(replace with actual version)</span></p>
+        <p style="color: var(--text-muted); margin-bottom: 6px;">Last updated: <time datetime="2025-12">December 2025</time></p>
+        <details style="color: var(--text-muted);">
+          <summary style="cursor: pointer;">Release notes</summary>
+          <div style="margin-top:8px;">
+            <h4 style="margin:6px 0 4px 0;">What’s New</h4>
+            <ul style="margin-left:18px;">
+              <li><strong>Core Rental Platform Launched</strong> — End-to-end experience to discover, explore, and engage with rental options on SPoT.</li>
+              <li><strong>User Authentication &amp; Onboarding</strong> — Secure sign-in and streamlined onboarding designed to get users operational fast.</li>
+              <li><strong>Property Discovery</strong> — Browse and explore rental listings with a clean, performance-optimized interface.</li>
+              <li><strong>Notifications Infrastructure</strong> — Push notification framework in place to support real-time updates and engagement.</li>
+              <li><strong>Modern UI &amp; Performance Foundation</strong> — Built with scalability in mind, optimized for speed, reliability, and future feature rollouts.</li>
+            </ul>
+
+            <h4 style="margin:10px 0 4px 0;">Stability &amp; Security</h4>
+            <ul style="margin-left:18px;">
+              <li>Production-ready build with signed release configuration.</li>
+              <li>Secure data handling aligned with platform compliance requirements.</li>
+              <li>Logging optimized for operational visibility without leaking internal system details.</li>
+            </ul>
+
+            <h4 style="margin:10px 0 4px 0;">Known Limitations</h4>
+            <ul style="margin-left:18px;">
+              <li>Feature set intentionally focused on core workflows for launch.</li>
+              <li>Additional filters, enhancements, and advanced personalization are planned for upcoming releases.</li>
+            </ul>
+
+            <h4 style="margin:10px 0 4px 0;">What’s Next</h4>
+            <ul style="margin-left:18px; margin-bottom:6px;">
+              <li>Enhanced search and discovery capabilities.</li>
+              <li>Expanded user engagement features.</li>
+              <li>Performance optimizations driven by real-world usage data.</li>
+              <li>Continuous UX refinements based on early adopter feedback.</li>
+            </ul>
+          </div>
+        </details>
+        <p style="color: var(--text-muted); font-size:0.95rem; margin-top:8px;">Next Release is expected in every 2 weeks.</p>
       </div>
     </section>
 
-    <section class="content-summary panel" aria-labelledby="summary-heading">
-      <h2 id="summary-heading">Privacy policy — summary</h2>
-      <p>This page includes a short, human-friendly summary of our privacy practices and an embedded PDF containing the full, signed policy. Replace the PDF at <code>resource/privacy-policy.pdf</code> to update the official copy.</p>
-      <ul>
-        <li><strong>Data we collect:</strong> account details, contact info, usage logs, cookies, and analytics data.</li>
-        <li><strong>How we use data:</strong> to provide and improve services, communicate updates, personalize experience, and for security.</li>
-        <li><strong>Third parties:</strong> we use trusted analytics and payment providers; check the full policy for details.</li>
-        <li><strong>Your choices:</strong> you may request access, correction, or deletion of your personal data; contact us below.</li>
-        <li><strong>Cookies:</strong> essential cookies are used for functionality; analytics cookies may be used for product improvement.</li>
-      </ul>
-      <p>If you need the policy in another format or have questions, contact us: <a href="mailto:privacy@yourdomain.com">privacy@yourdomain.com</a>. Replace this address with your support/contact email.</p>
-    </section>
-
-    <section id="full-policy" class="panel" aria-labelledby="policy-heading">
-      <h2 id="policy-heading">Full Privacy Policy</h2>
-      <p>This full privacy policy provides the complete, human-readable text of how SPoT by Apna Sheher collects, uses, stores, and shares personal information. If you need a different format (plain text, large print, or another language), please contact <a href="mailto:privacy@yourdomain.com">privacy@yourdomain.com</a>.</p>
+    <section id="privacy-policy" class="panel policy" aria-labelledby="policy-heading">
+      <h2 id="policy-heading">Privacy Policy</h2>
+      <p><strong>Last updated:</strong> December 2025</p>
 
       <h3>1. Introduction</h3>
-      <p>SPoT ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains what information we collect about you, why we collect it, how we use it, with whom we share it, and the choices you have regarding our use of your information.</p>
+      <p>This Privacy Policy explains how SPoT ("we", "our", or "us") collects, uses, discloses, and protects your information when you use the SPoT mobile application (the "App"). By using the App, you agree to the practices described in this policy.</p>
 
-      <h3>2. Scope</h3>
-      <p>This policy applies to all visitors to our website, users of our services and applications, customers, and other persons whose personal data we process in the context of providing our services.</p>
-
-      <h3>3. Information We Collect</h3>
-      <h4>3.1 Information you provide</h4>
-      <p>We collect information you provide directly to us, including when you register an account, subscribe to newsletters, fill out forms, contact support, or otherwise communicate with us. This may include name, email address, phone number, postal address, and any other information you choose to provide.</p>
-
-      <h4>3.2 Usage and device information</h4>
-      <p>We automatically collect certain information about your device and how you interact with our services. This includes IP address, device identifiers, browser and operating system type, pages visited, referring/exit pages, and search terms.</p>
-
-      <h4>3.3 Cookies and similar technologies</h4>
-      <p>We use cookies, web beacons, and similar technologies for analytics, security, and to provide and personalize our services. You can control cookies through your browser settings; however, disabling certain cookies may affect site functionality.</p>
-
-      <h4>3.4 Third-party sources</h4>
-      <p>We may obtain information from third-party sources, such as analytics providers, advertising partners, or publicly available sources, and combine that with information we collect directly to improve our services.</p>
-
-      <h3>4. How We Use Information</h3>
-      <p>We use information for purposes including:</p>
+      <h3>2. Information We Collect</h3>
+      <p>We may collect the following categories of information:</p>
       <ul>
-        <li>Providing, maintaining, and improving our services;</li>
-        <li>Personalizing content and recommendations;</li>
-        <li>Communicating with you about your account, updates, and promotional offers (where permitted);</li>
-        <li>Detecting and preventing fraud, abuse, or security incidents;</li>
-        <li>Complying with legal obligations and enforcing our terms and policies.</li>
+        <li><strong>Personal Information:</strong> Name, phone number, email address, profile photo.</li>
+        <li><strong>Property &amp; Vehicle Data:</strong> Listings, images, and documents uploaded.</li>
+        <li><strong>Location Information:</strong> Approximate or precise location (with your consent).</li>
+        <li><strong>Usage Data:</strong> App interactions, crash logs, diagnostics, and analytics.</li>
+        <li><strong>Communications:</strong> In-app messages and notifications.</li>
       </ul>
 
-      <h3>5. Legal Basis for Processing (where applicable)</h3>
-      <p>Where required by applicable law, we rely on one or more of the following legal grounds to process personal data: your consent, performance of a contract, legitimate interests (such as security and product improvement), and legal obligations.</p>
-
-      <h3>6. Sharing and Disclosure</h3>
-      <p>We may share personal information with:</p>
+      <h3>3. How We Use Your Information</h3>
       <ul>
-        <li>Service providers and vendors who perform services on our behalf (hosting, analytics, payment processing);</li>
-        <li>Affiliates and business partners as necessary to deliver services;</li>
-        <li>Law enforcement, regulators, or other third parties when required by law or to protect rights, property, or safety;</li>
-        <li>Parties involved in a merger, sale, or reorganization of our business (with notice to affected users where required).</li>
+        <li>To provide, operate, and maintain core app functionality.</li>
+        <li>To verify users and prevent fraud or misuse.</li>
+        <li>To improve performance, stability, and user experience.</li>
+        <li>To communicate important updates and notifications.</li>
       </ul>
 
-      <h3>7. International Transfers</h3>
-      <p>We may transfer personal data to countries other than the one in which you reside for storage or processing. When we do, we take steps to ensure appropriate safeguards are in place to protect your information in accordance with this policy and applicable law.</p>
+      <h3>4. Data Sharing &amp; Disclosure</h3>
+      <p>We do not sell your personal data. Data may be shared only with:</p>
+      <ul>
+        <li>Trusted service providers (hosting, analytics, messaging).</li>
+        <li>Government or legal authorities when required by law.</li>
+        <li>Other users where interaction is an essential app feature.</li>
+      </ul>
 
-      <h3>8. Data Retention</h3>
-      <p>We retain personal information for as long as necessary to provide our services, comply with legal obligations, resolve disputes, and enforce agreements. Retention periods vary by the type of data and the purpose of processing.</p>
+      <h3>5. Data Security</h3>
+      <p>We apply reasonable technical and organizational security measures to protect your data. No digital system is completely secure.</p>
 
-      <h3>9. Security</h3>
-      <p>We implement administrative, technical, and physical safeguards designed to protect the personal information we process. No method of transmission or storage is completely secure; therefore, we cannot guarantee absolute security.</p>
+      <h3>6. Data Retention</h3>
+      <p>Personal data is retained only for as long as necessary to fulfill the purposes outlined, or as required by applicable law.</p>
 
-      <h3>10. Your Rights and Choices</h3>
-      <p>Subject to applicable law, you may have rights over your personal data, including rights to access, correct, delete, restrict processing, object to processing, and portability. To exercise these rights, contact us at <a href="mailto:privacy@yourdomain.com">privacy@yourdomain.com</a>. We will respond within the timeframe required by applicable law.</p>
+      <h3>7. Your Rights</h3>
+      <ul>
+        <li>Request access, correction, or deletion of your data.</li>
+        <li>Withdraw consent where applicable.</li>
+        <li>Request account deletion through app support.</li>
+      </ul>
 
-      <h3>11. Cookies and Tracking</h3>
-      <p>We use cookies and similar tracking technologies to provide and analyze our services. You can manage cookie preferences through your browser settings and any opt-out mechanisms we provide. For more details, see the cookie section of this policy.</p>
+      <h3>8. Children’s Privacy</h3>
+      <p>SPoT is not intended for users under the age of 18. We do not knowingly collect data from children.</p>
 
-      <h3>12. Children's Privacy</h3>
-      <p>Our services are not directed to children under 13 (or the minimum age in your jurisdiction). We do not knowingly collect personal information from children without parental consent. If you believe we have collected such information, contact us and we will take steps to delete it.</p>
+      <h3>9. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy periodically. Continued use of the App signifies acceptance of the updated policy.</p>
 
-      <h3>13. Changes to this Policy</h3>
-      <p>We may update this Privacy Policy from time to time. When we make material changes, we will provide notice through the website or other channels. The effective date is posted at the top of this policy.</p>
-
-      <h3>14. Contact Us</h3>
-      <p>If you have questions, requests, or concerns about this policy or our data practices, contact:</p>
+      <h3>10. Contact Us</h3>
+      <p>For questions or concerns regarding this Privacy Policy, contact us at:</p>
       <p>
-        SPoT by Apna Sheher<br>
-        Email: <a href="mailto:privacy@yourdomain.com">privacy@yourdomain.com</a><br>
-        Address: (replace with your business address)
+        Email: <a href="mailto:apnagharapnasheher@gmail.com">apnagharapnasheher@gmail.com</a><br>
+        Phone: +91 9711801657
       </p>
-
-      <p><em>Note:</em> This text is provided as a general privacy policy template. It does not constitute legal advice. Please consult qualified legal counsel to adapt this policy to your jurisdiction and business-specific requirements.</p>
     </section>
 
     <section class="viewer" id="policy-viewer">
@@ -369,7 +430,12 @@
             <p class="eyebrow" style="margin-bottom: 6px;">Official PDF</p>
             <h2 style="margin: 0; font-size: 1.4rem;">Embedded view</h2>
           </div>
-          <span class="pill"><i class="fas fa-lock"></i> Latest version</span>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <span class="pill"><i class="fas fa-lock"></i> Latest version</span>
+            <div class="viewer-actions">
+              <button id="expand-pdf-btn" class="icon-btn" aria-expanded="false" aria-controls="policy-object" title="Open PDF in larger view"><i class="fas fa-expand"></i> Expand</button>
+            </div>
+          </div>
         </div>
 
         <div class="viewer-frame">
@@ -377,7 +443,7 @@
           <object id="policy-object" data="" type="application/pdf" aria-label="Privacy policy PDF">
             <p style="padding: 18px; color: var(--text-muted);">
               We couldn't display the PDF inside the page. You can still
-              <a href="#" id="download-fallback">download it here</a> and open it in your PDF reader.
+              <a href="#" id="download-fallback" rel="noopener noreferrer">download it here</a> and open it in your PDF reader.
             </p>
           </object>
         </div>
@@ -392,10 +458,8 @@
     <p>&copy; <span id="year"></span> SPoT by Apna Sheher.</p>
     <div class="footer__nav">
       <a href="career.html">Careers</a>
-      <span style="margin: 0 8px; color: var(--footer-text-color);">ú</span>
+      <span style="margin: 0 8px; color: var(--footer-text-color);">|</span>
       <a href="privacy.html" aria-current="page">Privacy Policy</a>
-      <span style="margin: 0 8px; color: var(--footer-text-color);">ú</span>
-      <a href="mailto:privacy@yourdomain.com" aria-label="Contact us about privacy">Contact</a>
     </div>
   </footer>
 
@@ -451,6 +515,8 @@
     const downloadBtn = document.getElementById('download-pdf-btn');
     const downloadFallback = document.getElementById('download-fallback');
     const ctaBtn = document.getElementById('open-pdf-btn');
+    const expandBtn = document.getElementById('expand-pdf-btn');
+    const viewerFrame = document.querySelector('.viewer-frame');
 
     [downloadBtn, downloadFallback].forEach(link => {
       if (link) {
@@ -470,11 +536,36 @@
       if (!message) {
         statusEl.classList.add('hidden');
         return;
-      }
+      }ú 
       statusEl.textContent = message;
       statusEl.style.color = isError ? '#ffb199' : 'var(--text-muted)';
       statusEl.classList.remove('hidden');
     }
+
+    // Expand / fullscreen toggle for the embedded PDF
+    function toggleFullscreen(open) {
+      const isOpen = typeof open === 'boolean' ? open : !viewerFrame.classList.contains('fullscreen');
+      if (isOpen) {
+        viewerFrame.classList.add('fullscreen');
+        expandBtn.setAttribute('aria-expanded', 'true');
+        expandBtn.innerHTML = '<i class="fas fa-compress"></i> Close';
+        document.body.style.overflow = 'hidden';
+      } else {
+        viewerFrame.classList.remove('fullscreen');
+        expandBtn.setAttribute('aria-expanded', 'false');
+        expandBtn.innerHTML = '<i class="fas fa-expand"></i> Expand';
+        document.body.style.overflow = '';
+      }
+    }
+
+    expandBtn?.addEventListener('click', () => toggleFullscreen());
+
+    // Close fullscreen on ESC
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && viewerFrame.classList.contains('fullscreen')) {
+        toggleFullscreen(false);
+      }
+    });
 
     async function loadPdf() {
       objectEl.setAttribute('data', pdfUrl + '#toolbar=0&navpanes=0&view=FitH');
