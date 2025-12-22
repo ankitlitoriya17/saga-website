@@ -113,3 +113,8 @@ body {
 @media (max-width: 768px) {
   .site-header { padding: 16px 5%; gap: 12px; }
 }
+
+/* Styles for account deletion page */
+.form-container { max-width: 760px; margin: 0 auto; }
+.danger-btn { box-shadow: 0 8px 24px rgba(211,47,47,0.18); }
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Delete My Account — SPoT</title>
+  <link href="styles/shared.css" rel="stylesheet">
+  <style>
+    .page-hero { padding: 60px 5%; max-width: 860px; margin: 40px auto; }
+    .form-container { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 28px; border-radius: 12px; }
+    .field { margin-bottom: 14px; }
+    .field label { display:block; color: var(--text-muted); font-size:0.95rem; margin-bottom:6px; }
+    .field input[type="text"], .field input[type="password"], .field input[type="email"] { width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text-white); }
+    .help { font-size:0.85rem; color:var(--text-muted); margin-top:6px; }
+    .danger-btn { background: linear-gradient(90deg,#d32f2f,#ff7043); color: white; border: none; padding: 12px 18px; border-radius:8px; font-weight:700; cursor:pointer; }
+    .danger-btn[disabled] { opacity:0.5; cursor:default; }
+    .result { margin-top:14px; color: var(--text-muted); font-size:0.95rem; }
+  </style>
+</head>
+<body>
+  <main class="page-hero">
+    <h1 style="font-size:2rem; margin-bottom:8px;">Delete My Account</h1>
+    <p style="color:var(--text-muted); margin-bottom:18px;">This action permanently removes your account and all associated data. This cannot be undone.</p>
+
+    <section class="form-container" aria-labelledby="delete-heading">
+      <h2 id="delete-heading" style="margin-top:0;">Request account deletion via email</h2>
+      <p class="help">Send an email to request deletion. Once we receive and verify your request, the account will be permanently deleted after 14 days (processing within 7–14 business days).</p>
+
+      <div style="margin:14px 0;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);">
+        <strong>Email:</strong> <a href="mailto:apnagharapnasheher@gmail.com">apnagharapnasheher@gmail.com</a>
+      </div>
+
+      <div class="field">
+        <label for="email">Your registered email address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com">
+      </div>
+
+      <div class="field">
+        <label for="notes">Additional notes (optional)</label>
+        <input id="notes" name="notes" type="text" placeholder="Any extra details you want to include">
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <button id="open-mail" class="danger-btn" type="button">Open email client</button>
+        <button id="copy-template" type="button" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:8px;color:var(--text-white);">Copy email template</button>
+        <button id="i-sent" type="button" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:8px;color:var(--text-white);">I have sent the email</button>
+        <button id="cancel-btn" type="button" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:8px;color:var(--text-white);">Cancel</button>
+      </div>
+
+      <div id="result" class="result" aria-live="polite"></div>
+
+      <hr style="margin:18px 0;border-color:rgba(255,255,255,0.04)">
+
+      <div>
+        <h3 style="margin-bottom:6px;">What to include in the email</h3>
+        <ul style="color:var(--text-muted);margin-top:6px;margin-bottom:12px;">
+          <li>Registered email address</li>
+          <li>Subject line: "Account Deletion Request – SPoT"</li>
+        </ul>
+
+        <h3 style="margin-bottom:6px;">Data deleted</h3>
+        <p style="color:var(--text-muted);margin-top:6px;">User profile information (name, email) and account-related identifiers.</p>
+
+        <h3 style="margin-bottom:6px;">Data retained (if any)</h3>
+        <p style="color:var(--text-muted);margin-top:6px;">Minimal records required for legal or compliance purposes, if applicable.</p>
+
+        <h3 style="margin-bottom:6px;">Retention period</h3>
+        <p style="color:var(--text-muted);margin-top:6px;">Account deletion requests are processed within 7–14 business days. After processing, deletion completes and data is permanently removed. The account will be permanently deleted after 14 days from confirmation.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const openMailBtn = document.getElementById('open-mail');
+    const copyBtn = document.getElementById('copy-template');
+    const iSentBtn = document.getElementById('i-sent');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const result = document.getElementById('result');
+
+    const supportEmail = 'apnagharapnasheher@gmail.com';
+    function makeSubject() { return encodeURIComponent('Account Deletion Request – SPoT'); }
+    function makeBody() {
+      const reg = document.getElementById('email')?.value?.trim() || '[your registered email]';
+      const notes = document.getElementById('notes')?.value?.trim() || '';
+      return encodeURIComponent(
+        'Hello SPoT team,\n\nI would like to request deletion of my SPoT account.\n\nRegistered email address: ' + reg + '\n\n' + (notes ? ('Notes: ' + notes + '\n\n') : '') + 'Please process this request.\n\nThank you.'
+      );
+    }
+
+    openMailBtn.addEventListener('click', () => {
+      const mailto = `mailto:${supportEmail}?subject=${makeSubject()}&body=${makeBody()}`;
+      // open mail client
+      window.location.href = mailto;
+      result.textContent = 'Mail client opened. After sending the email, click "I have sent the email" to confirm.';
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const subject = 'Account Deletion Request – SPoT';
+      const reg = document.getElementById('email')?.value?.trim() || '[your registered email]';
+      const notes = document.getElementById('notes')?.value?.trim() || '';
+      const body = `Hello SPoT team,\n\nI would like to request deletion of my SPoT account.\n\nRegistered email address: ${reg}\n\n${notes ? ('Notes: ' + notes + '\n\n') : ''}Please process this request.\n\nThank you.`;
+      try {
+        await navigator.clipboard.writeText(`To: ${supportEmail}\nSubject: ${subject}\n\n${body}`);
+        result.textContent = 'Email template copied to clipboard. Paste it into your mail client and send to ' + supportEmail + '.';
+      } catch (err) {
+        result.textContent = 'Could not copy to clipboard. Please manually send email to ' + supportEmail + ' with subject "' + subject + '".';
+      }
+    });
+
+    iSentBtn.addEventListener('click', () => {
+      // final confirmation shown to user
+      result.innerHTML = '<strong>Request received.</strong> Your account deletion request will be processed within 7–14 business days. The account will be permanently deleted 14 days after confirmation.';
+      openMailBtn.disabled = true;
+      copyBtn.disabled = true;
+      iSentBtn.disabled = true;
+      cancelBtn.disabled = false;
+    });
+
+    cancelBtn.addEventListener('click', () => { window.history.back(); });
+  </script>
+</body>
+</html>
