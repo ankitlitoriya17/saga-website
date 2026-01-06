@@ -207,94 +207,10 @@
       gap: 8px;
     }
 
-    .viewer {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .viewer-frame {
-      position: relative;
-      background: radial-gradient(circle at 20% 20%, rgba(46,125,50,0.06), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 12px;
-      overflow: hidden;
-      min-height: 60vh;
-      height: 60vh;
-      max-height: 85vh;
-    }
-
-    .viewer-frame object {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-      background: #0c0c0c;
-    }
-
-    .viewer-frame.fullscreen {
-      position: fixed;
-      top: 4vh;
-      left: 4vw;
-      width: 92vw;
-      height: 92vh;
-      z-index: 99999;
-      border-radius: 8px;
-      box-shadow: 0 40px 120px rgba(0,0,0,0.8);
-    }
-
-    .viewer-frame.fullscreen object { height: 100%; }
-
-    .viewer-actions {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .icon-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.06);
-      color: var(--text-white);
-      padding: 6px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-
-    .icon-btn:focus { outline: 3px solid rgba(46,125,50,0.18); }
-
-    .status {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 12px 14px;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .status strong { color: var(--text-white); }
-
-    .status.hidden { display: none; }
-
-    .fallback {
-      padding: 16px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.02);
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
     @media (max-width: 768px) {
       h1 { font-size: 2.6rem; }
       .page { padding-top: 90px; }
       .panel { padding: 16px; }
-      .viewer-frame { min-height: 420px; }
     }
   </style>
 </head>
@@ -314,144 +230,81 @@
       <div>
         <p class="eyebrow">Policies</p>
         <h1>Privacy Policy</h1>
-        <p class="lead">This page renders the official privacy policy PDF so you always read the latest signed copy.</p>
-        <div class="cta-buttons">
-          <a class="btn-primary" href="#policy-viewer" id="open-pdf-btn"><i class="fas fa-book-open"></i> Read the policy</a>
-          <a class="btn-secondary" id="download-pdf-btn" target="_blank" rel="noopener noreferrer" download><i class="fas fa-file-arrow-down"></i> Download PDF</a>
-        </div>
+        <p class="lead">This page lists the official privacy policy for SPoT Easy Rental Solution.</p>
         <p class="meta-line">By using SPoT, you agree to our privacy practices as outlined in this policy.</p> 
       </div>
       <div class="panel">
         <div class="mini-title" style="color: var(--text-white); font-weight: 700; margin-bottom: 8px;">Release</div>
-        <p style="color: var(--text-muted); margin-bottom: 6px;">Version: <strong id="release-version">v0.0.1</strong> <span class="sr-only">(replace with actual version)</span></p>
-        <p style="color: var(--text-muted); margin-bottom: 6px;">Last updated: <time datetime="2025-12">December 2025</time></p>
-        <details style="color: var(--text-muted);">
-          <summary style="cursor: pointer;">Release notes</summary>
-          <div style="margin-top:8px;">
-            <h4 style="margin:6px 0 4px 0;">What’s New</h4>
-            <ul style="margin-left:18px;">
-              <li><strong>Core Rental Platform Launched</strong> — End-to-end experience to discover, explore, and engage with rental options on SPoT.</li>
-              <li><strong>User Authentication &amp; Onboarding</strong> — Secure sign-in and streamlined onboarding designed to get users operational fast.</li>
-              <li><strong>Property Discovery</strong> — Browse and explore rental listings with a clean, performance-optimized interface.</li>
-              <li><strong>Notifications Infrastructure</strong> — Push notification framework in place to support real-time updates and engagement.</li>
-              <li><strong>Modern UI &amp; Performance Foundation</strong> — Built with scalability in mind, optimized for speed, reliability, and future feature rollouts.</li>
-            </ul>
-
-            <h4 style="margin:10px 0 4px 0;">Stability &amp; Security</h4>
-            <ul style="margin-left:18px;">
-              <li>Production-ready build with signed release configuration.</li>
-              <li>Secure data handling aligned with platform compliance requirements.</li>
-              <li>Logging optimized for operational visibility without leaking internal system details.</li>
-            </ul>
-
-            <h4 style="margin:10px 0 4px 0;">Known Limitations</h4>
-            <ul style="margin-left:18px;">
-              <li>Feature set intentionally focused on core workflows for launch.</li>
-              <li>Additional filters, enhancements, and advanced personalization are planned for upcoming releases.</li>
-            </ul>
-
-            <h4 style="margin:10px 0 4px 0;">What’s Next</h4>
-            <ul style="margin-left:18px; margin-bottom:6px;">
-              <li>Enhanced search and discovery capabilities.</li>
-              <li>Expanded user engagement features.</li>
-              <li>Performance optimizations driven by real-world usage data.</li>
-              <li>Continuous UX refinements based on early adopter feedback.</li>
-            </ul>
-          </div>
-        </details>
+        <p style="color: var(--text-muted); margin-bottom: 6px;">Version: <strong id="release-version">4 (0.1.3)</strong> <span class="sr-only">(current version)</span></p>
+        <p style="color: var(--text-muted); margin-bottom: 6px;">Last updated: <time datetime="2026-01">January 2026</time></p>
         <p style="color: var(--text-muted); font-size:0.95rem; margin-top:8px;">Next Release is expected in every 2 weeks.</p>
       </div>
     </section>
 
     <section id="privacy-policy" class="panel policy" aria-labelledby="policy-heading">
       <h2 id="policy-heading">Privacy Policy</h2>
-      <p><strong>Last updated:</strong> December 2025</p>
+      <p><strong>Last updated:</strong> January 2026</p>
+      <p><strong>App Version:</strong> 4 (0.1.3)</p>
+      <p><strong>Developer:</strong> Ankit Litoriya</p>
 
       <h3>1. Introduction</h3>
-      <p>This Privacy Policy explains how SPoT ("we", "our", or "us") collects, uses, discloses, and protects your information when you use the SPoT mobile application (the "App"). By using the App, you agree to the practices described in this policy.</p>
+      <p>This Privacy Policy explains how SPoT Easy Rental Solution (“SPoT”, “we”, “our”, or “us”) collects, uses, stores, and protects your information when you use the SPoT mobile application. By using the app, you agree to the practices described in this policy.</p>
 
       <h3>2. Information We Collect</h3>
-      <p>We may collect the following categories of information:</p>
+      <p><strong>a. Mandatory Personal Information</strong></p>
       <ul>
-        <li><strong>Personal Information:</strong> Name, phone number, email address, profile photo.</li>
-        <li><strong>Property &amp; Vehicle Data:</strong> Listings, images, and documents uploaded.</li>
-        <li><strong>Location Information:</strong> Approximate or precise location (with your consent).</li>
-        <li><strong>Usage Data:</strong> App interactions, crash logs, diagnostics, and analytics.</li>
-        <li><strong>Communications:</strong> In-app messages and notifications.</li>
+        <li>Name (via Google Sign-In)</li>
+        <li>Email address (via Google Sign-In)</li>
+        <li>Phone number (mandatory for account identification)</li>
+      </ul>
+      <p><strong>b. Optional Identity &amp; Vehicle Documents</strong></p>
+      <p>Users may optionally upload documents such as Aadhaar Card, Driving License, and Vehicle Registration Certificate (RC). These documents are not mandatory, are not verified by SPoT, and are uploaded voluntarily by users. SPoT does not perform KYC or government verification.</p>
+      <p><strong>c. User-Generated Content</strong></p>
+      <ul>
+        <li>Property, shop, PG, or car listing details</li>
+        <li>Listing images</li>
+        <li>In-app messages between users</li>
+      </ul>
+      <p><strong>d. Device &amp; Usage Data</strong></p>
+      <ul>
+        <li>App usage activity</li>
+        <li>Crash logs and diagnostics</li>
+        <li>Device and OS information (collected via Firebase)</li>
       </ul>
 
-      <h3>3. How We Use Your Information</h3>
+      <h3>3. How We Use Information</h3>
       <ul>
-        <li>To provide, operate, and maintain core app functionality.</li>
-        <li>To verify users and prevent fraud or misuse.</li>
-        <li>To improve performance, stability, and user experience.</li>
-        <li>To communicate important updates and notifications.</li>
+        <li>To create and manage user accounts</li>
+        <li>To enable listings and in-app communication</li>
+        <li>To improve app performance and reliability</li>
+        <li>To diagnose crashes and technical issues</li>
+        <li>To comply with legal obligations if required</li>
       </ul>
 
-      <h3>4. Data Sharing &amp; Disclosure</h3>
-      <p>We do not sell your personal data. Data may be shared only with:</p>
-      <ul>
-        <li>Trusted service providers (hosting, analytics, messaging).</li>
-        <li>Government or legal authorities when required by law.</li>
-        <li>Other users where interaction is an essential app feature.</li>
-      </ul>
+      <h3>4. Data Storage &amp; Third-Party Services</h3>
+      <p>SPoT uses trusted third-party services including Google Sign-In (authentication), Firebase (analytics, crash reporting, backend services), and Supabase (storage of property and vehicle images). We do not sell or share personal data for advertising purposes.</p>
 
       <h3>5. Data Security</h3>
-      <p>We apply reasonable technical and organizational security measures to protect your data. No digital system is completely secure.</p>
+      <p>We apply reasonable technical and organizational safeguards to protect user data. However, no digital system is completely secure.</p>
 
-      <h3>6. Data Retention</h3>
-      <p>Personal data is retained only for as long as necessary to fulfill the purposes outlined, or as required by applicable law.</p>
+      <h3>6. Data Retention &amp; Deletion</h3>
+      <p>Personal data is retained only as long as necessary for app functionality or legal compliance. Users may delete listings, uploaded documents, or request account deletion by contacting support. Data will be removed within a reasonable timeframe.</p>
 
-      <h3>7. Your Rights</h3>
-      <ul>
-        <li>Request access, correction, or deletion of your data.</li>
-        <li>Withdraw consent where applicable.</li>
-        <li>Request account deletion through app support.</li>
-      </ul>
+      <h3>7. Children’s Privacy</h3>
+      <p>SPoT is not intended for users under the age of 18. We do not knowingly collect personal data from children.</p>
 
-      <h3>8. Children’s Privacy</h3>
-      <p>SPoT is not intended for users under the age of 18. We do not knowingly collect data from children.</p>
+      <h3>8. No Payments or Bookings</h3>
+      <p>SPoT does not process payments, bookings, or financial transactions. All rental discussions occur directly between users.</p>
 
       <h3>9. Changes to This Policy</h3>
-      <p>We may update this Privacy Policy periodically. Continued use of the App signifies acceptance of the updated policy.</p>
+      <p>We may update this Privacy Policy periodically. Updates will be posted on this page with a revised date. Continued use of the app signifies acceptance of the updated policy.</p>
 
-      <h3>10. Contact Us</h3>
-      <p>For questions or concerns regarding this Privacy Policy, contact us at:</p>
-      <p>
-        Email: <a href="mailto:apnagharapnasheher@gmail.com">apnagharapnasheher@gmail.com</a><br>
-        Phone: +91 9711801657
-      </p>
+      <h3>10. Contact Information</h3>
+      <p>Email: apnagharapnasheher@gmail.com</p>
+      <p>Phone: +91 9711801657</p>
+      <p>Address: Range Office, Rajgarh Chouraha, Datia, MP 475661, India</p>
     </section>
 
-    <section class="viewer" id="policy-viewer">
-      <div class="panel">
-        <div class="panel__header">
-          <div>
-            <p class="eyebrow" style="margin-bottom: 6px;">Official PDF</p>
-            <h2 style="margin: 0; font-size: 1.4rem;">Embedded view</h2>
-          </div>
-          <div style="display:flex; gap:12px; align-items:center;">
-            <span class="pill"><i class="fas fa-lock"></i> Latest version</span>
-            <div class="viewer-actions">
-              <button id="expand-pdf-btn" class="icon-btn" aria-expanded="false" aria-controls="policy-object" title="Open PDF in larger view"><i class="fas fa-expand"></i> Expand</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="viewer-frame">
-          <div class="status" id="pdf-status"><strong>Loading</strong> privacy policy...</div>
-          <object id="policy-object" data="" type="application/pdf" aria-label="Privacy policy PDF">
-            <p style="padding: 18px; color: var(--text-muted);">
-              We couldn't display the PDF inside the page. You can still
-              <a href="#" id="download-fallback" rel="noopener noreferrer">download it here</a> and open it in your PDF reader.
-            </p>
-          </object>
-        </div>
-        <div class="fallback" id="fallback-hint" hidden>
-          Can't see the embed? The PDF might be missing or blocked by your browser. Use the download button above to read it directly.
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
@@ -519,6 +372,7 @@
 
     animate();
 
+    /* PDF viewer removed.
     const pdfUrl = 'resource/privacy-policy.pdf';
     const objectEl = document.getElementById('policy-object');
     const statusEl = document.getElementById('pdf-status');
@@ -547,7 +401,7 @@
       if (!message) {
         statusEl.classList.add('hidden');
         return;
-      }ú 
+      }
       statusEl.textContent = message;
       statusEl.style.color = isError ? '#ffb199' : 'var(--text-muted)';
       statusEl.classList.remove('hidden');
@@ -593,6 +447,7 @@
     }
 
     loadPdf();
+    */
   </script>
 </body>
 </html>
