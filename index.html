@@ -396,7 +396,7 @@
         <a href="index.html" class="logo" aria-label="Return to the SPoT home page">
             <span class="logo__text" aria-hidden="true">SPoT</span>
         </a>
-        <a href="#" class="btn-action" id="playstore-btn"><i class="fab fa-google-play"></i> Download from Playstore</a>
+        <a href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" class="btn-action" id="playstore-btn" target="_blank" rel="noreferrer"><i class="fab fa-google-play"></i> Download from Playstore</a>
     </header>
 
     <div class="hero">
@@ -740,53 +740,6 @@
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
 
-        // Toast system for non-blocking notifications
-        const toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        toastContainer.id = 'toast-container';
-        toastContainer.setAttribute('role', 'status');
-        toastContainer.setAttribute('aria-live', 'polite');
-        toastContainer.setAttribute('aria-atomic', 'true');
-        document.body.appendChild(toastContainer);
-
-        function showToast({ title, message, duration = 4500 }) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `
-                <div class="toast__icon" aria-hidden="true">
-                    <i class="fas fa-rocket"></i>
-                </div>
-                <div class="toast__content">
-                    <div class="toast__title">${title}</div>
-                    <div class="toast__message">${message}</div>
-                </div>
-            `;
-
-            toastContainer.appendChild(toast);
-
-            const removeToast = () => {
-                toast.classList.add('is-dismissing');
-                toast.addEventListener('animationend', () => toast.remove(), { once: true });
-            };
-
-            const timeoutId = setTimeout(removeToast, duration);
-            toast.addEventListener('click', () => {
-                clearTimeout(timeoutId);
-                removeToast();
-            });
-        }
-
-        const playstoreBtn = document.getElementById('playstore-btn');
-        if (playstoreBtn) {
-            playstoreBtn.addEventListener('click', (event) => {
-                event.preventDefault();
-                showToast({
-                    title: 'Coming soon',
-                    message: 'We are putting the finishing touches on the Play Store release.',
-                });
-            });
-        }
-        
         let width = window.innerWidth;
         let height = window.innerHeight;
         
