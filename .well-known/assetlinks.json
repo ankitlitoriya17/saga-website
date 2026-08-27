@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.apnaghar.saga",
+      "sha256_cert_fingerprints": ["A8:8B:CD:38:B9:28:02:E7:73:75:74:B3:A6:2D:47:06:71:43:5B:81:4D:32:BD:0A:B7:0D:33:65:F3:E8:6D:2C"]
+    }
+  }
+]
