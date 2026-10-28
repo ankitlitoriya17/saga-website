@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Open a rental on SPoT</title>
+  <link rel="stylesheet" href="/property-share-assets/property.css">
+  <script defer src="/property-share-assets/property-link.js"></script>
+</head>
+<body>
+  <main>
+    <a class="brand" href="/">SPoT</a>
+    <p class="eyebrow">Find your next place</p>
+    <h1>A rental worth a closer look.</h1>
+    <p>SPoT helps you discover rental homes, rooms, PGs, and shops, explore listings, and connect with property owners.</p>
+    <p id="status" role="status">Install SPoT to explore rentals. If you received a property link, return to that link after installing.</p>
+    <a id="open-app" class="button" hidden>Open this property in SPoT</a>
+    <a id="install" class="button secondary" rel="noreferrer" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga">Get SPoT on Google Play</a>
+    <div id="reference" hidden>
+      <label for="property-reference">Keep this property link</label>
+      <input id="property-reference" readonly aria-label="Property link">
+      <button id="copy" type="button">Copy link</button>
+      <p>After installing, return to your message and tap the original link. You may need to sign in. The app checks whether the listing is still available.</p>
+    </div>
+    <p class="fine">Listing details and availability are shown securely in the app. This page does not confirm that a property is currently published.</p>
+    <noscript>JavaScript is needed to open and copy an individual property reference. The Google Play install button works without it.</noscript>
+  </main>
+</body>
+</html>
