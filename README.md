@@ -112,6 +112,12 @@ Automated interaction tests use a bounded DOM double. They verify controller sta
 and events, not browser rendering, native focus trapping, touch input or Lighthouse
 scores. Those require real browser evidence; do not infer them from passing unit tests.
 
+Layout lesson from the production hero: keep decorative image overlap in its own
+visual container. Captions and note cards belong in normal flow with measured gaps;
+positioning them against the entire hero caused a visible overlap in a user-supplied
+screenshot. Check the 580px, 850px and 1100px breakpoints and text zoom in a real
+browser before treating responsive layout as visually verified.
+
 Deletion inputs stay on-device until the user chooses to open their email app or
 copy a template. No request is sent to support automatically. The page cannot
 verify delivery or completion and never displays a fabricated acknowledgement.
