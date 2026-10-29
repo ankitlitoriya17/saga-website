@@ -1,791 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPoT | Rental Solution</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="resource/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="resource/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="resource/apple-touch-icon.png">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link href="styles/shared.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg-black: #050505;
-            --text-white: #ffffff;
-            --text-muted: #A1A1AA;
-            --accent-glow: #2E7D32; /* SPoT Green Glow */
-            --accent-secondary: #E65100; /* Orange Glow */
-            --border-color: #333;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* --- Toast Notifications --- */
-        .toast-container {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 200;
-        }
-
-        .toast {
-            min-width: 260px;
-            max-width: 320px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            padding: 14px 16px;
-            color: var(--text-white);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(12px);
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            animation: slide-in 250ms ease, fade-out 250ms ease 4000ms forwards;
-        }
-
-        .toast.is-dismissing {
-            animation: fade-out 180ms ease forwards;
-        }
-
-        .toast__icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.35), rgba(255, 152, 0, 0.35));
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .toast__content {
-            flex: 1;
-        }
-
-        .toast__title {
-            font-weight: 700;
-            margin-bottom: 4px;
-            letter-spacing: -0.01em;
-        }
-
-        .toast__message {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        @keyframes slide-in {
-            from {
-                opacity: 0;
-                transform: translateY(12px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes fade-out {
-            to {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-        }
-
-        /* --- Animated Starfield Background --- */
-        #starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            padding: 100px 5% 50px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 4.5rem;
-            line-height: 1.1;
-            font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #fff 30%, #aaa 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #4CAF50, #FF9800);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 40px auto;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 100px;
-        }
-
-        .btn-primary {
-            background: var(--text-white);
-            color: black;
-            padding: 14px 32px;
-            border-radius: 4px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: transform 0.2s;
-        }
-        
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-white);
-            padding: 14px 32px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 4px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-secondary:hover { border-color: var(--text-white); }
-
-        /* --- Screen Showcase (Replacement for Workflow) --- */
-        .showcase-container {
-            position: relative;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .phone-mockup {
-            width: 280px;
-            height: 580px;
-            background: #111;
-            border-radius: 40px;
-            border: 8px solid #333;
-            position: absolute;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            overflow: hidden;
-            transition: all 0.5s ease;
-        }
-
-        /* The Screen Content (Fake UI) */
-        .screen {
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            position: relative;
-        }
-
-        .screen-header {
-            height: 30px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .card-ui {
-            background: #2a2a2a;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .card-ui h4 { margin-bottom: 5px; color: white; font-size: 0.9rem; }
-        .card-ui p { font-size: 0.7rem; color: #888; }
-        .card-img { height: 100px; background: #333; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #555; }
-
-        /* Specific Phones */
-        .phone-left {
-            transform: translateX(-280px) translateZ(-100px) rotateY(15deg);
-            z-index: 1;
-            opacity: 0.8;
-            border-color: #444;
-        }
-
-        .phone-center {
-            transform: translateZ(50px);
-            z-index: 10;
-            box-shadow: 0 0 60px rgba(46, 125, 50, 0.3);
-            border-color: var(--accent-glow);
-        }
-
-        .phone-right {
-            transform: translateX(280px) translateZ(-100px) rotateY(-15deg);
-            z-index: 1;
-            opacity: 0.8;
-            border-color: #444;
-        }
-
-        /* Hover Effects for interactivity */
-        .showcase-container:hover .phone-left { transform: translateX(-320px) translateZ(-50px) rotateY(20deg); opacity: 1; }
-        .showcase-container:hover .phone-right { transform: translateX(320px) translateZ(-50px) rotateY(-20deg); opacity: 1; }
-        .showcase-container:hover .phone-center { transform: translateZ(80px) translateY(-10px); }
-
-        /* --- Grid Features --- */
-        .features {
-            padding: 120px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 60px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .card:hover {
-            border-color: var(--accent-glow);
-            background: rgba(46, 125, 50, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .card p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .tag-pill {
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 20px;
-            border: 1px solid #444;
-            color: #888;
-            margin-left: auto;
-        }
-
-        /* Helper styles for phone screens */
-        .screen-title {
-            color: #fff;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            opacity: 0.85;
-        }
-
-        .badge-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(76, 175, 80, 0.16);
-            color: #a5d6a7;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .badge-pill--warning {
-            background: rgba(230, 81, 0, 0.18);
-            color: #ffcc80;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #4caf50;
-        }
-
-        .badge-dot--warning {
-            background: #ff9800;
-        }
-
-        .chip-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .chip {
-            font-size: 0.7rem;
-            padding: 4px 8px;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: #ddd;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 0.75rem;
-            color: #aaa;
-        }
-
-        .stat-row strong {
-            color: #fff;
-            font-size: 0.85rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            h1 { font-size: 3rem; }
-            .showcase-container { height: auto; flex-direction: column; gap: 20px; margin-bottom: 50px; }
-            .phone-mockup { position: relative; transform: none !important; width: 100%; max-width: 300px; height: 600px; }
-            .grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#eeeae4">
+  <title>SPoT | A place for your next chapter</title>
+  <meta name="description" content="Find homes, rooms, PGs and shops. Manage properties, tenants and rent records with SPoT for Android.">
+  <link rel="canonical" href="https://spot.apnasheher.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SPoT | A place for your next chapter">
+  <meta property="og:description" content="Find homes, rooms, PGs and shops. Manage properties, tenants and rent records with SPoT for Android.">
+  <meta property="og:url" content="https://spot.apnasheher.com/">
+  <meta property="og:image" content="https://spot.apnasheher.com/resource/app/brand.png">
+  <link rel="icon" type="image/png" href="resource/app/brand.png">
+  <link rel="apple-touch-icon" href="resource/app/brand.png">
+  <link rel="stylesheet" href="styles/shared.css">
+  <script src="scripts/site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="SPoT home"><img src="resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Easy rental solution</small></span></a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <a href="index.html#renters">For renters</a><a href="index.html#owners">For owners</a><a href="index.html#inside">The app</a>
+    </nav>
+    <a class="button button-small" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Get SPoT <span aria-hidden="true">↗</span><span class="sr-only">on Google Play (opens a new tab)</span></a>
+  </header>
+  <main id="main-content">
+    <section class="hero section-wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> HOMES · ROOMS · PGs · SHOPS</p>
+        <h1 id="hero-title">Your next place.<br><em>A little closer.</em></h1>
+        <p class="lead">A new beginning for renters. A clearer day for owners. Find your space and keep the everyday details together with SPoT.</p>
+        <div class="actions"><a class="button" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Download SPoT <span aria-hidden="true">↗</span><span class="sr-only">from Google Play (opens a new tab)</span></a><a class="text-link" href="#inside">Take a look inside <span aria-hidden="true">↓</span></a></div>
+        <p class="fine-print">Available on Android through Google Play.</p>
+        <div class="hero-note"><span class="note-icon" aria-hidden="true">⌂</span><p>From finding a rental<br><strong>to making it feel like home.</strong></p></div>
+      </div>
+      <figure class="hero-visual">
+        <div class="visual-label"><span>THE EVERYDAY, SIMPLIFIED</span><span>01 / DISCOVER</span></div>
+        <img class="hero-capture" src="resource/app/discover.png" width="1080" height="1920" fetchpriority="high" alt="SPoT Android discovery screen showing illustrative home and shop listings with rent and availability.">
+        <figcaption>Real app screens. Fictional demo listings.</figcaption>
+      </figure>
+    </section>
 
-    <!-- Starfield Background -->
-    <canvas id="starfield"></canvas>
+    <div class="rental-types" aria-label="Rental categories"><span>A space for your next chapter</span><p>Homes <b aria-hidden="true">/</b> Rooms <b aria-hidden="true">/</b> PGs <b aria-hidden="true">/</b> Shops</p></div>
 
-    <header class="site-header">
-        <a href="index.html" class="logo" aria-label="Return to the SPoT home page">
-            <span class="logo__text" aria-hidden="true">SPoT</span>
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" class="btn-action" id="playstore-btn" target="_blank" rel="noreferrer"><i class="fab fa-google-play"></i> Download from Playstore</a>
-    </header>
+    <section class="section-wrap journey" id="renters" aria-labelledby="renters-title">
+      <div class="section-heading"><p class="eyebrow">01 / FOR RENTERS</p><h2 id="renters-title">Less searching.<br><em>More settling in.</em></h2><p>Keep your search, conversations and stay in one familiar place.</p></div>
+      <div class="feature-grid">
+        <article class="feature"><span class="feature-number">01</span><h3>Find a place that fits</h3><p>Explore rentals by city. Compare details, amenities and available units before taking the next step.</p></article>
+        <article class="feature"><span class="feature-number">02</span><h3>Save it. Talk it through.</h3><p>Keep a shortlist in Saved, apply for a rental and continue conversations in the app’s Inbox.</p></article>
+        <article class="feature"><span class="feature-number">03</span><h3>Stay on top of your stay</h3><p>Use My Stay to view your tenancy details, report a rent payment and raise a complaint when something needs attention.</p></article>
+      </div>
+    </section>
 
-    <div class="hero">
-        <h1>Reliable Rentals<br>for the <span class="gradient-text">Modern Era.</span></h1>
-        <p>Orchestrate your properties and fleet with SPoT. The unified platform that guarantees consistency across your rental business.</p>
-        
-        <div class="cta-buttons">
-            <a href="#" class="btn-primary">Property Rental</a>
-            <a href="#" class="btn-secondary"><i class="fas fa-car"></i> Car Rental</a>
-        </div>
+    <section class="owner-section" id="owners" aria-labelledby="owners-title">
+      <div class="section-wrap owner-grid"><div><p class="eyebrow">02 / FOR PROPERTY OWNERS</p><h2 id="owners-title">Your properties.<br><em>A clearer picture.</em></h2><p class="lead">From an available unit to a tenant’s payment record, bring the moving parts of your rental day together.</p><a class="text-link" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Start with SPoT on Android <span aria-hidden="true">↗</span><span class="sr-only">(opens a new tab)</span></a></div>
+        <div class="owner-features"><article><span aria-hidden="true">⌂</span><div><h3>Properties &amp; units</h3><p>Create listings and manage units, availability and rental details.</p></div></article><article><span aria-hidden="true">↗</span><div><h3>Applications &amp; tenants</h3><p>Review applicants and keep active and past tenant records organised.</p></div></article><article><span aria-hidden="true">₹</span><div><h3>Rent &amp; electricity records</h3><p>Record payments, review tenant submissions, track electricity charges and share rent receipts.</p></div></article></div>
+      </div>
+      <p class="section-wrap owner-footnote">Payment records help you track rent. Recording or reporting a payment is separate from transferring money.</p>
+    </section>
 
-        <!-- 3 Phone Mockups Showcase -->
-        <div class="showcase-container">
-            
-            <!-- Left Phone: Landlord Dashboard -->
-            <div class="phone-mockup phone-left">
-                <div class="screen">
-                    <div class="screen-header">
-                        <span>Owner Hub</span>
-                        <span style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:#9e9e9e;">
-                            <i class="fas fa-circle" style="font-size:6px;color:#4CAF50;"></i>
-                            LIVE
-                        </span>
-                    </div>
+    <section class="section-wrap app-section" id="inside" aria-labelledby="inside-title">
+      <div class="section-heading heading-row"><div><p class="eyebrow">03 / INSIDE SPoT</p><h2 id="inside-title">Familiar details.<br><em>Thoughtfully together.</em></h2></div><p>Take a closer look at the Android app.<br>All screens use fictional demo data.</p></div>
+      <div class="screen-gallery" role="region" aria-label="App screenshots. Scroll horizontally to see all four." tabindex="0">
+        <figure><a href="resource/app/details.png" aria-label="View full size property details screenshot"><img src="resource/app/details.png" width="1080" height="1920" loading="lazy" decoding="async" alt="Property details demo with amenities, images and rental information."></a><figcaption><span>01</span> Know the details</figcaption></figure>
+        <figure><a href="resource/app/dashboard.png" aria-label="View full size landlord dashboard screenshot"><img src="resource/app/dashboard.png" width="1080" height="1920" loading="lazy" decoding="async" alt="Landlord dashboard demo with properties and unit availability."></a><figcaption><span>02</span> See your properties</figcaption></figure>
+        <figure><a href="resource/app/tenants.png" aria-label="View full size tenant management screenshot"><img src="resource/app/tenants.png" width="1080" height="1920" loading="lazy" decoding="async" alt="Tenant directory demo showing fictional tenant records."></a><figcaption><span>03</span> Keep people in view</figcaption></figure>
+        <figure><a href="resource/app/rent.png" aria-label="View full size rent tracking screenshot"><img src="resource/app/rent.png" width="1080" height="1920" loading="lazy" decoding="async" alt="Rent history demo distinguishing pending submissions from approved payment records."></a><figcaption><span>04</span> Follow the rent record</figcaption></figure>
+      </div>
+      <p class="fine-print">Swipe or scroll to explore. Select a screen to view it full size.</p>
+    </section>
 
-                    <div class="screen-title">Portfolio snapshot</div>
+    <section class="section-wrap safety-section" aria-labelledby="safety-title"><div><p class="eyebrow">A LITTLE MORE PEACE OF MIND</p><h2 id="safety-title">Keep the next step<br><em>in your hands.</em></h2></div><div class="safety-copy"><p>Review listing details and discuss rental terms before making a commitment. You can report a listing or block unwanted communication in the app.</p><p>This website introduces SPoT. You don’t need to sign in or share personal details to explore it.</p><a class="text-link" href="privacy.html">Read our privacy policy <span aria-hidden="true">↗</span></a></div></section>
 
-                    <div class="card-ui" style="border-radius:16px;border:1px solid rgba(76,175,80,0.4);background:linear-gradient(135deg,#1b1f1c,#101311);">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                            <div>
-                                <div style="font-size:0.75rem;color:#a5d6a7;">Occupancy</div>
-                                <div style="font-size:1.8rem;font-weight:800;color:#fff;">92%</div>
-                            </div>
-                            <div style="text-align:right;">
-                                <div style="font-size:0.7rem;color:#81c784;">+4% vs last month</div>
-                                <div style="font-size:0.7rem;color:#9e9e9e;">8 / 10 units filled</div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px;height:5px;border-radius:999px;background:#263238;overflow:hidden;">
-                            <div style="width:92%;height:100%;border-radius:999px;background:linear-gradient(90deg,#4CAF50,#FF9800);"></div>
-                        </div>
-                    </div>
+    <section class="section-wrap faq-section" aria-labelledby="faq-title"><p class="eyebrow">GOOD TO KNOW</p><h2 id="faq-title">A few everyday questions.</h2><div class="faq-list">
+      <details><summary>What can I find on SPoT?</summary><p>SPoT supports homes, rooms, PGs and shops. Listings and availability depend on what owners publish in your selected city. Explore current options in the Android app.</p></details>
+      <details><summary>Can I manage my property as an owner?</summary><p>Yes. The app includes property and unit management, applications, tenant records, rent and electricity tracking, and rent receipt sharing.</p></details>
+      <details><summary>Does reporting rent transfer money?</summary><p>Reporting or recording rent creates a payment record for review and tracking. It does not itself transfer money. Confirm payment arrangements directly with the other party.</p></details>
+      <details><summary>How do I get support or request account deletion?</summary><p>Email <a href="mailto:apnagharapnasheher@gmail.com">apnagharapnasheher@gmail.com</a> for support, or visit <a href="delete-account.html">Delete my account</a> to prepare a deletion request. Never share a password or OTP.</p></details>
+    </div></section>
 
-                    <div style="margin-top:16px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
-                        <div class="screen-title" style="margin:0;">Live listings</div>
-                        <div class="badge-pill">
-                            <span class="badge-dot"></span>
-                            <span>SYNCED</span>
-                        </div>
-                    </div>
-
-                    <div class="card-ui" style="border-radius:14px;">
-                        <div style="display:flex;gap:10px;">
-                            <div style="width:54px;height:54px;border-radius:12px;background:#333;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#777;">
-                                IMG
-                            </div>
-                            <div style="flex:1;">
-                                <div style="display:flex;justify-content:space-between;align-items:center;">
-                                    <div style="color:#fff;font-size:0.85rem;font-weight:600;">2 BHK • HSR Layout</div>
-                                    <span style="font-size:0.8rem;color:#a5d6a7;">₹18,000</span>
-                                </div>
-                                <div style="font-size:0.7rem;color:#9e9e9e;margin-top:2px;">
-                                    900 sq.ft · 2 bath · 3rd floor
-                                </div>
-                                <div class="chip-row">
-                                    <span class="chip">Family only</span>
-                                    <span class="chip">Fully furnished</span>
-                                    <span class="chip">Covered parking</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stat-row">
-                            <span>New applications</span>
-                            <strong>3</strong>
-                        </div>
-                        <div class="stat-row">
-                            <span>Pending approvals</span>
-                            <strong>1</strong>
-                        </div>
-                    </div>
-
-                    <div class="card-ui" style="margin-top:12px;border-radius:14px;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                            <h4 style="margin:0;color:#fff;font-size:0.85rem;">Pipeline</h4>
-                            <span style="font-size:0.7rem;color:#9e9e9e;">Today</span>
-                        </div>
-                        <div class="stat-row">
-                            <span>New tenant leads</span>
-                            <strong>7</strong>
-                        </div>
-                        <div class="stat-row">
-                            <span>Scheduled visits</span>
-                            <strong>4</strong>
-                        </div>
-                        <div class="stat-row">
-                            <span>Move-ins this week</span>
-                            <strong>2</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Center Phone: Car Rentals (SPoT Wheels) -->
-            <div class="phone-mockup phone-center">
-                <div class="screen" style="background:#050505;">
-                    <div class="screen-header">
-                        <span>SPoT Discover</span>
-                        <span style="font-size:0.75rem;color:#9e9e9e;">Bengaluru ▾</span>
-                    </div>
-
-                    <div style="display:flex;gap:8px;margin-bottom:12px;">
-                        <div style="flex:1;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:#111;border:1px solid #333;">
-                            <i class="fas fa-search" style="font-size:0.8rem;color:#757575;"></i>
-                            <span style="font-size:0.8rem;color:#777;">Search area, landmark, car</span>
-                        </div>
-                        <button style="width:34px;height:34px;border-radius:50%;border:none;background:#1e1e1e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">
-                            <i class="fas fa-sliders-h"></i>
-                        </button>
-                    </div>
-
-                    <div class="chip-row" style="margin-bottom:14px;">
-                        <span class="chip" style="border-color:#4CAF50;color:#a5d6a7;">Homes</span>
-                        <span class="chip">PG / Hostels</span>
-                        <span class="chip">Shops</span>
-                        <span class="chip" style="border-color:#E65100;color:#ffcc80;">
-                            <i class="fas fa-car" style="font-size:0.7rem;margin-right:4px;"></i>SAGA Wheels
-                        </span>
-                    </div>
-
-                    <!-- Hero card for SPoT Wheels -->
-                    <div class="card-ui" style="border-radius:18px;padding:0;overflow:hidden;border:none;background:#111;margin-bottom:14px;">
-                        <div style="position:relative;height:150px;background:radial-gradient(circle at 20% 0,#E65100 0,#111 55%);display:flex;align-items:flex-end;padding:12px;">
-                            <i class="fas fa-car-side" style="font-size:3rem;color:#ffe0b2;"></i>
-                            <div style="margin-left:10px;">
-                                <div style="font-size:0.75rem;color:#ffcc80;text-transform:uppercase;letter-spacing:0.08em;">SPoT Wheels</div>
-                                <div style="font-size:1.1rem;color:#fff;font-weight:700;">Swift • Self-drive</div>
-                                <div style="font-size:0.8rem;color:#ffe0b2;">Petrol · Manual · 4 seater</div>
-                            </div>
-                            <div style="position:absolute;top:10px;right:10px;" class="badge-pill badge-pill--warning">
-                                <span class="badge-dot badge-dot--warning"></span>
-                                <span>WEEKEND RUSH</span>
-                            </div>
-                        </div>
-                        <div style="padding:10px 14px 12px 14px;display:flex;justify-content:space-between;align-items:center;">
-                            <div>
-                                <div style="font-size:0.75rem;color:#9e9e9e;">Starting</div>
-                                <div style="font-size:1rem;color:#fff;font-weight:700;">₹1,299 / day</div>
-                            </div>
-                            <button style="border:none;border-radius:999px;padding:8px 16px;background:#E65100;color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;">
-                                Book in 2 taps
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Mixed inventory list -->
-                    <div class="screen-title" style="margin-bottom:8px;">Recommended for you</div>
-
-                    <div class="card-ui" style="border-radius:14px;margin-bottom:10px;">
-                        <div style="display:flex;gap:10px;">
-                            <div style="width:46px;height:46px;border-radius:12px;background:#263238;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#90a4ae;">
-                                2BHK
-                            </div>
-                            <div style="flex:1;">
-                                <div style="display:flex;justify-content:space-between;align-items:center;">
-                                    <div style="color:#fff;font-size:0.85rem;font-weight:600;">Koramangala 5th Block</div>
-                                    <span style="font-size:0.8rem;color:#a5d6a7;">₹24,000</span>
-                                </div>
-                                <div style="font-size:0.7rem;color:#9e9e9e;margin-top:2px;">
-                                    Family preferred · 1 covered parking
-                                </div>
-                                <div class="chip-row">
-                                    <span class="chip">Near offices</span>
-                                    <span class="chip">Move-in ready</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-ui" style="border-radius:14px;">
-                        <div style="display:flex;gap:10px;">
-                            <div style="width:46px;height:46px;border-radius:12px;background:#311b92;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#e1bee7;">
-                                PG
-                            </div>
-                            <div style="flex:1;">
-                                <div style="display:flex;justify-content:space-between;align-items:center;">
-                                    <div style="color:#fff;font-size:0.85rem;font-weight:600;">Gents PG • HSR</div>
-                                    <span style="font-size:0.8rem;color:#a5d6a7;">₹9,500</span>
-                                </div>
-                                <div style="font-size:0.7rem;color:#9e9e9e;margin-top:2px;">
-                                    WiFi · Food · 2 sharing
-                                </div>
-                                <div class="chip-row">
-                                    <span class="chip">Bachelors</span>
-                                    <span class="chip">Near metro</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Phone: Tenant View -->
-            <div class="phone-mockup phone-right">
-                <div class="screen">
-                    <div class="screen-header">
-                        <span>My Stay</span>
-                        <span style="font-size:0.75rem;color:#9e9e9e;">Unit 304 ▾</span>
-                    </div>
-
-                    <div class="card-ui" style="border-radius:16px;margin-bottom:14px;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                            <div style="font-size:0.8rem;color:#9e9e9e;">December rent</div>
-                            <div class="badge-pill badge-pill--warning">
-                                <span class="badge-dot badge-dot--warning"></span>
-                                <span>DUE IN 3 DAYS</span>
-                            </div>
-                        </div>
-                        <div style="font-size:1.7rem;color:#fff;font-weight:800;margin-bottom:4px;">₹12,500</div>
-                        <div style="font-size:0.75rem;color:#9e9e9e;margin-bottom:10px;">
-                            Includes maintenance · Excludes electricity
-                        </div>
-                        <div style="margin-bottom:10px;height:5px;border-radius:999px;background:#263238;overflow:hidden;">
-                            <div style="width:60%;height:100%;border-radius:999px;background:linear-gradient(90deg,#FF9800,#4CAF50);"></div>
-                        </div>
-                        <button style="width:100%;border:none;border-radius:999px;padding:9px 0;background:#fff;color:#000;font-size:0.85rem;font-weight:700;cursor:pointer;">
-                            Pay securely with UPI
-                        </button>
-                    </div>
-
-                    <div class="card-ui" style="border-radius:14px;margin-bottom:14px;">
-                        <h4 style="margin:0 0 6px 0;color:#fff;font-size:0.85rem;">Utilities</h4>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#9e9e9e;margin-bottom:6px;">
-                            <span>Electricity · Last reading</span>
-                            <span>2 days ago</span>
-                        </div>
-                        <div style="margin-bottom:8px;height:4px;border-radius:999px;background:#263238;overflow:hidden;">
-                            <div style="width:55%;height:100%;border-radius:999px;background:#4CAF50;"></div>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#9e9e9e;">
-                            <span>Water</span>
-                            <span>Included</span>
-                        </div>
-                    </div>
-
-                    <div class="screen-title" style="margin-bottom:8px;">Quick actions</div>
-
-                    <div style="display:flex;gap:8px;margin-bottom:8px;">
-                        <button style="flex:1;border-radius:12px;border:1px solid #333;background:#121212;color:#fff;padding:10px 8px;font-size:0.75rem;display:flex;flex-direction:column;align-items:flex-start;gap:6px;cursor:pointer;">
-                            <span style="display:flex;align-items:center;gap:6px;">
-                                <i class="fas fa-file-invoice"></i>
-                                <span>Rent receipts</span>
-                            </span>
-                            <span style="font-size:0.7rem;color:#9e9e9e;">Download PDF</span>
-                        </button>
-                        <button style="flex:1;border-radius:12px;border:1px solid #333;background:#121212;color:#fff;padding:10px 8px;font-size:0.75rem;display:flex;flex-direction:column;align-items:flex-start;gap:6px;cursor:pointer;">
-                            <span style="display:flex;align-items:center;gap:6px;">
-                                <i class="fas fa-headset"></i>
-                                <span>Support ticket</span>
-                            </span>
-                            <span style="font-size:0.7rem;color:#9e9e9e;">Report an issue</span>
-                        </button>
-                    </div>
-
-                    <div style="display:flex;gap:8px;">
-                        <button style="flex:1;border-radius:12px;border:1px solid #333;background:#121212;color:#fff;padding:10px 8px;font-size:0.75rem;display:flex;flex-direction:column;align-items:flex-start;gap:6px;cursor:pointer;">
-                            <span style="display:flex;align-items:center;gap:6px;">
-                                <i class="fas fa-comments"></i>
-                                <span>Chat with owner</span>
-                            </span>
-                            <span style="font-size:0.7rem;color:#9e9e9e;">Phone shielded</span>
-                        </button>
-                        <button style="width:42px;border-radius:12px;border:1px solid #333;background:#121212;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                            <i class="fas fa-ellipsis-vertical"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <section class="download-section" aria-labelledby="download-title"><p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h2 id="download-title">Make room<br><em>for what’s next.</em></h2><a class="button button-light" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Download SPoT from Google Play <span aria-hidden="true">↗</span><span class="sr-only">(opens a new tab)</span></a><p>Homes. Rooms. PGs. Shops. One SPoT.</p></section>
+  </main>
+  <footer class="footer">
+    <div class="footer-top"><a class="footer-wordmark" href="index.html">SPoT<span>A place for every next chapter.</span></a>
+      <nav aria-label="Footer navigation"><a href="career.html">Careers</a><a href="privacy.html">Privacy policy</a><a href="delete-account.html">Delete my account</a><a href="mailto:apnagharapnasheher@gmail.com">Contact support</a></nav>
     </div>
-
-    <div class="features">
-        <div style="margin-bottom: 50px;">
-            <h2 style="font-size: 2rem;">Built for Scale</h2>
-            <p style="color: var(--text-muted);">From a single room to a fleet of 50 cars.</p>
-        </div>
-
-        <div class="grid">
-            <div class="card">
-                <h3>Visibility <span class="tag-pill">Core</span></h3>
-                <p>Track every tenant application, rent payment, and electricity reading in realtime.</p>
-            </div>
-            <div class="card">
-                <h3>SPoT Wheels <span class="tag-pill" style="color: #E65100; border-color: #E65100;">New</span></h3>
-                <p>Self-drive car rental system built-in. Manage daily limits, long-distance trips, and pricing tiers.</p>
-            </div>
-            <div class="card">
-                <h3>Reliability <span class="tag-pill">99.9%</span></h3>
-                <p>Offline-first architecture ensures you can view data even without an internet connection.</p>
-            </div>
-            <div class="card">
-                <h3>Security</h3>
-                <p>Phone Number Guard technology keeps tenant and owner contact details private and secure.</p>
-            </div>
-            <div class="card">
-                <h3>Digital PDF</h3>
-                <p>Automated rent receipt generation. Share professionally formatted PDFs directly via WhatsApp.</p>
-            </div>
-            <div class="card">
-                <h3>Managed Platform</h3>
-                <p>Expert support, reliable updates, and a secure roadmap so you can focus on growing your rentals.</p>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <p>&copy; 2025 SPoT by Apna Sheher. Made with <span aria-label="love">❤️</span> in India.</p>
-        <div class="footer__nav">
-            <a href="career.html">Careers</a>
-            <span style="margin: 0 8px; color: var(--footer-text-color);">|</span>
-            <a href="delete-account.html">Delete my account</a>
-            <span style="margin: 0 8px; color: var(--footer-text-color);">|</span>
-            <a href="privacy.html">Privacy Policy</a>
-        </div>
-        <div class="footer__social">
-            <a href="https://www.facebook.com/profile.php?id=61585693345272" target="_blank" rel="noreferrer" aria-label="Visit SPoT on Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://www.instagram.com/spoteasyrentalsolution/" target="_blank" rel="noreferrer" aria-label="Visit SPoT on Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Visit SPoT on X (Twitter)">
-                <i class="fab fa-x-twitter"></i>
-            </a>
-        </div>
-    </footer>
-
-    <script>
-        // Starfield Animation Script
-        const canvas = document.getElementById('starfield');
-        const ctx = canvas.getContext('2d');
-
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-        
-        canvas.width = width;
-        canvas.height = height;
-
-        const stars = [];
-        const numStars = 200;
-
-        for (let i = 0; i < numStars; i++) {
-            stars.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                size: Math.random() * 2,
-                speed: Math.random() * 0.5 + 0.1
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'white';
-
-            stars.forEach(star => {
-                ctx.globalAlpha = Math.random() * 0.5 + 0.3;
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-
-                star.y -= star.speed;
-                if (star.y < 0) star.y = height;
-            });
-
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        });
-
-        animate();
-    </script>
+    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p></div>
+  </footer>
 </body>
 </html>

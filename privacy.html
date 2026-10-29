@@ -1,249 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPoT | Privacy Policy</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="resource/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="resource/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="resource/apple-touch-icon.png">
-  <meta name="description" content="SPoT privacy policy - summary, data collected, use, cookies, third-party services, and how to contact us. Read or download the full PDF.">
-  <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#050505">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#eeeae4">
+  <title>Privacy Policy | SPoT</title>
+  <meta name="description" content="Read the SPoT privacy policy and find privacy and account support.">
   <link rel="canonical" href="https://spot.apnasheher.com/privacy.html">
-  <meta property="og:title" content="SPoT | Privacy Policy">
-  <meta property="og:description" content="Summary of our privacy practices and the official privacy policy PDF.">
   <meta property="og:type" content="website">
+  <meta property="og:title" content="Privacy Policy | SPoT">
+  <meta property="og:description" content="Read the SPoT privacy policy and find privacy and account support.">
   <meta property="og:url" content="https://spot.apnasheher.com/privacy.html">
-  <meta name="twitter:card" content="summary">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link href="styles/shared.css" rel="stylesheet">
-  <style>
-    .skip-link {
-      position: absolute;
-      left: -999px;
-      top: auto;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-    }
-    .skip-link:focus {
-      left: 8px;
-      top: 8px;
-      width: auto;
-      height: auto;
-      padding: 8px 12px;
-      background: #fff;
-      color: #000;
-      z-index: 9999;
-      border-radius: 4px;
-    }
-
-    .sr-only {
-      position: absolute !important;
-      height: 1px; width: 1px; overflow: hidden;
-      clip: rect(1px, 1px, 1px, 1px); white-space: nowrap;
-      border: 0; padding: 0; margin: -1px;
-    }
-
-    .content-summary { gap: 18px; }
-    .content-summary p, .content-summary li { color: var(--text-muted); }
-
-    /* Readable policy styles (text unchanged) */
-    .policy {
-      padding: 18px 6px;
-      line-height: 1.65;
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-    .policy h2 {
-      color: var(--text-white);
-      font-size: 1.6rem;
-      margin: 0 0 12px 0;
-      letter-spacing: -0.4px;
-    }
-    .policy h3 {
-      color: var(--text-white);
-      font-size: 1.05rem;
-      margin: 18px 0 8px 0;
-      font-weight: 700;
-    }
-    .policy p { margin: 8px 0; }
-    .policy ul { margin: 6px 0 12px 1.2rem; }
-    .policy li { margin: 6px 0; }
-    .policy strong { color: var(--text-white); }
-    .policy time { color: var(--text-white); font-weight: 600; }
-    .policy a { color: #9fe3a9; text-decoration: underline; }
-
-    :root {
-      --bg-black: #050505;
-      --text-white: #ffffff;
-      --text-muted: #A1A1AA;
-      --accent-glow: #2E7D32;
-      --accent-secondary: #E65100;
-      --header-bg: rgba(5,5,5,0.82);
-      --panel-border: rgba(255,255,255,0.08);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    #starfield {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.6;
-    }
-
-    .page {
-      padding: 110px 5% 80px 5%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      align-items: start;
-    }
-
-    h1 {
-      font-size: 3.4rem;
-      line-height: 1.05;
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #fff 30%, #c7c7c7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--accent-glow);
-      font-weight: 700;
-      font-size: 0.8rem;
-      margin-bottom: 10px;
-    }
-
-    .lead {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      margin-bottom: 16px;
-    }
-
-    .meta-line {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 8px;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      padding: 13px 24px;
-      border-radius: 4px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: var(--text-white);
-      color: black;
-      box-shadow: 0 12px 30px rgba(255,255,255,0.18);
-    }
-
-    .btn-primary:hover { transform: translateY(-2px); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-white);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .btn-secondary:hover { border-color: var(--text-white); }
-
-    .panel {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-
-    .panel__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .pill {
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 999px;
-      padding: 6px 12px;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 2.6rem; }
-      .page { padding-top: 90px; }
-      .panel { padding: 16px; }
-    }
-  </style>
+  <meta property="og:image" content="https://spot.apnasheher.com/resource/app/brand.png">
+  <link rel="icon" type="image/png" href="resource/app/brand.png">
+  <link rel="apple-touch-icon" href="resource/app/brand.png">
+  <link rel="stylesheet" href="styles/shared.css">
+  <script src="scripts/site.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <canvas id="starfield"></canvas>
-
   <header class="site-header">
-    <a href="index.html" class="logo" aria-label="Return to the SPoT home page">
-      <span class="logo__text" aria-hidden="true">SPoT</span>
-    </a>
-    <a href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" class="btn-action" target="_blank" rel="noreferrer"><i class="fab fa-google-play"></i> Download from Playstore</a>
+    <a class="logo" href="index.html" aria-label="SPoT home"><img src="resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Easy rental solution</small></span></a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <a href="index.html#renters">For renters</a><a href="index.html#owners">For owners</a><a href="index.html#inside">The app</a>
+    </nav>
+    <a class="button button-small" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Get SPoT <span aria-hidden="true">↗</span><span class="sr-only">on Google Play (opens a new tab)</span></a>
   </header>
-
-  <main id="main-content" class="page">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Policies</p>
-        <h1>Privacy Policy</h1>
-        <p class="lead">This page lists the official privacy policy for SPoT Easy Rental Solution.</p>
-        <p class="meta-line">By using SPoT, you agree to our privacy practices as outlined in this policy.</p> 
-      </div>
-      <div class="panel">
-        <div class="mini-title" style="color: var(--text-white); font-weight: 700; margin-bottom: 8px;">Release</div>
-        <p style="color: var(--text-muted); margin-bottom: 6px;">Last updated: <time datetime="2026-01">January 2026</time></p>
-        <p style="color: var(--text-muted); font-size:0.95rem; margin-top:8px;">Next Release is expected in every 2 weeks.</p>
-      </div>
-    </section>
-
-    <section id="privacy-policy" class="panel policy" aria-labelledby="policy-heading">
+  <main id="main-content">
+<section class="section-wrap page-intro"><p class="eyebrow">YOUR INFORMATION</p><h1>Privacy policy.</h1><p class="lead">Read the SPoT privacy policy below. For privacy questions, contact <a href="mailto:apnagharapnasheher@gmail.com">apnagharapnasheher@gmail.com</a>.</p><p class="policy-meta">Policy last updated: January 2026.</p></section>
+<section id="privacy-policy" class="section-wrap policy" aria-labelledby="policy-heading">
       <h2 id="policy-heading">Privacy Policy</h2>
       <p><strong>Last updated:</strong> January 2026</p>
       <p><strong>Developer:</strong> apnasheher</p>
@@ -348,150 +135,12 @@
       <p>Phone: +91 9711801657</p>
       <p>Address: Range Office, Rajgarh Chouraha, Datia, MP 475661, India</p>
     </section>
-
   </main>
-
   <footer class="footer">
-    <p>&copy; <span id="year"></span> SPoT by Apna Sheher.</p>
-    <div class="footer__nav">
-      <a href="career.html">Careers</a>
-      <span style="margin: 0 8px; color: var(--footer-text-color);">|</span>
-      <a href="privacy.html" aria-current="page">Privacy Policy</a>
+    <div class="footer-top"><a class="footer-wordmark" href="index.html">SPoT<span>A place for every next chapter.</span></a>
+      <nav aria-label="Footer navigation"><a href="career.html">Careers</a><a href="privacy.html" aria-current="page">Privacy policy</a><a href="delete-account.html">Delete my account</a><a href="mailto:apnagharapnasheher@gmail.com">Contact support</a></nav>
     </div>
-    <div class="footer__social">
-      <a href="https://www.facebook.com/profile.php?id=61585693345272" target="_blank" rel="noreferrer" aria-label="Visit SPoT on Facebook">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://www.instagram.com/spoteasyrentalsolution/" target="_blank" rel="noreferrer" aria-label="Visit SPoT on Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Visit SPoT on X (Twitter)">
-        <i class="fab fa-x-twitter"></i>
-      </a>
-    </div>
+    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p></div>
   </footer>
-
-  <script>
-    const yearEl = document.getElementById('year');
-    yearEl.textContent = new Date().getFullYear();
-
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    const stars = [];
-    const numStars = 200;
-
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 2,
-        speed: Math.random() * 0.5 + 0.1
-      });
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'white';
-      stars.forEach(star => {
-        ctx.globalAlpha = Math.random() * 0.5 + 0.3;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-        star.y -= star.speed;
-        if (star.y < 0) star.y = height;
-      });
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    });
-
-    animate();
-
-    /* PDF viewer removed.
-    const pdfUrl = 'resource/privacy-policy.pdf';
-    const objectEl = document.getElementById('policy-object');
-    const statusEl = document.getElementById('pdf-status');
-    const fallbackHint = document.getElementById('fallback-hint');
-    const downloadBtn = document.getElementById('download-pdf-btn');
-    const downloadFallback = document.getElementById('download-fallback');
-    const ctaBtn = document.getElementById('open-pdf-btn');
-    const expandBtn = document.getElementById('expand-pdf-btn');
-    const viewerFrame = document.querySelector('.viewer-frame');
-
-    [downloadBtn, downloadFallback].forEach(link => {
-      if (link) {
-        link.href = pdfUrl;
-        link.download = 'SPoT-Privacy-Policy.pdf';
-      }
-    });
-
-    ctaBtn?.addEventListener('click', (event) => {
-      if (objectEl.getAttribute('data')) return;
-      event.preventDefault();
-      loadPdf();
-      document.getElementById('policy-viewer').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    function showStatus(message, isError = false) {
-      if (!message) {
-        statusEl.classList.add('hidden');
-        return;
-      }
-      statusEl.textContent = message;
-      statusEl.style.color = isError ? '#ffb199' : 'var(--text-muted)';
-      statusEl.classList.remove('hidden');
-    }
-
-    // Expand / fullscreen toggle for the embedded PDF
-    function toggleFullscreen(open) {
-      const isOpen = typeof open === 'boolean' ? open : !viewerFrame.classList.contains('fullscreen');
-      if (isOpen) {
-        viewerFrame.classList.add('fullscreen');
-        expandBtn.setAttribute('aria-expanded', 'true');
-        expandBtn.innerHTML = '<i class="fas fa-compress"></i> Close';
-        document.body.style.overflow = 'hidden';
-      } else {
-        viewerFrame.classList.remove('fullscreen');
-        expandBtn.setAttribute('aria-expanded', 'false');
-        expandBtn.innerHTML = '<i class="fas fa-expand"></i> Expand';
-        document.body.style.overflow = '';
-      }
-    }
-
-    expandBtn?.addEventListener('click', () => toggleFullscreen());
-
-    // Close fullscreen on ESC
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && viewerFrame.classList.contains('fullscreen')) {
-        toggleFullscreen(false);
-      }
-    });
-
-    async function loadPdf() {
-      objectEl.setAttribute('data', pdfUrl + '#toolbar=0&navpanes=0&view=FitH');
-      showStatus('Loading privacy policy...');
-      try {
-        const response = await fetch(pdfUrl, { method: 'HEAD' });
-        if (!response.ok) throw new Error('Missing PDF');
-        showStatus('');
-      } catch (error) {
-        objectEl.style.display = 'none';
-        fallbackHint.hidden = false;
-        showStatus('We could not load the PDF here. Use the download button instead.', true);
-      }
-    }
-
-    loadPdf();
-    */
-  </script>
 </body>
 </html>

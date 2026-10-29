@@ -1,0 +1,13 @@
+    <section class="section-wrap page-intro"><p class="eyebrow">ACCOUNT SUPPORT</p><h1>Your account.<br><em>Your choice.</em></h1><p class="lead">Prepare an account deletion request for the SPoT support team.</p></section>
+    <section class="section-wrap account-layout" aria-labelledby="delete-heading"><div class="content-panel"><h2 id="delete-heading">Request account deletion</h2><p>Send your request to <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>. Support will verify your account and confirm the next steps.</p><p class="notice">This page prepares an email on your device. You still need to send it. The website cannot confirm delivery or delete your account.</p>
+      <form id="deletion-form">
+        <fieldset id="deletion-fields" disabled><legend class="sr-only">Prepare your account deletion email</legend>
+        <label for="email">Your registered email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required aria-describedby="email-help"><p id="email-help" class="fine-print">Used only to prepare your email. This page does not upload or save it.</p>
+        <label for="notes">Additional notes <span class="label-optional">(optional)</span></label><textarea id="notes" name="notes" rows="3" maxlength="1000" aria-describedby="notes-help"></textarea><p id="notes-help" class="fine-print">Never include a password, OTP, Aadhaar number or banking details.</p>
+        <div class="actions"><button class="button" type="submit">Prepare email <span aria-hidden="true">↗</span></button><button class="button button-outline" type="button" id="copy-template">Copy email template</button></div>
+        </fieldset>
+      </form>
+      <p id="result" class="result" role="status" aria-live="polite"></p>
+      <div id="manual-template" hidden><label for="email-template">Email template — select and copy</label><textarea id="email-template" rows="10" readonly></textarea></div>
+      <noscript><p class="notice">Email {{SUPPORT_EMAIL}} with the subject “Account Deletion Request – SPoT” and your registered email address. The buttons above need JavaScript; you can email support directly.</p></noscript>
+    </div><aside class="account-help"><h3>What happens next?</h3><ol><li>Send the email from your email app.</li><li>Support verifies that you own the account.</li><li>Support confirms processing and any applicable retention requirements.</li></ol><p>Account deletion is permanent once completed. See the <a href="privacy.html#privacy-policy">privacy policy</a> for data retention information.</p><a class="text-link" href="index.html">Back to SPoT <span aria-hidden="true">↗</span></a></aside></section>

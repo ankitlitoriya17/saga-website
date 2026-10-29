@@ -3,372 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SPoT Careers | Build the future of rentals</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="resource/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="resource/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="resource/apple-touch-icon.png">
-  <meta name="description" content="Join SPoT by ApnaSheher to build unified rentals. Explore open roles and apply via email with your resume." />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link href="styles/shared.css" rel="stylesheet">
-  <style>
-    :root {
-      --bg-black: #050505;
-      --text-white: #ffffff;
-      --text-muted: #A1A1AA;
-      --accent-glow: #2E7D32;
-      --accent-secondary: #E65100;
-      --border-color: #1e1e1e;
-      --header-bg: rgba(5,5,5,0.8);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    #starfield {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.6;
-    }
-
-    .hero {
-      padding: 100px 5% 60px 5%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      align-items: center;
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      line-height: 1.1;
-      font-weight: 800;
-      letter-spacing: -2px;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #fff 30%, #aaa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--accent-glow);
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      padding: 14px 28px;
-      border-radius: 4px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: var(--text-white);
-      color: black;
-      box-shadow: 0 12px 30px rgba(255,255,255,0.2);
-    }
-
-    .btn-primary:hover { transform: translateY(-2px); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-white);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .btn-secondary:hover { border-color: var(--text-white); }
-
-    .glass-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-
-    .mini-title {
-      font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: 0.05em;
-      color: var(--text-white);
-    }
-
-    .bullet-list {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .bullet-list li::before {
-      content: '•';
-      color: var(--accent-secondary);
-      margin-right: 8px;
-    }
-
-    .section {
-      padding: 80px 5%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-
-    .section p.description {
-      color: var(--text-muted);
-      max-width: 760px;
-      margin-bottom: 30px;
-    }
-
-    .role-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .role-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .role-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-glow);
-    }
-
-    .pill-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .pill {
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .role-card h3 { margin: 0; }
-
-    .role-card p { color: var(--text-muted); }
-
-    .pill.accent { color: #E65100; border-color: #E65100; }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 2.6rem; }
-    }
-  </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#eeeae4">
+  <title>Careers | SPoT</title>
+  <meta name="description" content="Connect with the SPoT team about opportunities to improve the rental experience.">
+  <link rel="canonical" href="https://spot.apnasheher.com/career.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Careers | SPoT">
+  <meta property="og:description" content="Connect with the SPoT team about opportunities to improve the rental experience.">
+  <meta property="og:url" content="https://spot.apnasheher.com/career.html">
+  <meta property="og:image" content="https://spot.apnasheher.com/resource/app/brand.png">
+  <link rel="icon" type="image/png" href="resource/app/brand.png">
+  <link rel="apple-touch-icon" href="resource/app/brand.png">
+  <link rel="stylesheet" href="styles/shared.css">
+  <script src="scripts/site.js" defer></script>
 </head>
 <body>
-  <canvas id="starfield"></canvas>
-
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
-     <a href="index.html" class="logo" aria-label="Return to the SPoT home page">
-      <span class="logo__text" aria-hidden="true">SPoT</span>
-    </a>
-    <a href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" class="btn-action" target="_blank" rel="noreferrer"><i class="fab fa-google-play"></i> Download from Playstore</a>
+    <a class="logo" href="index.html" aria-label="SPoT home"><img src="resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Easy rental solution</small></span></a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <a href="index.html#renters">For renters</a><a href="index.html#owners">For owners</a><a href="index.html#inside">The app</a>
+    </nav>
+    <a class="button button-small" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Get SPoT <span aria-hidden="true">↗</span><span class="sr-only">on Google Play (opens a new tab)</span></a>
   </header>
-
-  <main>
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Careers</p>
-        <h1>Build reliable rentals with SPoT.</h1>
-        <p>Join the crew creating a single operating system for property and vehicle rentals. We look for thoughtful builders who deliver clarity, care about users, and design for reliability.</p>
-        <div class="cta-buttons">
-          <a class="btn-primary" href="mailto:apnagharapnasheher@gmail.com?subject=Applying%20to%20SPoT&body=Hi%20SPoT%20team%2C%20here%27s%20my%20resume%20for%20your%20review.">Send your resume</a>
-          <a class="btn-secondary" href="#open-roles"><i class="fas fa-briefcase"></i> View open roles</a>
-        </div>
-        <p style="color: var(--text-muted); margin-top: 12px;">Email your resume to <a style="color: white; text-decoration: underline;" href="mailto:apnagharapnasheher@gmail.com">apnagharapnasheher@gmail.com</a> with the role you’re interested in.</p>
-      </div>
-      <div class="glass-card">
-        <div class="mini-title">How we work</div>
-        <ul class="bullet-list">
-          <li>Product-first collaboration with design, engineering, and ops.</li>
-          <li>Customer empathy and rapid validation in every launch city.</li>
-          <li>Ownership, autonomy, and crisp documentation.</li>
-        </ul>
-        <p style="color: var(--text-muted);">We combine technology, local insights, and trusted service to deliver fair, fast rentals.</p>
-      </div>
-    </section>
-
-    <section class="section" id="open-roles">
-      <h2>Open positions</h2>
-      <p class="description">If a role fits you, email your resume and a short note about your impact. We respond quickly to thoughtful applications.</p>
-      <div class="role-grid">
-        <article class="role-card">
-          <div class="pill-row">
-            <span class="pill">Product</span>
-            <span class="pill">Hybrid · India</span>
-          </div>
-          <h3>Product Manager</h3>
-          <p>Lead roadmap discovery across rentals, craft crisp requirements, and ship outcomes with engineering and operations partners.</p>
-          <ul class="bullet-list">
-            <li>Define metrics that balance growth, trust, and efficiency.</li>
-            <li>Orchestrate experiments with clear rollout plans per city.</li>
-            <li>Champion documentation and clarity across teams.</li>
-          </ul>
-          <a class="btn-secondary" href="mailto:apnagharapnasheher@gmail.com?subject=Application%20-%20Product%20Manager&body=Hi%20SPoT%2C%0A%0AI%27d%20like%20to%20apply%20for%20the%20Product%20Manager%20role.%20Please%20find%20my%20resume%20attached.%0A%0ABest%2C">Apply for this role</a>
-        </article>
-
-        <article class="role-card">
-          <div class="pill-row">
-            <span class="pill">Engineering</span>
-            <span class="pill">Remote-friendly</span>
-          </div>
-          <h3>Full-stack Engineer</h3>
-          <p>Design resilient services, craft smooth user experiences, and iterate quickly with strong observability and secure defaults.</p>
-          <ul class="bullet-list">
-            <li>Build modular systems with clear contracts.</li>
-            <li>Advocate for performance, accessibility, and security.</li>
-            <li>Pair with design to ship polished, maintainable UI flows.</li>
-          </ul>
-          <a class="btn-secondary" href="mailto:apnagharapnasheher@gmail.com?subject=Application%20-%20Full-stack%20Engineer&body=Hi%20SPoT%2C%0A%0AI%27d%20like%20to%20apply%20for%20the%20Full-stack%20Engineer%20role.%20Please%20find%20my%20resume%20attached.%0A%0ABest%2C">Apply for this role</a>
-        </article>
-
-        <article class="role-card">
-          <div class="pill-row">
-            <span class="pill">City Operations</span>
-            <span class="pill">Onsite · Key cities</span>
-          </div>
-          <h3>City Operations Lead</h3>
-          <p>Drive local launches, partner with owners and renters, and ensure every transaction meets our trust and service bar.</p>
-          <ul class="bullet-list">
-            <li>Build and train on-the-ground playbooks.</li>
-            <li>Close feedback loops with product to improve workflows.</li>
-            <li>Measure reliability, SLAs, and partner satisfaction.</li>
-          </ul>
-          <a class="btn-secondary" href="mailto:apnagharapnasheher@gmail.com?subject=Application%20-%20City%20Operations%20Lead&body=Hi%20SPoT%2C%0A%0AI%27d%20like%20to%20apply%20for%20the%20City%20Operations%20Lead%20role.%20Please%20find%20my%20resume%20attached.%0A%0ABest%2C">Apply for this role</a>
-        </article>
-
-        <article class="role-card">
-          <div class="pill-row">
-            <span class="pill">Customer Success</span>
-            <span class="pill">Hybrid</span>
-          </div>
-          <h3>Customer Success Specialist</h3>
-          <p>Guide owners and tenants through onboarding, resolve issues quickly, and turn every interaction into a confident experience.</p>
-          <ul class="bullet-list">
-            <li>Maintain proactive communication across channels.</li>
-            <li>Document playbooks and recurring solutions clearly.</li>
-            <li>Surface insights that improve trust and retention.</li>
-          </ul>
-          <a class="btn-secondary" href="mailto:apnagharapnasheher@gmail.com?subject=Application%20-%20Customer%20Success%20Specialist&body=Hi%20SPoT%2C%0A%0AI%27d%20like%20to%20apply%20for%20the%20Customer%20Success%20Specialist%20role.%20Please%20find%20my%20resume%20attached.%0A%0ABest%2C">Apply for this role</a>
-        </article>
-      </div>
-    </section>
+  <main id="main-content">
+    <section class="section-wrap page-intro"><p class="eyebrow">BUILD WITH CARE</p><h1>Better rental days.<br><em>Built together.</em></h1><p class="lead">Interested in making everyday renting easier? Introduce yourself to the SPoT team.</p></section>
+    <section class="section-wrap content-panel" aria-labelledby="connect-title"><h2 id="connect-title">Tell us where you could help.</h2><p>Share your background and area of interest, whether that’s Android development, design, engineering, or helping renters and property owners.</p><p>The team can confirm whether suitable opportunities are available. Include a portfolio or résumé if you’d like.</p><a class="button" href="mailto:apnagharapnasheher@gmail.com?subject=Working%20with%20SPoT">Email the SPoT team <span aria-hidden="true">↗</span></a><p class="fine-print">apnagharapnasheher@gmail.com<br>Please don’t include identity documents, passwords or sensitive account details.</p></section>
   </main>
-
   <footer class="footer">
-    <p>&copy; <span id="year"></span> SPoT by Apna Sheher. Made with <span aria-label="love">❤️</span> in India.</p>
-    <div class="footer__nav">
-      <a href="career.html">Careers</a>
-      <span style="margin: 0 8px; color: var(--footer-text-color);">|</span>
-      <a href="privacy.html">Privacy Policy</a>
+    <div class="footer-top"><a class="footer-wordmark" href="index.html">SPoT<span>A place for every next chapter.</span></a>
+      <nav aria-label="Footer navigation"><a href="career.html" aria-current="page">Careers</a><a href="privacy.html">Privacy policy</a><a href="delete-account.html">Delete my account</a><a href="mailto:apnagharapnasheher@gmail.com">Contact support</a></nav>
     </div>
-    <div class="footer__social">
-      <a href="https://www.facebook.com/profile.php?id=61585693345272" target="_blank" rel="noreferrer" aria-label="Visit SPoT on Facebook">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://www.instagram.com/spoteasyrentalsolution/" target="_blank" rel="noreferrer" aria-label="Visit SPoT on Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Visit SPoT on X (Twitter)">
-        <i class="fab fa-x-twitter"></i>
-      </a>
-    </div>
+    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p></div>
   </footer>
-
-  <script>
-    const yearEl = document.getElementById('year');
-    yearEl.textContent = new Date().getFullYear();
-
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    const stars = [];
-    const numStars = 200;
-
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 2,
-        speed: Math.random() * 0.5 + 0.1
-      });
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'white';
-      stars.forEach(star => {
-        ctx.globalAlpha = Math.random() * 0.5 + 0.3;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-        star.y -= star.speed;
-        if (star.y < 0) star.y = height;
-      });
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    });
-
-    animate();
-  </script>
 </body>
 </html>
