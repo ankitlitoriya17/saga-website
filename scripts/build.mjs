@@ -1,17 +1,28 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { site, pages, contentSecurityPolicy } from '../src/site.mjs';
+import { renderIcons, icon } from '../src/icons.mjs';
+import { experience, gallery, phone } from '../src/components.mjs';
+import { publicAssets } from '../src/public-assets.mjs';
 
 const root = new URL('../', import.meta.url);
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const check = process.argv.includes('--check');
+const digest = createHash('sha256');
+for (const asset of publicAssets) digest.update(await readFile(new URL(asset.file, root)));
+const version = digest.digest('hex').slice(0, 12);
 
 for (const page of pages) {
-  const content = (await readFile(new URL(`src/pages/${page.file}`, root), 'utf8')).replaceAll('\r\n', '\n')
+  const content = renderIcons((await readFile(new URL(`src/pages/${page.file}`, root), 'utf8')).replaceAll('\r\n', '\n')
     .replaceAll('{{PLAY_URL}}', escape(site.playUrl))
-    .replaceAll('{{SUPPORT_EMAIL}}', escape(site.supportEmail));
+    .replaceAll('{{SUPPORT_EMAIL}}', escape(site.supportEmail))
+    .replaceAll('{{EXPERIENCE}}', experience())
+    .replaceAll('{{GALLERY}}', gallery())
+    .replaceAll('{{HERO_PHONE}}', phone('discover', { priority: true })));
   const canonical = `${site.origin}/${page.file === 'index.html' ? '' : page.file}`;
   const link = (file, label) => `<a href="${file}"${page.file === file ? ' aria-current="page"' : ''}>${label}</a>`;
+  const navigation = site.navigation.map(item => `<a href="index.html#${item.id}" data-nav>${item.label}</a>`).join('');
   const output = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,18 +41,19 @@ for (const page of pages) {
   <meta property="og:image" content="${site.origin}/resource/app/brand.png">
   <link rel="icon" type="image/png" href="resource/app/brand.png">
   <link rel="apple-touch-icon" href="resource/app/brand.png">
-  <link rel="stylesheet" href="styles/shared.css">
-  <script src="scripts/site.js" defer></script>
+  <link rel="preload" href="resource/fonts/outfit-regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles/shared.css?v=${version}">
+  <script type="module" src="scripts/site.mjs?v=${version}"></script>
 ${page.file === 'delete-account.html' ? '  <script src="scripts/deletion.js" defer></script>\n' : ''}\
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <a class="logo" href="index.html" aria-label="SPoT home"><img src="resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Easy rental solution</small></span></a>
-    <nav class="primary-nav" aria-label="Main navigation">
-      <a href="index.html#renters">For renters</a><a href="index.html#owners">For owners</a><a href="index.html#inside">The app</a>
-    </nav>
-    <a class="button button-small" href="${escape(site.playUrl)}" target="_blank" rel="noopener noreferrer">Get SPoT <span aria-hidden="true">↗</span><span class="sr-only">on Google Play (opens a new tab)</span></a>
+    <nav class="primary-nav" aria-label="Main navigation">${navigation}</nav>
+    <div class="header-actions"><a class="button button-small" href="${escape(site.playUrl)}" target="_blank" rel="noopener noreferrer">Get the app ${icon('arrow')}<span class="sr-only">on Google Play (opens a new tab)</span></a>
+      <details class="mobile-navigation"><summary aria-label="Navigation menu">${icon('menu')}</summary><nav aria-label="Mobile navigation">${navigation}<a href="mailto:${site.supportEmail}">Contact support ${icon('arrow')}</a></nav></details>
+    </div>
   </header>
   <main id="main-content">
 ${content.trimEnd()}
@@ -50,7 +62,7 @@ ${content.trimEnd()}
     <div class="footer-top"><a class="footer-wordmark" href="index.html">SPoT<span>A place for every next chapter.</span></a>
       <nav aria-label="Footer navigation">${link('career.html', 'Careers')}${link('privacy.html', 'Privacy policy')}${link('delete-account.html', 'Delete my account')}<a href="mailto:${site.supportEmail}">Contact support</a></nav>
     </div>
-    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p></div>
+    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p><a href="#top">Back to top ${icon('arrow')}</a></div>
   </footer>
 </body>
 </html>

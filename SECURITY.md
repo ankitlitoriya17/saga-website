@@ -10,6 +10,9 @@
   template text goes into a textarea or clipboard, never HTML.
 - No personal data persistence, automatic email sending or false deletion receipt.
 - Shared generated layout and configuration keep security policy and links consistent.
+- Progressive enhancement keeps core content readable without JavaScript. Gallery
+  labels use text assignment; no HTML injection, tracking or backend access is added.
+- Stylesheet and module cache versions derive from one public-asset digest.
 
 ## Before publication
 
@@ -29,7 +32,8 @@
    controls are needed, configure the existing supported edge/host separately.
    Without a response `frame-ancestors` policy, anti-framing protection is unverified.
 4. **Check real browsers.** Review 320px mobile through wide desktop, 200% text zoom,
-   keyboard focus, screenshot scrolling, FAQ expansion, JavaScript disabled, CSP
+   keyboard focus, persona tabs, native dialog containment/Escape, screenshot scrolling,
+   FAQ expansion, reduced motion, JavaScript disabled, CSP
    console errors and actual mail client handling. Clipboard fallback has automated
    coverage; real mail delivery and support processing are not automated.
 5. **Keep web access scoped.** This site introduces the app. If live listings are

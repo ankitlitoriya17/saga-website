@@ -4,7 +4,13 @@ export const site = Object.freeze({
   origin: 'https://spot.apnasheher.com',
   playUrl: 'https://play.google.com/store/apps/details?id=com.apnaghar.saga',
   supportEmail: 'apnagharapnasheher@gmail.com',
-  themeColor: '#eeeae4',
+  themeColor: '#101312',
+  navigation: [
+    { id: 'experience', label: 'The experience' },
+    { id: 'renters', label: 'For renters' },
+    { id: 'owners', label: 'For owners' },
+    { id: 'inside', label: 'Inside the app' },
+  ],
 });
 
 // GitHub Pages supports the meta form below. frame-ancestors requires an HTTP

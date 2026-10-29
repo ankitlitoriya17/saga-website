@@ -4,16 +4,18 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { site, pages } from '../src/site.mjs';
+import { publicAssets } from '../src/public-assets.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const git = (...args) => execFileSync('git', ['-c', `safe.directory=${root}`, '-C', root, ...args], { maxBuffer: 10 * 1024 * 1024 });
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const commit = git('rev-parse', 'HEAD').toString().trim();
+const entryVersion = git('show', 'HEAD:index.html').toString().match(/scripts\/site\.mjs\?v=([a-f0-9]{12})/)?.[1];
+assert.ok(entryVersion, 'Committed homepage has no browser asset version');
 const checks = [
   ...pages.map(page => ({ path: page.file === 'index.html' ? '/' : `/${page.file}`, file: page.file, type: 'text/html' })),
-  { path: '/styles/shared.css', file: 'styles/shared.css', type: 'text/css' },
-  ...['site', 'deletion'].map(name => ({ path: `/scripts/${name}.js`, file: `scripts/${name}.js`, type: 'javascript' })),
-  ...['brand', 'discover', 'details', 'dashboard', 'tenants', 'rent'].map(name => ({ path: `/resource/app/${name}.png`, file: `resource/app/${name}.png`, type: 'image/png' })),
+  ...publicAssets.map(asset => ({ path: `/${asset.file}`, ...asset })),
+  ...publicAssets.filter(asset => asset.type === 'javascript' || asset.type === 'text/css').map(asset => ({ ...asset, path: `/${asset.file}?v=${entryVersion}` })),
   { path: '/property/?propertyId=spot-production-check', file: 'property/index.html', type: 'text/html' },
   { path: '/property/?propertyId=%E0%A4%98%E0%A4%B0%20A%2B%23%3F', file: 'property/index.html', type: 'text/html' },
   { path: '/property/?propertyId=bad%2Fid', file: 'property/index.html', type: 'text/html' },

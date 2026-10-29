@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
-  <meta name="theme-color" content="#eeeae4">
+  <meta name="theme-color" content="#101312">
   <title>Request account deletion | SPoT</title>
   <meta name="description" content="Prepare an account deletion email for the SPoT support team.">
   <link rel="canonical" href="https://spot.apnasheher.com/delete-account.html">
@@ -16,18 +16,19 @@
   <meta property="og:image" content="https://spot.apnasheher.com/resource/app/brand.png">
   <link rel="icon" type="image/png" href="resource/app/brand.png">
   <link rel="apple-touch-icon" href="resource/app/brand.png">
-  <link rel="stylesheet" href="styles/shared.css">
-  <script src="scripts/site.js" defer></script>
+  <link rel="preload" href="resource/fonts/outfit-regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles/shared.css?v=7c229f15a550">
+  <script type="module" src="scripts/site.mjs?v=7c229f15a550"></script>
   <script src="scripts/deletion.js" defer></script>
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <a class="logo" href="index.html" aria-label="SPoT home"><img src="resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Easy rental solution</small></span></a>
-    <nav class="primary-nav" aria-label="Main navigation">
-      <a href="index.html#renters">For renters</a><a href="index.html#owners">For owners</a><a href="index.html#inside">The app</a>
-    </nav>
-    <a class="button button-small" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Get SPoT <span aria-hidden="true">↗</span><span class="sr-only">on Google Play (opens a new tab)</span></a>
+    <nav class="primary-nav" aria-label="Main navigation"><a href="index.html#experience" data-nav>The experience</a><a href="index.html#renters" data-nav>For renters</a><a href="index.html#owners" data-nav>For owners</a><a href="index.html#inside" data-nav>Inside the app</a></nav>
+    <div class="header-actions"><a class="button button-small" href="https://play.google.com/store/apps/details?id=com.apnaghar.saga" target="_blank" rel="noopener noreferrer">Get the app <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg><span class="sr-only">on Google Play (opens a new tab)</span></a>
+      <details class="mobile-navigation"><summary aria-label="Navigation menu"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></summary><nav aria-label="Mobile navigation"><a href="index.html#experience" data-nav>The experience</a><a href="index.html#renters" data-nav>For renters</a><a href="index.html#owners" data-nav>For owners</a><a href="index.html#inside" data-nav>Inside the app</a><a href="mailto:apnagharapnasheher@gmail.com">Contact support <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></nav></details>
+    </div>
   </header>
   <main id="main-content">
     <section class="section-wrap page-intro"><p class="eyebrow">ACCOUNT SUPPORT</p><h1>Your account.<br><em>Your choice.</em></h1><p class="lead">Prepare an account deletion request for the SPoT support team.</p></section>
@@ -48,7 +49,7 @@
     <div class="footer-top"><a class="footer-wordmark" href="index.html">SPoT<span>A place for every next chapter.</span></a>
       <nav aria-label="Footer navigation"><a href="career.html">Careers</a><a href="privacy.html">Privacy policy</a><a href="delete-account.html" aria-current="page">Delete my account</a><a href="mailto:apnagharapnasheher@gmail.com">Contact support</a></nav>
     </div>
-    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p></div>
+    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p><a href="#top">Back to top <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div>
   </footer>
 </body>
 </html>

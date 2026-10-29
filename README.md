@@ -26,11 +26,15 @@ committed so the current GitHub Pages setup can continue serving the repository 
 
 - `src/site.mjs`: public URLs, contact details, metadata, shared security policy.
 - `src/pages/*.html`: page content. Change these instead of generated root pages.
+- `src/showcase.mjs`: one catalogue of app screens and renter/owner experience content.
+- `src/components.mjs`, `src/icons.mjs`: build-time components and local SVGs.
+- `src/public-assets.mjs`: public asset catalogue shared by serving and deployment checks.
 - `scripts/build.mjs`: shared document, header and footer; generates the four root pages.
 - `styles/shared.css`: shared responsive styles and brand tokens.
-- `scripts/site.js`: year display only.
+- `scripts/site.mjs`: small browser entry, with individual controllers in `scripts/ui/`.
 - `scripts/deletion.js`: on-device email preparation and clipboard fallback.
-- `tests/security.test.mjs`: security contracts, deletion interactions and local HTTP checks.
+- `tests/security.test.mjs`, `tests/interactions.test.mjs`: security, keyboard/state contracts,
+  no-JavaScript fallbacks, motion preferences, deletion and local HTTP checks.
 
 After editing source content or configuration, run `npm run build`. The check
 command detects stale generated pages. Keeping one configuration and one layout
@@ -45,7 +49,8 @@ The current code was inspected on 29 October 2026. Palette values come from
 
 `resource/app/brand.png` is copied from the app's 192px
 `app/src/main/res/mipmap-xxxhdpi/ic_spot_launcher.png`.
-The five other PNGs are copied byte-for-byte from `playstore/screenshots/`:
+The displayed screenshots in `resource/app/screens/` are copied byte-for-byte from
+`playstore/raw/`. Each is 1080 × 2160, without the Play Store marketing frame:
 
 | Website file | App source filename |
 | --- | --- |
@@ -59,6 +64,9 @@ The app's `playstore/SCREENSHOT_GUIDE.md` and `VALIDATION_REPORT.md` describe th
 offline production-Compose capture with fictional data. These are illustrative
 screens, not live listings, user records, or proof of service availability. The
 screenshots predate this website update; refresh them when the app UI changes.
+The older marketing-framed screenshots at `resource/app/*.png` remain available
+to preserve any existing links. `living-room.jpg` comes from the app's isolated
+`app/src/playstore/assets/rentals/` demo assets and is explicitly illustrative.
 
 Photo provenance is carried over from the app's `playstore/IMAGE_SOURCES.md`:
 Pyx Photography ([living room](https://unsplash.com/photos/CgA03H9jCKw)), Gokul
@@ -69,11 +77,40 @@ its license review on 26 October 2026. No new photo downloads were made here.
 
 ## Security and support
 
-The site uses local scripts and styles, system fonts, no external icon library,
+The site uses local scripts and styles, self-hosted Outfit fonts with system fallbacks,
+no external icon library,
 and no analytics, cookies, browser storage or backend reads/writes. All four pages
 carry a restrictive meta Content Security Policy and `no-referrer` policy.
 No inline executable code is needed. Core navigation, screenshots, FAQs and direct
 support email links work without JavaScript.
+
+## Frontend interaction and performance
+
+The dark premium design uses charcoal, ivory and bronze, with restrained olive
+surfaces. Components include a responsive mobile menu, renter/owner tabs, a native
+dialog gallery, active-section navigation and optional scroll reveals.
+
+The browser entry forwards a generated asset digest to every UI module. The same
+digest versions the stylesheet and entry URL, so deployment invalidates cached UI
+code together. No hydration framework, animation library, continuous scroll loop,
+service worker or persistent browser storage is used.
+
+- Without JavaScript, both experience panels, gallery image links, the native mobile
+  menu and FAQ details remain usable. The deletion controls remain safely disabled.
+- Tabs use manual keyboard activation with arrow keys, Home/End, Enter/Space and
+  linked ARIA panels, following the [WAI tab pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+- The [native dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
+  supplies modal focus containment and Escape behavior. The gallery restores focus
+  on close and preserves ordinary image navigation when dialog is unavailable.
+- Reveals use [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+  and reveal immediately for reduced-motion preferences or unsupported APIs.
+- Screens reserve their dimensions and load lazily, except the hero screen. Two
+  unmodified Outfit weights are self-hosted from the app, with `font-display: swap`.
+  Their [SIL Open Font License](resource/fonts/OFL.txt) is included.
+
+Automated interaction tests use a bounded DOM double. They verify controller state
+and events, not browser rendering, native focus trapping, touch input or Lighthouse
+scores. Those require real browser evidence; do not infer them from passing unit tests.
 
 Deletion inputs stay on-device until the user chooses to open their email app or
 copy a template. No request is sent to support automatically. The page cannot

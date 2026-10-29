@@ -4,6 +4,8 @@ import { readFile, access } from 'node:fs/promises';
 import vm from 'node:vm';
 import { previewServer } from '../scripts/serve.mjs';
 import { pages, site, contentSecurityPolicy } from '../src/site.mjs';
+import { publicAssets, uiModules } from '../src/public-assets.mjs';
+import { screens } from '../src/showcase.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = file => readFile(new URL(file, root), 'utf8');
@@ -16,7 +18,7 @@ test('every page enforces local assets and blocks inline code and network connec
     assert.match(html, /name="referrer" content="no-referrer"/);
     assert.doesNotMatch(html, /<style\b|\sstyle=|\son\w+\s*=|javascript:|<iframe\b|<object\b/i);
     for (const script of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
-      assert.match(script[1], /src="scripts\/[\w.-]+\.js"/);
+      assert.match(script[1], /src="scripts\/[\w.-]+\.m?js(?:\?v=[a-f0-9]{12})?"/);
       assert.equal(script[2].trim(), '');
     }
     for (const asset of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
@@ -24,7 +26,7 @@ test('every page enforces local assets and blocks inline code and network connec
       if (/^https:/.test(value)) {
         assert.ok([site.origin, 'https://play.google.com'].includes(new URL(value).origin), value);
       } else if (!value.startsWith('mailto:') && !value.startsWith('#')) {
-        await access(new URL(value.split('#')[0], root));
+        await access(new URL(value.split(/[?#]/)[0], root));
       }
     }
     for (const anchor of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) {
@@ -41,7 +43,7 @@ test('every page enforces local assets and blocks inline code and network connec
 });
 
 test('runtime does not persist personal details, inject HTML, or call backend services', async () => {
-  for (const file of ['scripts/site.js', 'scripts/deletion.js']) {
+  for (const file of ['scripts/site.mjs', 'scripts/deletion.js', ...uiModules.map(name => `scripts/ui/${name}.mjs`)]) {
     assert.doesNotMatch(await read(file), /innerHTML|outerHTML|document\.write|\beval\b|localStorage|sessionStorage|document\.cookie|\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket/);
   }
 });
@@ -90,11 +92,11 @@ test('navigation fragments resolve and screenshot PNG dimensions match the layou
       assert.ok(target.includes(`id="${anchor[2]}"`), `${file}: ${anchor[0]}`);
     }
   }
-  for (const file of ['discover', 'details', 'dashboard', 'tenants', 'rent']) {
-    const png = await readFile(new URL(`resource/app/${file}.png`, root));
+  for (const screen of screens) {
+    const png = await readFile(new URL(`resource/app/screens/${screen.key}.png`, root));
     assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
     assert.equal(png.readUInt32BE(16), 1080);
-    assert.equal(png.readUInt32BE(20), 1920);
+    assert.equal(png.readUInt32BE(20), 2160);
   }
 });
 
@@ -138,11 +140,13 @@ test('local preview serves actual pages and assets and rejects source, traversal
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   t.after(() => { server.closeAllConnections(); server.close(); });
   const origin = `http://127.0.0.1:${server.address().port}`;
-  for (const path of ['/', ...pages.map(page => `/${page.file}`), '/styles/shared.css', '/scripts/deletion.js', '/resource/app/discover.png', '/property/?propertyId=production-check', '/property-share-assets/property-link.js', '/property-share-assets/property.css', '/.well-known/assetlinks.json']) {
+  for (const path of ['/', ...pages.map(page => `/${page.file}`), ...publicAssets.map(asset => `/${asset.file}`), '/scripts/site.mjs?v=production-check', '/styles/shared.css?v=production-check', '/property/?propertyId=production-check', '/property-share-assets/property-link.js', '/property-share-assets/property.css', '/.well-known/assetlinks.json']) {
     const response = await fetch(origin + path);
     assert.equal(response.status, 200, path);
     assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
     assert.ok(response.headers.get('content-security-policy').includes("frame-ancestors 'none'"));
+    const asset = publicAssets.find(asset => path === `/${asset.file}`);
+    if (asset) assert.ok(response.headers.get('content-type').includes(asset.type), path);
     await response.arrayBuffer();
   }
   for (const path of ['/src/site.mjs', '/.git/config', '/scripts/build.mjs', '/resource/%2e%2e%2fpackage.json', '/resource/%5c..%5cpackage.json', '/%ZZ']) {
