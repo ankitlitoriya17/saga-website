@@ -2,12 +2,22 @@ name: SPoT social auto-post
 
 on:
   schedule:
+    - cron: '0 7 * * *'
+      timezone: 'Asia/Kolkata'
     - cron: '0 19 * * *'
       timezone: 'Asia/Kolkata'
   workflow_dispatch:
     inputs:
+      slot:
+        description: 'Which daily post to preview or manually publish?'
+        required: true
+        type: choice
+        options:
+          - morning
+          - evening
+        default: morning
       live:
-        description: 'Publish now (requires SPOT_SOCIAL_LIVE=true variable)'
+        description: 'Publish now (also requires SPOT_SOCIAL_LIVE=true variable)'
         required: true
         type: boolean
         default: false
@@ -15,6 +25,7 @@ on:
     paths:
       - '.github/workflows/spot-social.yml'
       - 'scripts/social-post.mjs'
+      - 'scripts/social-content.mjs'
       - 'scripts/generate-social-images.py'
       - 'social/**'
       - 'tests/social-post.test.mjs'
@@ -44,38 +55,43 @@ jobs:
           cache-dependency-path: 'social/requirements.txt'
       - name: Install free image renderer
         run: python -m pip install -r social/requirements.txt
-      - name: Validate website and social logic
+      - name: Validate website and all uniqueness checks
         run: |
           npm run check
           npm test
-      - name: Generate square branded JPEGs
+      - name: Prepare unique slot content
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          SPOT_POST_SLOT: ${{ inputs.slot }}
+        run: node scripts/social-post.mjs --prepare
+      - name: Generate unique square JPEG for this slot
         run: |
           python scripts/generate-social-images.py
           python - <<'PY'
+          import json
           from pathlib import Path
           from PIL import Image
-          pictures = sorted(Path('social/images').glob('*.jpg'))
-          assert len(pictures) == 7
-          for picture in pictures:
-              with Image.open(picture) as img:
-                  assert img.format == 'JPEG'
-                  assert img.size == (1080, 1080)
-          print('Validated seven JPEGs')
+          data = json.loads(Path('social/.prepared.json').read_text())
+          file = Path('social/images') / data['filename']
+          assert file.is_file()
+          with Image.open(file) as img:
+              assert img.format == 'JPEG'
+              assert img.size == (1080, 1080)
+          print('Validated unique image: ' + str(file))
           PY
-      - name: Save preview images
+      - name: Save reviewable creative
         uses: actions/upload-artifact@v4
         with:
           name: spot-social-artwork
           path: social/images/*.jpg
           retention-days: 7
-      - name: Test-only preview for pull requests
-        if: github.event_name == 'pull_request'
-        run: node scripts/social-post.mjs
-      - name: Dry run or publish
-        if: github.event_name != 'pull_request'
+      - name: Dry run or publish to Meta
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
           GITHUB_REF: ${{ github.ref }}
+          SPOT_POST_SLOT: ${{ inputs.slot }}
           SPOT_MANUAL_LIVE: ${{ inputs.live }}
           SPOT_SOCIAL_LIVE: ${{ vars.SPOT_SOCIAL_LIVE }}
           META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
