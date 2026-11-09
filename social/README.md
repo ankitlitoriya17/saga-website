@@ -1,94 +1,110 @@
-# SPoT — free Facebook + Instagram automation
+# SPoT — zero-subscription Facebook + Instagram automation
 
-This is a deterministic, template-based social publisher (no paid AI calls). Seven
-branded square JPEG cards (1080 × 1080) use SPoT's existing logo and website palette.
-A daily GitHub Actions job chooses a weekday topic in India and publishes through
-the official Meta Graph API only after explicit activation.
+The SPoT website repository hosts an automated, template-driven social publisher.
+It creates a **different 1080×1080 JPEG and Hinglish caption** for each scheduled
+slot without using paid generative-image or text APIs.
 
-## Safety and duplicate protection
+## Schedule (Indian Standard Time)
 
-- The repository Actions **variable** named SPOT_SOCIAL_LIVE must equal true.
-  Otherwise every schedule and manual run is **DRY RUN**.
-- Manual "Run workflow" defaults to **live=false** even after scheduled posting
-  has been enabled. Check **live=true** only for an intentional public post.
-- Pull requests never receive Meta credentials and cannot publish.
-- Each platform is claimed in **social/state.json** and committed before the first
-  mutating Meta call. Pending/unknown outcomes are not automatically retried.
-- Confirmed IDs and error statuses appear in social/state.json, in this public
-  website repository. **Never store access tokens or user data here.**
-- This automation does not read Firebase, properties, tenants, or the Android app.
+- **07:00 AM Asia/Kolkata** — morning post
+- **07:00 PM Asia/Kolkata** — evening post
 
-## Meta prerequisites
+Each slot publishes the selected creative to all connected eligible channels
+(Facebook Page and/or Instagram Professional). A GitHub Actions schedule is not
+an exact-time SLA: GitHub may delay or occasionally skip scheduled events.
 
-1. Create a Meta Developers app with the Instagram API **with Facebook Login**
-   configuration, for a Facebook Page linked to an Instagram Professional
-   (Business or Creator) account. A personal Instagram account is unsupported.
-2. Obtain your Facebook **Page access token** with permission to publish to
-   that Page (including pages_manage_posts).
-3. For Instagram via Facebook Login, use the linked IG Professional account ID,
-   instagram_basic, instagram_content_publish, pages_show_list and
-   pages_read_engagement as needed.
-4. Ensure your Meta app's mode, roles and any required permission review are
-   appropriate for the accounts you manage. Access tokens can expire or be revoked.
+## No-repeat design
 
-Meta official API collection:
+- A 7-topic bank combines 98 individually authored rental tips and 16 phrasing
+  variations to produce **1,568 distinct caption/creative pairs**.
+- Two daily posts are different and have unique, date/slot-specific image URLs.
+- A content SHA-256 hash, computed from the actual caption content **without date
+  or serial numbers**, is checked against the long-term publication ledger
+  before publishing. A post cannot become "new" simply by changing its date.
+- Each platform/slot is claimed durably before the publishing API request.
+  Pending, unknown and unsuccessful statuses never trigger a blind retry.
+- Once all **1,568 unique combinations** are used (up to **784 days** at two per
+  day starting 9 November 2026), the automation **stops rather than repeats**.
+  Replenish the editorial bank before then.
+- Broader subjects (rent collection, receipts, listings) naturally recur; exact
+  caption/creative combinations do not. Human editorial review remains useful
+  to keep related advice fresh and avoid repetitive-sounding campaigns.
+
+The scheduled source is social/posts.json and the curated angles are in
+social/angles.json. Each slot's generated artwork is stored as
+social/images/YYYY-MM-DD-morning.jpg or social/images/YYYY-MM-DD-evening.jpg.
+The no-repeat ledger is social/state.json, public in this public repo and
+intended to contain **no tokens, tenant records or other private data**.
+
+## Safe activation
+
+Before any real posting, the repository variable SPOT_SOCIAL_LIVE must equal
+true. When unset, every scheduled run is a dry-run. Manual workflow dispatches
+also require their separate **live=true** checkbox; this checkbox defaults to
+false. Manual runs can preview/publish the morning or evening slot separately.
+
+Pull requests do not publish, and they cannot use publishing credentials.
+The workflow checks the site, tests every one of the 1,568 possible post
+combinations for uniqueness, prepares the next caption, renders its JPEG, checks
+dimensions and uploads a preview artifact. Only a permitted live run first
+commits the image to GitHub Pages, waits for the live image URL to respond,
+and then attempts to publish through Meta.
+
+## Meta setup
+
+Create a Meta Developers app using **Instagram API with Facebook Login**, and
+link an Instagram **Professional** account to a Facebook Page you administer.
+For Facebook Page posts use a Page access token with appropriate publishing
+permissions (including pages_manage_posts). Instagram via this integration
+requires its linked IG Professional numeric ID and the relevant permissions,
+such as instagram_basic, instagram_content_publish, pages_show_list and
+pages_read_engagement. Account/app roles, Live mode and review requirements
+may apply depending on your setup.
+
+Official Meta collection:
 https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api
 
-## GitHub setup (this website repository)
+In THIS repository go to Settings → Secrets and variables → Actions:
 
-Go to Settings → Secrets and variables → Actions.
-
-| Kind | Key | Value |
+| Type | Key | Purpose |
 | --- | --- | --- |
 | Secret | FB_PAGE_ID | Facebook Page numeric ID |
-| Secret | FB_PAGE_TOKEN | Page token with Page post permission |
-| Secret | IG_USER_ID | Linked Instagram Professional numeric ID |
-| Secret | IG_PAGE_TOKEN | Optional IG-capable Page token; fallback is FB_PAGE_TOKEN |
-| Variable | META_GRAPH_VERSION | Optional, default v27.0 |
-| Variable | SPOT_SOCIAL_LIVE | Set to true **only after verifying previews** |
+| Secret | FB_PAGE_TOKEN | Facebook Page publishing token |
+| Secret | IG_USER_ID | Linked Instagram Professional ID |
+| Secret | IG_PAGE_TOKEN | Optional Instagram-capable Page token, defaults to FB_PAGE_TOKEN |
+| Variable | META_GRAPH_VERSION | Optional Graph API version, default v27.0 |
+| Variable | SPOT_SOCIAL_LIVE | Set to true **only when ready to make public posts** |
 
-Configure either platform alone or both. This implementation uses Instagram API
-**with Facebook Login** at graph.facebook.com; standalone Instagram Login tokens
-are not interchangeable with these calls. Never paste tokens into chat, commits,
-issues or public logs. Rotate/renew tokens before expiry.
+Do not paste token values into issues, commits, chat or logs. Tokens may expire
+and require renewal. This implementation does **not** support personal Instagram
+accounts or standalone Instagram Login tokens.
 
-## Deployment checklist
+## Operating procedure
 
-1. Merge the feature pull request into main after workflow checks pass.
-2. Open Actions → SPoT social auto-post → Run workflow, leave live=false.
-3. Download the "spot-social-artwork" artifact and review the seven JPEG images
-   and the dry-run captions in the job summary.
-4. Add the Meta secrets, verify correct account permissions and identifiers.
-5. Set the variable SPOT_SOCIAL_LIVE=true; manually run live=true on main to
-   authorise the **first actual Facebook/Instagram post**.
-6. The first live run commits the generated images so they become public
-   at https://spot.apnasheher.com/social/images/ . The code verifies that
-   the chosen image is accessible before any Meta publishing request.
-7. The schedule runs at 7:00 PM Asia/Kolkata every day. GitHub scheduled
-   workflows can start late or occasionally be missed.
-8. Check the Actions job summary and social/state.json statuses each day.
+1. Review and merge a change to this feature, after Actions tests pass.
+2. Open Actions → SPoT social auto-post → Run workflow; choose **morning** or
+   **evening**, leave **live=false**, and inspect caption + downloaded artwork.
+3. Configure Meta IDs and secrets; confirm correct permissions.
+4. Set SPOT_SOCIAL_LIVE=true and deliberately run **live=true** for one slot.
+   Confirm a real post appeared on each connected account before relying on
+   automated scheduling. Both schedule events will then be enabled for live
+   posting at the configured local hours.
+5. Monitor Actions summaries and social/state.json for missing events and
+   statuses such as needs_review. Investigate a suspected post directly on
+   Meta before modifying the ledger; a timeout may occur after successful
+   publishing.
 
-When a channel shows needs_review, inspect its real social account and Meta
-container state BEFORE changing any state entry. Do not blindly delete entries
-and retry because Meta may have published despite a network error.
+A daily run has one post **per platform per slot**, not multiple copies on the
+same platform. If an account lacks API permissions it will not be published.
+No app/Firebase data is accessed. The content library contains helpful general
+advice and only SPoT features documented in the app's marketing material.
 
-### Editing content
+## Costs and limitations
 
-Edit social/posts.json to update English artwork headlines, Hinglish captions
-and hashtags. Run the workflow in dry-run mode first. The artwork generator is
-scripts/generate-social-images.py, which uses Pillow and existing SPoT branding.
-Generated images are static templates, not fabricated property listings.
-The campaign recycles weekly. Add fresh posts regularly to avoid repetition.
+This does not require a paid social scheduler or paid AI generation. GitHub
+Actions/Pages free-use policies and Meta API limitations still apply. Two
+scheduled workflows create two preview artifacts and, only when enabled, up to
+two new public images/day. Automated posts cannot guarantee user growth.
+Keep the content library and Meta account permissions up to date.
 
-## Cost and limits
-
-Standard GitHub-hosted Actions in a public repo, GitHub Pages hosting and Meta
-organic publishing API usage do not require a paid social scheduler. Meta API
-permissions and limits still apply. This is *not* paid AI generation.
-
-### Tests
-
-- npm test verifies calendar selection, opt-in, duplicate prevention and captions.
-- The workflow checks the full website and JPEG dimensions/format.
-- Live publishing remains unverified until Meta credentials are configured and
-  a user-authorised live post succeeds.
+Run npm test and verify the GitHub Actions PR check before deploying.

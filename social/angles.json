@@ -1,0 +1,428 @@
+{
+  "hooks": [
+    "Aaj ka rental idea:",
+    "SPoT quick tip:",
+    "Rental routine suggestion:",
+    "Aaj ka practical step:",
+    "Property management note:",
+    "Landlord aur renter checklist:",
+    "Smart rental habit:",
+    "Is detail ko overlook na karein:",
+    "Rental planning insight:",
+    "Weekly management tip:",
+    "Better rental records ke liye:",
+    "Property journey ka ek step:",
+    "SPoT learning corner:",
+    "Rental organisation tip:",
+    "Aaj ka helpful reminder:",
+    "Simple practice, better clarity:"
+  ],
+  "topics": {
+    "get-started": [
+      {
+        "short": "Explore with clear filters",
+        "text": "Property search mein budget aur location clear rakhein, taaki suitable options shortlist karna easy ho."
+      },
+      {
+        "short": "Save your must-haves",
+        "text": "Ghar search se pehle parking, water aur connectivity jaise must-have facilities note karein."
+      },
+      {
+        "short": "Compare total monthly costs",
+        "text": "Rent ke saath maintenance aur travel expenses bhi compare karein."
+      },
+      {
+        "short": "Check your commute",
+        "text": "Property choose karte waqt office ya school tak daily travel ka estimate dekhein."
+      },
+      {
+        "short": "Ask about nearby services",
+        "text": "Naye ghar ke aas-paas medical, grocery aur transport ke options check karein."
+      },
+      {
+        "short": "Verify before paying",
+        "text": "Deposit ya advance payment se pehle property details aur ownership independently verify karein."
+      },
+      {
+        "short": "List questions in advance",
+        "text": "Property visit par poochne wale sawaal ek list mein rakhein."
+      },
+      {
+        "short": "Check property photos closely",
+        "text": "Property photos helpful hain, lekin final decision se pehle visit bhi karein."
+      },
+      {
+        "short": "Read rental terms carefully",
+        "text": "Agreement ke notice period aur deposit conditions samajhkar hi aage badhein."
+      },
+      {
+        "short": "Keep a visit checklist",
+        "text": "House visit par light, ventilation, water aur storage assess karein."
+      },
+      {
+        "short": "Confirm move-in timing",
+        "text": "Move-in date property owner ke saath pehle se clear karna useful hai."
+      },
+      {
+        "short": "Review neighbourhood access",
+        "text": "Neighbourhood mein public transport aur daily necessities ke options dekhein."
+      },
+      {
+        "short": "Plan a realistic budget",
+        "text": "Monthly rent ke saath shifting aur setup cost ka budget bhi banayein."
+      },
+      {
+        "short": "Use digital tools",
+        "text": "Rental search aur management ko organised rakhne ke liye digital tools ka use karein."
+      }
+    ],
+    "list-property": [
+      {
+        "short": "Add accurate location",
+        "text": "Listing mein area aur nearby landmark sahi likhein, jisse interested renters ko clarity mile."
+      },
+      {
+        "short": "Use bright property photos",
+        "text": "Property ko dikhane ke liye saaf, current aur well-lit photos choose karein."
+      },
+      {
+        "short": "Mention rent clearly",
+        "text": "Expected monthly rent ko listing mein clearly mention karein."
+      },
+      {
+        "short": "Highlight available facilities",
+        "text": "Parking, water aur other available facilities ko accurately describe karein."
+      },
+      {
+        "short": "Describe room layout",
+        "text": "Property ke rooms aur layout ko simple language mein explain karein."
+      },
+      {
+        "short": "Keep details up to date",
+        "text": "Rent ya availability badle to listing details refresh karein."
+      },
+      {
+        "short": "Add a helpful landmark",
+        "text": "Nearby known landmark mention karna location samajhne mein madad karta hai."
+      },
+      {
+        "short": "Show the actual condition",
+        "text": "Photos mein property ki current condition dikhayein; misleading visuals avoid karein."
+      },
+      {
+        "short": "Review before publishing",
+        "text": "Listing public karne se pehle spelling, pricing aur contact details verify karein."
+      },
+      {
+        "short": "Think like a renter",
+        "text": "Listing likhte waqt un sawaalon ka jawab dein jo ek renter pooch sakta hai."
+      },
+      {
+        "short": "Keep photos organised",
+        "text": "Living room, bedroom aur kitchen ki pictures ko logically arrange karein."
+      },
+      {
+        "short": "Be transparent about charges",
+        "text": "Maintenance ya other charges apply hon to unhe upfront clarify karein."
+      },
+      {
+        "short": "Avoid unnecessary details",
+        "text": "Listing ko informative rakhein, lekin tenant ki personal information share na karein."
+      },
+      {
+        "short": "Update property status",
+        "text": "Property rent par chadhne ke baad old availability information update karein."
+      }
+    ],
+    "rent-reminders": [
+      {
+        "short": "Track each due date",
+        "text": "Har tenant ki rent due date ek organised record mein maintain karein."
+      },
+      {
+        "short": "Check upcoming payments",
+        "text": "Week ke start mein upcoming rent dates review karna useful hai."
+      },
+      {
+        "short": "Confirm reminder settings",
+        "text": "Automatic reminders use karte waqt tenant details aur notification settings verify karein."
+      },
+      {
+        "short": "Communicate politely",
+        "text": "Rent reminder ka message short, polite aur clear rakhein."
+      },
+      {
+        "short": "Set expectations early",
+        "text": "Tenant ko move-in ke time payment date clearly bata dein."
+      },
+      {
+        "short": "Review after a missed due",
+        "text": "Due date cross hone par records check karein aur calmly follow up karein."
+      },
+      {
+        "short": "Avoid repeated pings",
+        "text": "Same payment ke liye unnecessary repeated messages bhejne se bachein."
+      },
+      {
+        "short": "Correct a wrong due date",
+        "text": "Incorrect due date reminder ko confusing bana sakti hai, isliye record correct karein."
+      },
+      {
+        "short": "Record received payments",
+        "text": "Payment receive hone par status promptly update karein."
+      },
+      {
+        "short": "Keep reminder history",
+        "text": "Payment follow-ups ki basic timeline rakhne se confusion kam hota hai."
+      },
+      {
+        "short": "Check tenants individually",
+        "text": "Multiple tenants ki due dates alag ho sakti hain, sabko separately review karein."
+      },
+      {
+        "short": "Explain payment options",
+        "text": "Tenant ko accepted payment methods aur reference detail bata dein."
+      },
+      {
+        "short": "Confirm payment proof",
+        "text": "Payment confirmation ko record se match karke hi dues clear mark karein."
+      },
+      {
+        "short": "Use a monthly routine",
+        "text": "Har month rent tracking ka ek fixed review day rakhein."
+      }
+    ],
+    "payment-tracking": [
+      {
+        "short": "Update payment status",
+        "text": "Rent receive hone par record promptly update karein, taaki pending list accurate rahe."
+      },
+      {
+        "short": "Record exact amount",
+        "text": "Partial payment aur full payment mein difference clearly maintain karein."
+      },
+      {
+        "short": "Keep payment reference",
+        "text": "Bank transfer reference ya receipt number safely note karna useful ho sakta hai."
+      },
+      {
+        "short": "Separate months clearly",
+        "text": "April ka rent May mein aaye to transaction ko correct month se link karein."
+      },
+      {
+        "short": "Review unpaid rent",
+        "text": "Monthly closing se pehle pending rents ki list verify karein."
+      },
+      {
+        "short": "Avoid duplicate entries",
+        "text": "Same rent payment ko do baar received mark na karein."
+      },
+      {
+        "short": "Note payment timing",
+        "text": "Payment date aur due date dono track karne se clarity banti hai."
+      },
+      {
+        "short": "Reconcile with bank",
+        "text": "Digital records ko actual bank credit ke saath occasionally match karein."
+      },
+      {
+        "short": "Maintain per-tenant records",
+        "text": "Har tenant ka rent history individually review karein."
+      },
+      {
+        "short": "Track balance carefully",
+        "text": "Part payments ke baad remaining balance clearly calculate karein."
+      },
+      {
+        "short": "Keep clear descriptions",
+        "text": "Payment notes mein month aur unit ko identify karne layak description likhein."
+      },
+      {
+        "short": "Check annual trends",
+        "text": "Monthly rent collection compare karke recurring delays identify kar sakte hain."
+      },
+      {
+        "short": "Review corrections",
+        "text": "Galat entered payments ko update karte waqt supporting proof check karein."
+      },
+      {
+        "short": "Protect financial privacy",
+        "text": "Public posts ya screenshots mein tenants ki actual payment details share na karein."
+      }
+    ],
+    "tenant-management": [
+      {
+        "short": "Confirm move-in date",
+        "text": "Tenant ke move-in date ka correct record future calculations mein helpful hota hai."
+      },
+      {
+        "short": "Keep names consistent",
+        "text": "Tenant name ko records mein same spelling ke saath maintain karein."
+      },
+      {
+        "short": "Organise occupant details",
+        "text": "Occupant information ko necessary scope tak limited aur organised rakhein."
+      },
+      {
+        "short": "Review monthly rent",
+        "text": "Tenant ka agreed monthly rent accurate store karein."
+      },
+      {
+        "short": "Update changed information",
+        "text": "Phone ya address change ho to relevant details update karein."
+      },
+      {
+        "short": "Track move-out carefully",
+        "text": "Move-out hone par date aur final settlement records check karein."
+      },
+      {
+        "short": "Keep previous records",
+        "text": "Past tenants ka historical record organised rakhna useful hota hai."
+      },
+      {
+        "short": "Limit sensitive details",
+        "text": "Tenant ki personal data sirf legitimate management needs ke liye collect karein."
+      },
+      {
+        "short": "Use clear unit names",
+        "text": "Room ya unit identifiers consistent rakhein taaki records mix na hon."
+      },
+      {
+        "short": "Verify agreement basics",
+        "text": "Tenant agreement mein rent, deposit aur notice terms ko clear rakhein."
+      },
+      {
+        "short": "Review occupancy",
+        "text": "Occupied aur vacant units ka accurate status maintain karein."
+      },
+      {
+        "short": "Check outstanding dues",
+        "text": "Tenant exit ke samay pending dues ko carefully reconcile karein."
+      },
+      {
+        "short": "Store supporting notes",
+        "text": "Important rental discussions ka concise, relevant note rakh sakte hain."
+      },
+      {
+        "short": "Respect tenant privacy",
+        "text": "Private tenant information ko social media par bina consent share na karein."
+      }
+    ],
+    "rent-receipts": [
+      {
+        "short": "Issue after confirmation",
+        "text": "Actual payment confirm hone ke baad hi rent receipt banayein."
+      },
+      {
+        "short": "Review receipt amount",
+        "text": "Receipt share karne se pehle amount aur payment month verify karein."
+      },
+      {
+        "short": "Keep receipt date correct",
+        "text": "Payment received date aur receipt date ka context clear rakhein."
+      },
+      {
+        "short": "Match tenant identity",
+        "text": "Receipt mein correct tenant aur unit details use karein."
+      },
+      {
+        "short": "Keep a copy safely",
+        "text": "Receipts ki copy apne records ke liye organised rakhein."
+      },
+      {
+        "short": "Separate partial payments",
+        "text": "Partial payment ka receipt full month settlement na dikhaye."
+      },
+      {
+        "short": "Mention payment month",
+        "text": "Rent kis period ke liye diya gaya hai, usko clearly mention karein."
+      },
+      {
+        "short": "Check before sharing",
+        "text": "Receipt export karne se pehle names aur amounts double-check karein."
+      },
+      {
+        "short": "Avoid public receipts",
+        "text": "Real tenant receipts ko public social media posts par upload na karein."
+      },
+      {
+        "short": "Use organised filenames",
+        "text": "Receipt files ko month aur unit ke hisaab se organise karein."
+      },
+      {
+        "short": "Share through safe channels",
+        "text": "Rent receipt tenant ko appropriate private channel par share karein."
+      },
+      {
+        "short": "Correct errors promptly",
+        "text": "Receipt mein error mile to corrected record issue karein."
+      },
+      {
+        "short": "Use simple records",
+        "text": "Payment receipt aur rent ledger ke figures consistent rakhein."
+      },
+      {
+        "short": "Keep history accessible",
+        "text": "Past payment receipts ko organised folders ya records mein maintain karein."
+      }
+    ],
+    "landlord-tips": [
+      {
+        "short": "Create a rental checklist",
+        "text": "Move-in aur move-out process ke liye repeatable checklist banayein."
+      },
+      {
+        "short": "Plan maintenance checks",
+        "text": "Small maintenance issues ko regularly review karna bade problems avoid kar sakta hai."
+      },
+      {
+        "short": "Keep property info current",
+        "text": "Available units, rent aur facilities ka latest record maintain karein."
+      },
+      {
+        "short": "Communicate expectations",
+        "text": "Rent date, maintenance responsibilities aur house rules upfront discuss karein."
+      },
+      {
+        "short": "Document important changes",
+        "text": "Rent amount ya occupancy changes ko proper records mein note karein."
+      },
+      {
+        "short": "Avoid misleading promotions",
+        "text": "Property marketing mein sirf verified information hi share karein."
+      },
+      {
+        "short": "Respect privacy by design",
+        "text": "Tenant photos, IDs aur phone numbers public share na karein."
+      },
+      {
+        "short": "Review monthly cashflow",
+        "text": "Collected rent aur pending dues ka monthly summary check karein."
+      },
+      {
+        "short": "Check deposit rules",
+        "text": "Security deposit ka use aur refund terms agreement ke according rakhein."
+      },
+      {
+        "short": "Maintain key contacts",
+        "text": "Emergency maintenance contacts ko accessible aur up to date rakhein."
+      },
+      {
+        "short": "Keep fair communication",
+        "text": "Tenant queries ka response professional aur timely rakhein."
+      },
+      {
+        "short": "Prepare for vacancy",
+        "text": "Unit vacant hone se pehle listing photos aur property details update kar sakte hain."
+      },
+      {
+        "short": "Record repairs clearly",
+        "text": "Repairs aur expenses ke basic records future planning mein useful hote hain."
+      },
+      {
+        "short": "Focus on clear processes",
+        "text": "Organised records aur transparent communication landlord-tenant confusion kam karte hain."
+      }
+    ]
+  }
+}
