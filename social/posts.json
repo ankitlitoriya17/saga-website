@@ -1,0 +1,79 @@
+[
+  {
+    "day": "sunday",
+    "slug": "get-started",
+    "headline": [
+      "Rentals,",
+      "made simpler."
+    ],
+    "subline": "Discover and manage on SPoT",
+    "caption": "Ghar dhoondhna ho ya apni rental property manage karni ho — SPoT par shuruat karein. Properties explore karein aur rental management ko easy banayein.",
+    "hashtags": "#SPoTApp #RentalApp #RentalsIndia #HouseForRent #PropertyManagement"
+  },
+  {
+    "day": "monday",
+    "slug": "list-property",
+    "headline": [
+      "Your property.",
+      "Your control."
+    ],
+    "subline": "List your rental property",
+    "caption": "Property rent par deni hai? SPoT mein apni property ki details, photos aur expected rent add karein. Interested tenants ke liye listing ko easy to discover banayein.",
+    "hashtags": "#SPoTApp #PropertyListing #LandlordIndia #RentalProperty #PropertyManagement"
+  },
+  {
+    "day": "tuesday",
+    "slug": "rent-reminders",
+    "headline": [
+      "Rent due?",
+      "Stay ahead."
+    ],
+    "subline": "Manage upcoming rent reminders",
+    "caption": "Rent date yaad rakhne ki tension kam karein. SPoT mein tenant aur rent details manage karein aur configured automatic rent reminders ka fayda uthayein.",
+    "hashtags": "#SPoTApp #RentReminder #LandlordTools #RentManagement #RentalApp"
+  },
+  {
+    "day": "wednesday",
+    "slug": "payment-tracking",
+    "headline": [
+      "Track rent.",
+      "Stay organised."
+    ],
+    "subline": "Payment records in one place",
+    "caption": "Kis tenant ne rent pay kiya aur kiski payment pending hai? SPoT mein rent payment records ko organised tareeke se track karein.",
+    "hashtags": "#SPoTApp #RentPayment #RentTracking #LandlordIndia #PropertyManagement"
+  },
+  {
+    "day": "thursday",
+    "slug": "tenant-management",
+    "headline": [
+      "Tenants.",
+      "Simplified."
+    ],
+    "subline": "Keep tenant details together",
+    "caption": "Tenant details, monthly rent aur move-in information ek jagah. SPoT rental management ko simple banane mein madad karta hai.",
+    "hashtags": "#SPoTApp #TenantManagement #RentalsIndia #PropertyManager #LandlordTools"
+  },
+  {
+    "day": "friday",
+    "slug": "rent-receipts",
+    "headline": [
+      "A receipt.",
+      "In a tap."
+    ],
+    "subline": "Digital rent payment receipts",
+    "caption": "Rent receive hone par digital receipt banana easy banayein. SPoT ki rent receipt feature se payment records ko manage karein.",
+    "hashtags": "#SPoTApp #RentReceipt #DigitalReceipt #RentManagement #LandlordIndia"
+  },
+  {
+    "day": "saturday",
+    "slug": "landlord-tips",
+    "headline": [
+      "Be a smarter",
+      "landlord."
+    ],
+    "subline": "Organise your rental routine",
+    "caption": "Landlord tip: tenant details, rent due dates aur receipts ko scattered chats mein rakhne ke bajay ek organised system use karein. SPoT app try karein.",
+    "hashtags": "#SPoTApp #LandlordTips #RentalBusiness #TenantManagement #PropertyManagement"
+  }
+]

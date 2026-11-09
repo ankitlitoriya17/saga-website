@@ -1,0 +1,86 @@
+name: SPoT social auto-post
+
+on:
+  schedule:
+    - cron: '0 19 * * *'
+      timezone: 'Asia/Kolkata'
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'Publish now (requires SPOT_SOCIAL_LIVE=true variable)'
+        required: true
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - '.github/workflows/spot-social.yml'
+      - 'scripts/social-post.mjs'
+      - 'scripts/generate-social-images.py'
+      - 'social/**'
+      - 'tests/social-post.test.mjs'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spot-social-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  social:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: ${{ github.event_name != 'pull_request' }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: 'social/requirements.txt'
+      - name: Install free image renderer
+        run: python -m pip install -r social/requirements.txt
+      - name: Validate website and social logic
+        run: |
+          npm run check
+          npm test
+      - name: Generate square branded JPEGs
+        run: |
+          python scripts/generate-social-images.py
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          pictures = sorted(Path('social/images').glob('*.jpg'))
+          assert len(pictures) == 7
+          for picture in pictures:
+              with Image.open(picture) as img:
+                  assert img.format == 'JPEG'
+                  assert img.size == (1080, 1080)
+          print('Validated seven JPEGs')
+          PY
+      - name: Save preview images
+        uses: actions/upload-artifact@v4
+        with:
+          name: spot-social-artwork
+          path: social/images/*.jpg
+          retention-days: 7
+      - name: Test-only preview for pull requests
+        if: github.event_name == 'pull_request'
+        run: node scripts/social-post.mjs
+      - name: Dry run or publish
+        if: github.event_name != 'pull_request'
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          SPOT_MANUAL_LIVE: ${{ inputs.live }}
+          SPOT_SOCIAL_LIVE: ${{ vars.SPOT_SOCIAL_LIVE }}
+          META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
+        run: node scripts/social-post.mjs
