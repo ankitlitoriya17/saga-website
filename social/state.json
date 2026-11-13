@@ -18,10 +18,11 @@
     },
     "evening": {
       "facebook": {
-        "status": "pending",
+        "status": "published",
         "slug": "rent-reminders",
         "content_id": "09c73e286405ce79e120db17274b01631dd0a17611f0c3d1d3281e96062fac51",
-        "updated_at": "2026-11-13T13:51:05.110Z"
+        "updated_at": "2026-11-13T13:51:11.508Z",
+        "post_id": "926683933861110_122150779335189778"
       }
     }
   }
