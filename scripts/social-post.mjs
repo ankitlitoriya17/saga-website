@@ -3,7 +3,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 import { indiaDate, resolveSlot, selectPost, shouldPublish, contentAlreadyUsed,
-  captionFor, isLive } from './social-content.mjs';
+  captionFor, isLive, backupWindowAllowed } from './social-content.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const STATE_PATH = resolve(ROOT, 'social/state.json');
@@ -136,6 +136,16 @@ async function run() {
   const expected = selectPost(posts, angles, post.date, post.slot);
   if (JSON.stringify(expected) !== JSON.stringify(post)) {
     throw new Error('Prepared content differs from current campaign');
+  }
+  // An external fallback dispatch is never allowed outside its own IST window.
+  // GitHub's normal scheduled runs and intentional manual dispatches are unaffected.
+  if (process.env.GITHUB_EVENT_NAME === 'workflow_dispatch') {
+    const source = process.env.SPOT_TRIGGER_SOURCE || 'manual';
+    if (!['manual', 'backup'].includes(source)) throw new Error('Invalid dispatch source');
+    if (source === 'backup' && !backupWindowAllowed(new Date(), post.slot)) {
+      await report('BACKUP SKIPPED: outside approved ' + post.slot + ' IST window. No publishing.');
+      return;
+    }
   }
   const live = isLive(process.env);
   await report('### ' + post.date + ' ' + post.slot + ' — ' +
