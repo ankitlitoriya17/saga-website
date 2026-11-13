@@ -9,6 +9,10 @@ slot without using paid generative-image or text APIs.
 - **07:00 AM Asia/Kolkata** — morning post
 - **07:00 PM Asia/Kolkata** — evening post
 
+The GitHub schedule uses explicit UTC cron (`30 1 * * *` for 7 AM IST,
+`30 13 * * *` for 7 PM IST). GitHub Actions may start later than
+its scheduled time; verify actual run times in Actions and investigate delays.
+
 Each slot publishes the selected creative to all connected eligible channels
 (Facebook Page and/or Instagram Professional). A GitHub Actions schedule is not
 an exact-time SLA: GitHub may delay or occasionally skip scheduled events.
