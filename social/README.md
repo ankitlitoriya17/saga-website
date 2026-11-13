@@ -9,6 +9,15 @@ slot without using paid generative-image or text APIs.
 - **07:00 AM Asia/Kolkata** — morning post
 - **07:00 PM Asia/Kolkata** — evening post
 
+## Optional cron-job.org fallback
+
+To protect against a missed/delayed GitHub *scheduled event*, set up two
+external 20-minute-later recovery dispatches at **07:20 and 19:20 IST**. The
+backup is idempotent and restricted to the intended slot's local-time window.
+See [CRON_BACKUP.md](CRON_BACKUP.md) for the secure GitHub PAT, HTTP request
+and testing steps. This does not replace GitHub Actions or bypass Meta/API
+outages. Do **not** put the token in this repository.
+
 The GitHub schedule uses explicit UTC cron (`30 1 * * *` for 7 AM IST,
 `30 13 * * *` for 7 PM IST). GitHub Actions may start later than
 its scheduled time; verify actual run times in Actions and investigate delays.
