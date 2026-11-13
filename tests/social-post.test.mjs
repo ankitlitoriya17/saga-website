@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   indiaDate, resolveSlot, selectPost, shouldPublish, contentAlreadyUsed,
-  isLive, captionFor,
+  isLive, captionFor, backupWindowAllowed,
 } from '../scripts/social-content.mjs';
 
 const posts = JSON.parse(readFileSync(new URL('../social/posts.json', import.meta.url), 'utf8'));
@@ -107,6 +107,15 @@ test('publishing requires explicit live variable and allowed branch and event', 
   assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'pull_request' }), false);
   assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'schedule', GITHUB_REF: 'refs/heads/test' }), false);
   assert.equal(isLive({ ...base, SPOT_SOCIAL_LIVE: 'false', GITHUB_EVENT_NAME: 'schedule' }), false);
+});
+test('backup dispatch accepts only near-slot IST windows', () => {
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T01:50:00Z'), 'morning'), true); // 07:20 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T13:50:00Z'), 'evening'), true); // 19:20 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T01:44:00Z'), 'morning'), false); // 07:14 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T13:44:00Z'), 'evening'), false); // 19:14 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T07:00:00Z'), 'morning'), false); // 12:30 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T18:30:00Z'), 'evening'), false); // midnight IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T01:50:00Z'), 'invalid'), false);
 });
 test('creative captions contain real install links and branded tags', () => {
   const post = selectPost(posts, angles, '2026-11-09', 'morning');
