@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 const LAUNCH = Date.parse('2026-11-09T00:00:00Z');
 const DAY = 86_400_000;
 const SLOTS = Object.freeze(['morning', 'evening']);
-const VALID_CRON = { '0 7 * * *': 'morning', '0 19 * * *': 'evening' };
+const VALID_CRON = { '30 1 * * *': 'morning', '30 13 * * *': 'evening' };
 
 export function indiaDate(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-GB', {
