@@ -24,6 +24,20 @@ export function resolveSlot(env) {
   return slot;
 }
 
+// Backup requests must be near their intended local-time slot. Misconfigured
+// third-party cron jobs cannot publish an unrelated or very late post.
+export function backupWindowAllowed(now = new Date(), slot) {
+  if (!SLOTS.includes(slot)) return false;
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(now);
+  const number = type => Number(parts.find(part => part.type === type)?.value);
+  const minutes = number('hour') * 60 + number('minute');
+  const start = slot === 'morning' ? 7 * 60 + 15 : 19 * 60 + 15;
+  const end = slot === 'morning' ? 10 * 60 : 22 * 60;
+  return minutes >= start && minutes <= end;
+}
+
 export function selectPost(posts, angles, date, slot) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !SLOTS.includes(slot)) {
     throw new Error('Invalid date or posting slot');
