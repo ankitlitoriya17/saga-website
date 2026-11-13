@@ -17,10 +17,10 @@ test('India calendar day is calculated at local midnight', () => {
 });
 test('GitHub scheduled event maps to correct twice-daily India slot', () => {
   assert.equal(resolveSlot({
-    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '0 7 * * *',
+    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '30 1 * * *',
   }), 'morning');
   assert.equal(resolveSlot({
-    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '0 19 * * *',
+    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '30 13 * * *',
   }), 'evening');
   assert.throws(() => resolveSlot({
     GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '0 12 * * *',
