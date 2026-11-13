@@ -16,6 +16,14 @@ on:
           - morning
           - evening
         default: morning
+      source:
+        description: 'Manual or cron-job.org backup dispatch'
+        required: true
+        type: choice
+        options:
+          - manual
+          - backup
+        default: manual
       live:
         description: 'Publish now (also requires SPOT_SOCIAL_LIVE=true variable)'
         required: true
@@ -92,6 +100,7 @@ jobs:
           GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
           GITHUB_REF: ${{ github.ref }}
           SPOT_POST_SLOT: ${{ inputs.slot }}
+          SPOT_TRIGGER_SOURCE: ${{ inputs.source }}
           SPOT_MANUAL_LIVE: ${{ inputs.live }}
           SPOT_SOCIAL_LIVE: ${{ vars.SPOT_SOCIAL_LIVE }}
           META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
