@@ -1,0 +1,66 @@
+name: SPoT website build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/site-build.yml'
+      - 'src/**'
+      - 'styles/**'
+      - 'resource/**'
+      - 'scripts/build.mjs'
+      - 'scripts/site.mjs'
+      - 'scripts/ui/**'
+      - 'scripts/deletion.js'
+      - 'package.json'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - '.github/workflows/site-build.yml'
+      - 'src/**'
+      - 'styles/**'
+      - 'resource/**'
+      - 'scripts/build.mjs'
+      - 'scripts/site.mjs'
+      - 'scripts/ui/**'
+      - 'scripts/deletion.js'
+      - 'package.json'
+      - 'tests/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spot-website-build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: ${{ github.event_name != 'pull_request' }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Regenerate static website HTML
+        run: npm run build
+      - name: Verify generated HTML and run tests
+        run: |
+          npm run check
+          npm test
+      - name: Commit regenerated HTML to main
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          git add -- index.html landlords/index.html career.html privacy.html delete-account.html
+          if git diff --cached --quiet; then
+            echo "Generated HTML already current"
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore(site): sync generated HTML'
+          git pull --rebase origin main
+          git push origin HEAD:main
