@@ -52,10 +52,11 @@
     },
     "morning": {
       "facebook": {
-        "status": "pending",
+        "status": "published",
         "slug": "payment-tracking",
         "content_id": "ed934d22a22a318043855d7d4fc37e10a25757f2d79fae65f2c7810920b53177",
-        "updated_at": "2026-11-14T01:51:07.755Z"
+        "updated_at": "2026-11-14T01:51:15.643Z",
+        "post_id": "926683933861110_122150832309189778"
       }
     }
   }
