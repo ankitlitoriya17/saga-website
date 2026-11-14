@@ -77,10 +77,11 @@
         "post_id": "926683933861110_122150917827189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "landlord-tips",
         "content_id": "351b584961c710fc7c66e93aeb0f30776677e3b2e291297dda7084e7e49474c4",
-        "updated_at": "2026-11-14T18:49:01.488Z"
+        "updated_at": "2026-11-14T18:49:07.937Z",
+        "container_id": "17894770269617462"
       }
     }
   }
