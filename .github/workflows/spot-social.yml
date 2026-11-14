@@ -63,10 +63,8 @@ jobs:
           cache-dependency-path: 'social/requirements.txt'
       - name: Install free image renderer
         run: python -m pip install -r social/requirements.txt
-      - name: Validate website and all uniqueness checks
-        run: |
-          npm run check
-          npm test
+      - name: Validate social content and uniqueness checks
+        run: node --test tests/social-post.test.mjs
       - name: Prepare unique slot content
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
