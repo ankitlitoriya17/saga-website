@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { site, pages } from '../src/site.mjs';
+import { site, pages, pagePath } from '../src/site.mjs';
 import { publicAssets } from '../src/public-assets.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -13,7 +13,7 @@ const commit = git('rev-parse', 'HEAD').toString().trim();
 const entryVersion = git('show', 'HEAD:index.html').toString().match(/scripts\/site\.mjs\?v=([a-f0-9]{12})/)?.[1];
 assert.ok(entryVersion, 'Committed homepage has no browser asset version');
 const checks = [
-  ...pages.map(page => ({ path: page.file === 'index.html' ? '/' : `/${page.file}`, file: page.file, type: 'text/html' })),
+  ...pages.map(page => ({ path: pagePath(page), file: page.file, type: 'text/html' })),
   ...publicAssets.map(asset => ({ path: `/${asset.file}`, ...asset })),
   ...publicAssets.filter(asset => asset.type === 'javascript' || asset.type === 'text/css').map(asset => ({ ...asset, path: `/${asset.file}?v=${entryVersion}` })),
   { path: '/property/?propertyId=spot-production-check', file: 'property/index.html', type: 'text/html' },

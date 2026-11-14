@@ -1,0 +1,58 @@
+/* Landlord content only. Shared brand, controls and accessibility stay in shared.css. */
+.landlord-hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); align-items: center; gap: clamp(36px, 6vw, 96px); padding-block: 48px 64px; }
+.landlord-intro > .text-link { margin-bottom: 38px; color: var(--muted); }
+.landlord-hero h1 { font-size: clamp(3rem, 5.5vw, 5.6rem); }
+.landlord-hero .lead { margin-top: 28px; max-width: 570px; }
+.landlord-hinglish { color: var(--muted); font-size: .95rem; margin-top: 22px; max-width: 550px; }
+.landlord-hero-screen { width: min(100%, 290px); justify-self: center; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.landlord-screen-label { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--accent); }
+.landlord-screen-label .small-label { color: var(--accent); font-size: .53rem; }
+.landlord-hero-screen figcaption, .landlord-detail-screen figcaption { margin-top: 20px; text-align: center; font-size: .7rem; line-height: 1.6; color: var(--muted); }
+.landlord-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding-block: 24px; border-block: 1px solid var(--line); }
+.landlord-jump a { display: inline-flex; align-items: center; gap: 8px; padding-block: 8px; font-size: .86rem; }
+.landlord-jump > span { margin-right: auto; }
+.landlord-listing { padding-block: 90px; }
+.landlord-listing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+.landlord-listing-grid article { border-top: 1px solid var(--line); padding-top: 28px; }
+.landlord-listing-grid h3 { margin-block: 22px 14px; line-height: 1.3; }
+.landlord-listing-grid p { font-size: .95rem; color: var(--muted); }
+.landlord-listing > .fine-print { margin-top: 32px; max-width: 850px; }
+.landlord-workspace { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); align-items: center; gap: 80px; border-top: 1px solid var(--line); padding-block: 80px; }
+.landlord-section-copy .lead { margin-top: 28px; max-width: 580px; }
+.landlord-feature-list { padding-left: 22px; color: var(--ink); margin-block: 24px; }
+.landlord-feature-list li { padding: 8px 0 8px 6px; }
+.landlord-detail-screen { justify-self: center; width: min(100%, 260px); }
+.landlord-rent-steps { list-style: decimal-leading-zero; padding-left: 32px; margin-block: 28px; }
+.landlord-rent-steps li { padding: 8px 0 16px 12px; color: var(--accent); }
+.landlord-rent-steps p { margin-top: 6px; color: var(--muted); font-size: .95rem; }
+.landlord-section-copy .notice { font-size: .88rem; max-width: 600px; }
+.landlord-start { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; padding-block: 64px; background: var(--surface); }
+.landlord-start ol { margin: 0; padding-left: 22px; color: var(--muted); }
+.landlord-start li { padding: 10px 0 14px 8px; }
+.landlord-start strong { color: var(--ink); }
+@media (max-width: 1100px) {
+  .landlord-hero { gap: 36px; }
+  .landlord-workspace { gap: 40px; }
+  .landlord-jump > span { flex-basis: 100%; }
+}
+@media (max-width: 850px) {
+  .landlord-hero, .landlord-workspace { grid-template-columns: 1fr; gap: 44px; }
+  .landlord-hero h1 { font-size: clamp(3rem, 8vw, 4.8rem); }
+  .landlord-hero-screen { width: min(100%, 310px); }
+  .landlord-listing-grid { grid-template-columns: 1fr; gap: 30px; }
+  .landlord-listing-grid article { display: grid; grid-template-columns: 50px minmax(0, 1fr); column-gap: 20px; }
+  .landlord-listing-grid .feature-icon { grid-row: span 2; }
+  .landlord-listing-grid h3 { margin-block: 0 12px; }
+  .landlord-listing-grid p { grid-column: 2; }
+  .landlord-start { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 580px) {
+  .landlord-hero { padding-block: 30px 48px; }
+  .landlord-hero h1 { font-size: clamp(2.8rem, 10.5vw, 3.8rem); }
+  .landlord-intro > .text-link { margin-bottom: 28px; }
+  .landlord-jump { gap: 12px 24px; }
+  .landlord-jump a { font-size: .8rem; }
+  .landlord-listing, .landlord-workspace { padding-block: 56px; }
+  .landlord-listing-grid article { column-gap: 14px; }
+  .landlord-start { padding-block: 40px; }
+}

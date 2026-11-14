@@ -3,11 +3,12 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { contentSecurityPolicy, pages } from '../src/site.mjs';
+import { contentSecurityPolicy, pages, pagePath } from '../src/site.mjs';
 import { publicAssets } from '../src/public-assets.mjs';
 
 const root = new URL('../', import.meta.url);
 const pagePaths = new Set(pages.map(page => `/${page.file}`));
+const pageIndexes = new Map(pages.map(page => [pagePath(page), `/${page.file}`]));
 const assetPaths = new Set(publicAssets.map(asset => `/${asset.file}`));
 const sharingPaths = new Set(['/property/index.html', '/property-share-assets/property.css', '/property-share-assets/property-link.js', '/.well-known/assetlinks.json']);
 const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.ttf': 'font/ttf', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.pdf': 'application/pdf', '.txt': 'text/plain; charset=utf-8', '.json': 'application/json; charset=utf-8' };
@@ -23,7 +24,7 @@ export function previewServer() {
     }
     try {
       const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-      const path = pathname === '/' ? '/index.html' : pathname === '/property/' ? '/property/index.html' : pathname;
+      const path = pageIndexes.get(pathname) ?? (pathname === '/property/' ? '/property/index.html' : pathname);
       const allowed = pagePaths.has(path) || assetPaths.has(path) || sharingPaths.has(path) || path === '/app-ads.txt' ||
         /^\/resource\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+\.(?:png|svg|pdf)$/.test(path);
       if (!allowed || path.includes('..') || path.includes('\\')) {

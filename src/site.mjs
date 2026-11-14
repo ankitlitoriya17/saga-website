@@ -8,7 +8,7 @@ export const site = Object.freeze({
   navigation: [
     { id: 'experience', label: 'The experience' },
     { id: 'renters', label: 'For renters' },
-    { id: 'owners', label: 'For owners' },
+    { href: 'landlords/', label: 'For landlords' },
     { id: 'inside', label: 'Inside the app' },
   ],
 });
@@ -19,7 +19,11 @@ export const contentSecurityPolicy = "default-src 'none'; script-src 'self'; sty
 
 export const pages = [
   { file: 'index.html', title: 'SPoT | A place for your next chapter', description: 'Find homes, rooms, PGs and shops. Manage properties, tenants and rent records with SPoT for Android.' },
+  { file: 'landlords/index.html', stylesheet: 'styles/landlords.css', title: 'Landlord App for Tenant & Rent Management | SPoT', description: 'List rental properties, manage tenants and track rent payment records with SPoT for Android. Property aur kiraye ka hisaab, ek jagah.' },
   { file: 'career.html', title: 'Careers | SPoT', description: 'Connect with the SPoT team about opportunities to improve the rental experience.' },
   { file: 'privacy.html', title: 'Privacy Policy | SPoT', description: 'Read the SPoT privacy policy and find privacy and account support.' },
   { file: 'delete-account.html', title: 'Request account deletion | SPoT', description: 'Prepare an account deletion email for the SPoT support team.' },
 ];
+
+// Directory indexes work on GitHub Pages without a rewrite or client router.
+export const pagePath = page => `/${page.file.replace(/(^|\/)index\.html$/, '$1')}`;

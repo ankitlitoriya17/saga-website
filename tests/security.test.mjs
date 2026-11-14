@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import vm from 'node:vm';
 import { previewServer } from '../scripts/serve.mjs';
-import { pages, site, contentSecurityPolicy } from '../src/site.mjs';
+import { pages, pagePath, site, contentSecurityPolicy } from '../src/site.mjs';
 import { publicAssets, uiModules } from '../src/public-assets.mjs';
 import { screens } from '../src/showcase.mjs';
 
@@ -18,7 +18,7 @@ test('every page enforces local assets and blocks inline code and network connec
     assert.match(html, /name="referrer" content="no-referrer"/);
     assert.doesNotMatch(html, /<style\b|\sstyle=|\son\w+\s*=|javascript:|<iframe\b|<object\b/i);
     for (const script of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
-      assert.match(script[1], /src="scripts\/[\w.-]+\.m?js(?:\?v=[a-f0-9]{12})?"/);
+      assert.match(script[1], /src="(?:\.\.\/)*scripts\/[\w.-]+\.m?js(?:\?v=[a-f0-9]{12})?"/);
       assert.equal(script[2].trim(), '');
     }
     for (const asset of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
@@ -26,7 +26,7 @@ test('every page enforces local assets and blocks inline code and network connec
       if (/^https:/.test(value)) {
         assert.ok([site.origin, 'https://play.google.com'].includes(new URL(value).origin), value);
       } else if (!value.startsWith('mailto:') && !value.startsWith('#')) {
-        await access(new URL(value.split(/[?#]/)[0], root));
+        await access(new URL(value.split(/[?#]/)[0], new URL(file, root)));
       }
     }
     for (const anchor of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) {
@@ -88,7 +88,9 @@ test('navigation fragments resolve and screenshot PNG dimensions match the layou
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
     assert.equal(new Set(ids).size, ids.length, `${file}: duplicate IDs`);
     for (const anchor of html.matchAll(/href="([^"#:]*)(?:#)([^"#]+)"/g)) {
-      const target = await read(anchor[1] || file);
+      const targetUrl = new URL(anchor[1] || '', new URL(file, root));
+      if (targetUrl.pathname.endsWith('/')) targetUrl.pathname += 'index.html';
+      const target = await readFile(targetUrl, 'utf8');
       assert.ok(target.includes(`id="${anchor[2]}"`), `${file}: ${anchor[0]}`);
     }
   }
@@ -140,7 +142,7 @@ test('local preview serves actual pages and assets and rejects source, traversal
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   t.after(() => { server.closeAllConnections(); server.close(); });
   const origin = `http://127.0.0.1:${server.address().port}`;
-  for (const path of ['/', ...pages.map(page => `/${page.file}`), ...publicAssets.map(asset => `/${asset.file}`), '/scripts/site.mjs?v=production-check', '/styles/shared.css?v=production-check', '/property/?propertyId=production-check', '/property-share-assets/property-link.js', '/property-share-assets/property.css', '/.well-known/assetlinks.json']) {
+  for (const path of [...pages.map(pagePath), ...pages.map(page => `/${page.file}`), ...publicAssets.map(asset => `/${asset.file}`), '/scripts/site.mjs?v=production-check', '/styles/shared.css?v=production-check', '/property/?propertyId=production-check', '/property-share-assets/property-link.js', '/property-share-assets/property.css', '/.well-known/assetlinks.json']) {
     const response = await fetch(origin + path);
     assert.equal(response.status, 200, path);
     assert.equal(response.headers.get('x-content-type-options'), 'nosniff');

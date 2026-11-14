@@ -25,11 +25,11 @@ committed so the current GitHub Pages setup can continue serving the repository 
 ## Separation of concerns
 
 - `src/site.mjs`: public URLs, contact details, metadata, shared security policy.
-- `src/pages/*.html`: page content. Change these instead of generated root pages.
+- `src/pages/**/*.html`: page content. Change these instead of generated public pages.
 - `src/showcase.mjs`: one catalogue of app screens and renter/owner experience content.
 - `src/components.mjs`, `src/icons.mjs`: build-time components and local SVGs.
 - `src/public-assets.mjs`: public asset catalogue shared by serving and deployment checks.
-- `scripts/build.mjs`: shared document, header and footer; generates the four root pages.
+- `scripts/build.mjs`: shared document, header and footer; generates four root pages and `/landlords/index.html`.
 - `styles/shared.css`: shared responsive styles and brand tokens.
 - `scripts/site.mjs`: small browser entry, with individual controllers in `scripts/ui/`.
 - `scripts/deletion.js`: on-device email preparation and clipboard fallback.
@@ -79,7 +79,7 @@ its license review on 26 October 2026. No new photo downloads were made here.
 
 The site uses local scripts and styles, self-hosted Outfit fonts with system fallbacks,
 no external icon library,
-and no analytics, cookies, browser storage or backend reads/writes. All four pages
+and no analytics, cookies, browser storage or backend reads/writes. All five pages
 carry a restrictive meta Content Security Policy and `no-referrer` policy.
 No inline executable code is needed. Core navigation, screenshots, FAQs and direct
 support email links work without JavaScript.
@@ -140,7 +140,7 @@ Preserve these files in future updates; removing them could break property shari
 and Android link verification.
 
 Keep the existing hosting provider and domain. After publication, check HTTPS,
-all four pages and assets, `/property/`, the association JSON, and `app-ads.txt`.
+all five pages and assets, `/landlords/`, `/property/`, the association JSON, and `app-ads.txt`.
 Validate actual response headers and test Android App Links on a Play-installed app
 separately. This static website update alone requires no Android release.
 
@@ -156,3 +156,15 @@ Pages. It offers an app-open action, a Google Play install button, and a copyabl
 reference without fetching listing data. See [PROPERTY_SHARING.md](PROPERTY_SHARING.md)
 for the Android contract, tests, and deployment sequence. `npm test` runs both the
 existing property fallback suite and the new page security tests.
+
+## Landlord acquisition page
+
+`/landlords/` is a generated directory-index page for the existing GitHub Pages
+host. Edit `src/pages/landlords/index.html`, then run the normal build, check and
+test commands. Its canonical is `https://spot.apnasheher.com/landlords/`; there is
+no browser router, API, tracking or additional Firebase operation. Metadata and
+public routes remain in `src/site.mjs`, reused by the build, preview and production
+verification. Landlord-only layout rules live in `styles/landlords.css`.
+
+See [LANDLORDS.md](LANDLORDS.md) for the verified Android claim references,
+SEO rationale, test evidence, browser QA limitation and publication checklist.

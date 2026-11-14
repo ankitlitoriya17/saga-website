@@ -4,6 +4,7 @@ export const uiModules = ['tabs', 'gallery', 'navigation', 'motion'];
 // Used by local serving, release checks and cache version generation.
 export const publicAssets = [
   { file: 'styles/shared.css', type: 'text/css' },
+  { file: 'styles/landlords.css', type: 'text/css' },
   { file: 'scripts/site.mjs', type: 'javascript' },
   ...uiModules.map(name => ({ file: `scripts/ui/${name}.mjs`, type: 'javascript' })),
   { file: 'scripts/deletion.js', type: 'javascript' },

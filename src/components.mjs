@@ -8,9 +8,9 @@ const screen = key => {
   return found;
 };
 
-export function phone(key, { priority = false } = {}) {
+export function phone(key, { priority = false, assetPrefix = '' } = {}) {
   const item = screen(key);
-  return `<div class="device-frame"><img src="resource/app/screens/${item.key}.png" width="1080" height="2160" ${priority ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'} alt="${escape(item.alt)}"></div>`;
+  return `<div class="device-frame"><img src="${assetPrefix}resource/app/screens/${item.key}.png" width="1080" height="2160" ${priority ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'} alt="${escape(item.alt)}"></div>`;
 }
 
 export function experience() {
