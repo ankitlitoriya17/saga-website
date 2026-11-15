@@ -93,10 +93,11 @@
         "post_id": "926683933861110_122150947503189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "rent-receipts",
         "content_id": "62f61cd8f0131cd8b07b02dc9b84ab5c64a2a296dc73642ff47c80518600bd80",
-        "updated_at": "2026-11-15T01:51:17.553Z"
+        "updated_at": "2026-11-15T01:51:22.885Z",
+        "container_id": "17894804619617462"
       }
     }
   }
