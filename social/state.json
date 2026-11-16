@@ -117,6 +117,14 @@
         "updated_at": "2026-11-15T19:27:03.062Z",
         "post_id": "18028401242870688"
       }
+    },
+    "morning": {
+      "facebook": {
+        "status": "pending",
+        "slug": "get-started",
+        "content_id": "28029981eb17e8c8d5a7b2cbbb3a5b21f1442c5eb43dba0da68e7f4156fd8a2a",
+        "updated_at": "2026-11-16T01:51:06.174Z"
+      }
     }
   }
 }
