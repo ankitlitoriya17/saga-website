@@ -161,10 +161,11 @@
         "post_id": "926683933861110_122151173397189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "rent-reminders",
         "content_id": "3b166a595a5b88ad8b5e2c9b596d20d8d3a96b57ad6f124572ddc83dbc3ae535",
-        "updated_at": "2026-11-17T01:51:15.828Z"
+        "updated_at": "2026-11-17T01:51:20.751Z",
+        "container_id": "17895101019617462"
       }
     }
   }
