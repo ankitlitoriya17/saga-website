@@ -9,22 +9,18 @@ slot without using paid generative-image or text APIs.
 - **07:00 AM Asia/Kolkata** — morning post
 - **07:00 PM Asia/Kolkata** — evening post
 
-## Optional cron-job.org fallback
+## cron-job.org scheduler (the only trigger)
 
-To protect against a missed/delayed GitHub *scheduled event*, set up two
-external 20-minute-later recovery dispatches at **07:20 and 19:20 IST**. The
-backup is idempotent and restricted to the intended slot's local-time window.
-See [CRON_BACKUP.md](CRON_BACKUP.md) for the secure GitHub PAT, HTTP request
-and testing steps. This does not replace GitHub Actions or bypass Meta/API
-outages. Do **not** put the token in this repository.
-
-The GitHub schedule uses explicit UTC cron (`30 1 * * *` for 7 AM IST,
-`30 13 * * *` for 7 PM IST). GitHub Actions may start later than
-its scheduled time; verify actual run times in Actions and investigate delays.
+The GitHub `schedule` trigger was removed because its runs started hours late
+(and, past midnight IST, posted the evening slot at night). Two daily
+cron-job.org jobs dispatch the workflow at **07:00 and 19:00 IST**. Dispatches
+are idempotent and restricted to the slot's local-time window. See
+[CRON_BACKUP.md](CRON_BACKUP.md) for the secure GitHub PAT, HTTP request and
+testing steps. This does not bypass Meta/API outages. Do **not** put the token
+in this repository.
 
 Each slot publishes the selected creative to all connected eligible channels
-(Facebook Page and/or Instagram Professional). A GitHub Actions schedule is not
-an exact-time SLA: GitHub may delay or occasionally skip scheduled events.
+(Facebook Page and/or Instagram Professional).
 
 ## No-repeat design
 
@@ -52,9 +48,9 @@ intended to contain **no tokens, tenant records or other private data**.
 ## Safe activation
 
 Before any real posting, the repository variable SPOT_SOCIAL_LIVE must equal
-true. When unset, every scheduled run is a dry-run. Manual workflow dispatches
-also require their separate **live=true** checkbox; this checkbox defaults to
-false. Manual runs can preview/publish the morning or evening slot separately.
+true. When unset, every run is a dry-run. Every dispatch (including the
+cron-job.org jobs, which send `"live":"true"`) also requires its separate
+**live=true** input; the manual checkbox defaults to false. Manual runs can preview/publish the morning or evening slot separately.
 
 Pull requests do not publish, and they cannot use publishing credentials.
 The workflow checks the site, tests every one of the 1,568 possible post
@@ -100,8 +96,8 @@ accounts or standalone Instagram Login tokens.
 3. Configure Meta IDs and secrets; confirm correct permissions.
 4. Set SPOT_SOCIAL_LIVE=true and deliberately run **live=true** for one slot.
    Confirm a real post appeared on each connected account before relying on
-   automated scheduling. Both schedule events will then be enabled for live
-   posting at the configured local hours.
+   automated scheduling. The cron-job.org jobs will then post live at the
+   configured local hours.
 5. Monitor Actions summaries and social/state.json for missing events and
    statuses such as needs_review. Investigate a suspected post directly on
    Meta before modifying the ledger; a timeout may occur after successful

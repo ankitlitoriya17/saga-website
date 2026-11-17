@@ -1,8 +1,15 @@
-# cron-job.org backup for SPoT social posting
+# cron-job.org scheduler for SPoT social posting
 
-The primary GitHub Actions schedule remains **07:00 and 19:00 Asia/Kolkata**.
-Configure two independent, **daily** cron-job.org jobs to dispatch a backup
-run at **07:20 and 19:20 Asia/Kolkata**.
+The GitHub `schedule` trigger has been **removed**: GitHub started scheduled runs
+hours late, and runs that crossed midnight IST posted the evening slot at night.
+cron-job.org is now the **only** trigger. Configure **daily** jobs that dispatch
+the workflow at **07:00 and 19:00 Asia/Kolkata**. (The input is still named
+`source=backup` so existing jobs keep working; jobs already set to 07:20/19:20
+still work too.)
+
+Optional but recommended: add two **retry** jobs at **07:30 and 19:30** with the
+same bodies. They are harmless when the slot is already published (the ledger
+skips claimed slots) and cover a single failed or missed dispatch.
 
 The backup always **requests** a GitHub workflow dispatch. It does not inspect
 GitHub directly to decide whether to dispatch; the GitHub publisher checks
@@ -10,8 +17,8 @@ GitHub directly to decide whether to dispatch; the GitHub publisher checks
 No-repeat SHA-256 logic and the single-branch workflow concurrency also apply.
 
 Backup dispatches are refused outside these windows:
-- Morning: **07:15–10:00 IST**
-- Evening: **19:15–22:00 IST**
+- Morning: **06:55–10:00 IST**
+- Evening: **18:55–22:00 IST**
 
 Backups do not bypass the global `SPOT_SOCIAL_LIVE=true` gate. Failed or
 uncertain Meta requests with a committed `pending` or `needs_review` entry
@@ -38,12 +45,12 @@ https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-eve
 
 Log in at https://console.cron-job.org/ and create a cronjob:
 
-- Title: `SPoT Morning Backup`
+- Title: `SPoT Morning Post`
 - URL (same for both jobs):
   `https://api.github.com/repos/ankitlitoriya17/saga-website/actions/workflows/spot-social.yml/dispatches`
 - Method: `POST`
 - Schedule timezone: **Asia/Kolkata**
-- Every day at **07:20**
+- Every day at **07:00**
 - Request headers:
   - `Authorization`: `Bearer YOUR_FINE_GRAINED_GITHUB_PAT`
   - `Accept`: `application/vnd.github+json`
@@ -62,9 +69,9 @@ cron-job.org account. Never put the token in the URL or JSON body.
 
 Create a second job with the **same URL and headers**:
 
-- Title: `SPoT Evening Backup`
+- Title: `SPoT Evening Post`
 - Schedule timezone: **Asia/Kolkata**
-- Every day at **19:20**
+- Every day at **19:00**
 - POST body:
 
 ```json
@@ -109,16 +116,18 @@ If cron-job.org reports:
 
 ### Limits
 
-This protects against GitHub's own **scheduled event not firing on time** as
-long as its workflow-dispatch API and Actions runners are working.
+cron-job.org dispatches on time as long as the GitHub workflow-dispatch API and
+Actions runners are working. There is **no second scheduler** any more, so keep
+cron-job.org failure notifications on, rotate the GitHub token before it expires
+(an expired token means silent 401s and no posts), and check `social/state.json`
+daily for the first week.
 
 It **does not** protect against a total GitHub API/Actions outage, expired
 Meta credentials, GitHub Pages unavailability, or Meta publishing failures.
 The third-party cron service necessarily processes the restricted GitHub token
 as a request header; apply least privilege and rotate it.
 
-The ordinary GitHub schedule should remain enabled. Do not create cron-job.org
-triggers at 7:00/19:00; keep them 20 minutes later to minimize contention.
+Do not add a GitHub `schedule` back unless it is guarded against late starts.
 
 Useful docs:
 - https://docs.cron-job.org/creating-cron-jobs.html

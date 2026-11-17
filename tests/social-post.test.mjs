@@ -15,16 +15,7 @@ test('India calendar day is calculated at local midnight', () => {
   assert.equal(indiaDate(new Date('2026-11-08T19:00:00Z')), '2026-11-09');
   assert.equal(indiaDate(new Date('2026-11-08T17:59:59Z')), '2026-11-08');
 });
-test('GitHub scheduled event maps to correct twice-daily India slot', () => {
-  assert.equal(resolveSlot({
-    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '30 1 * * *',
-  }), 'morning');
-  assert.equal(resolveSlot({
-    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '30 13 * * *',
-  }), 'evening');
-  assert.throws(() => resolveSlot({
-    GITHUB_EVENT_NAME: 'schedule', GITHUB_EVENT_SCHEDULE: '0 12 * * *',
-  }));
+test('dispatch input selects the slot and rejects unknown values', () => {
   assert.equal(resolveSlot({
     GITHUB_EVENT_NAME: 'workflow_dispatch', SPOT_POST_SLOT: 'evening',
   }), 'evening');
@@ -101,18 +92,20 @@ test('legacy one-per-day evening claims still prevent duplicates', () => {
 });
 test('publishing requires explicit live variable and allowed branch and event', () => {
   const base = { SPOT_SOCIAL_LIVE: 'true', GITHUB_REF: 'refs/heads/main' };
-  assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'schedule' }), true);
+  assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'schedule' }), false);
   assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'workflow_dispatch', SPOT_MANUAL_LIVE: 'true' }), true);
   assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'workflow_dispatch', SPOT_MANUAL_LIVE: 'false' }), false);
   assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'pull_request' }), false);
-  assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'schedule', GITHUB_REF: 'refs/heads/test' }), false);
-  assert.equal(isLive({ ...base, SPOT_SOCIAL_LIVE: 'false', GITHUB_EVENT_NAME: 'schedule' }), false);
+  assert.equal(isLive({ ...base, GITHUB_EVENT_NAME: 'workflow_dispatch', SPOT_MANUAL_LIVE: 'true', GITHUB_REF: 'refs/heads/test' }), false);
+  assert.equal(isLive({ ...base, SPOT_SOCIAL_LIVE: 'false', GITHUB_EVENT_NAME: 'workflow_dispatch', SPOT_MANUAL_LIVE: 'true' }), false);
 });
-test('backup dispatch accepts only near-slot IST windows', () => {
+test('external scheduler dispatch accepts only near-slot IST windows', () => {
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T01:30:00Z'), 'morning'), true); // 07:00 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T13:30:00Z'), 'evening'), true); // 19:00 IST
   assert.equal(backupWindowAllowed(new Date('2026-11-14T01:50:00Z'), 'morning'), true); // 07:20 IST
   assert.equal(backupWindowAllowed(new Date('2026-11-14T13:50:00Z'), 'evening'), true); // 19:20 IST
-  assert.equal(backupWindowAllowed(new Date('2026-11-14T01:44:00Z'), 'morning'), false); // 07:14 IST
-  assert.equal(backupWindowAllowed(new Date('2026-11-14T13:44:00Z'), 'evening'), false); // 19:14 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T01:20:00Z'), 'morning'), false); // 06:50 IST
+  assert.equal(backupWindowAllowed(new Date('2026-11-14T13:20:00Z'), 'evening'), false); // 18:50 IST
   assert.equal(backupWindowAllowed(new Date('2026-11-14T07:00:00Z'), 'morning'), false); // 12:30 IST
   assert.equal(backupWindowAllowed(new Date('2026-11-14T18:30:00Z'), 'evening'), false); // midnight IST
   assert.equal(backupWindowAllowed(new Date('2026-11-14T01:50:00Z'), 'invalid'), false);
