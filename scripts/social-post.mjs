@@ -137,8 +137,8 @@ async function run() {
   if (JSON.stringify(expected) !== JSON.stringify(post)) {
     throw new Error('Prepared content differs from current campaign');
   }
-  // An external fallback dispatch is never allowed outside its own IST window.
-  // GitHub's normal scheduled runs and intentional manual dispatches are unaffected.
+  // An external-scheduler dispatch (source=backup) is never allowed outside its own
+  // IST window. Intentional manual dispatches are unaffected.
   if (process.env.GITHUB_EVENT_NAME === 'workflow_dispatch') {
     const source = process.env.SPOT_TRIGGER_SOURCE || 'manual';
     if (!['manual', 'backup'].includes(source)) throw new Error('Invalid dispatch source');

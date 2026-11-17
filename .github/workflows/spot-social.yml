@@ -1,11 +1,9 @@
 name: SPoT social auto-post
 
 on:
-  schedule:
-    # 07:00 IST = 01:30 UTC; 19:00 IST = 13:30 UTC.
-    # Explicit UTC cron avoids unexpected timezone interpretation.
-    - cron: '30 1 * * *'
-    - cron: '30 13 * * *'
+  # No GitHub `schedule`: GitHub's cron started runs hours late and, after
+  # crossing midnight IST, posted the evening slot at night. cron-job.org
+  # dispatches this workflow at the intended IST times (social/CRON_BACKUP.md).
   workflow_dispatch:
     inputs:
       slot:
@@ -68,7 +66,6 @@ jobs:
       - name: Prepare unique slot content
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
           SPOT_POST_SLOT: ${{ inputs.slot }}
         run: node scripts/social-post.mjs --prepare
       - name: Generate unique square JPEG for this slot
@@ -95,7 +92,6 @@ jobs:
       - name: Dry run or publish to Meta
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
           GITHUB_REF: ${{ github.ref }}
           SPOT_POST_SLOT: ${{ inputs.slot }}
           SPOT_TRIGGER_SOURCE: ${{ inputs.source }}

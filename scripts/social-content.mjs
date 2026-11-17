@@ -3,7 +3,6 @@ import { createHash } from 'node:crypto';
 const LAUNCH = Date.parse('2026-11-09T00:00:00Z');
 const DAY = 86_400_000;
 const SLOTS = Object.freeze(['morning', 'evening']);
-const VALID_CRON = { '30 1 * * *': 'morning', '30 13 * * *': 'evening' };
 
 export function indiaDate(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -14,18 +13,15 @@ export function indiaDate(now = new Date()) {
 }
 
 export function resolveSlot(env) {
-  if (env.GITHUB_EVENT_NAME === 'schedule') {
-    const slot = VALID_CRON[env.GITHUB_EVENT_SCHEDULE];
-    if (!slot) throw new Error('Unknown schedule; refuse to select a posting slot');
-    return slot;
-  }
   const slot = env.SPOT_POST_SLOT || 'morning';
   if (!SLOTS.includes(slot)) throw new Error('Expected morning or evening slot');
   return slot;
 }
 
-// Backup requests must be near their intended local-time slot. Misconfigured
-// third-party cron jobs cannot publish an unrelated or very late post.
+// External-scheduler requests (source=backup) must be near their intended
+// local-time slot. The window opens 5 minutes before the slot so a 07:00/19:00
+// job works, and stays open for later retry jobs. Misconfigured third-party
+// cron jobs cannot publish an unrelated or very late post.
 export function backupWindowAllowed(now = new Date(), slot) {
   if (!SLOTS.includes(slot)) return false;
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -33,7 +29,7 @@ export function backupWindowAllowed(now = new Date(), slot) {
   }).formatToParts(now);
   const number = type => Number(parts.find(part => part.type === type)?.value);
   const minutes = number('hour') * 60 + number('minute');
-  const start = slot === 'morning' ? 7 * 60 + 15 : 19 * 60 + 15;
+  const start = slot === 'morning' ? 6 * 60 + 55 : 18 * 60 + 55;
   const end = slot === 'morning' ? 10 * 60 : 22 * 60;
   return minutes >= start && minutes <= end;
 }
@@ -112,6 +108,5 @@ export function captionFor(post, channel) {
 
 export function isLive(env) {
   if (env.GITHUB_REF !== 'refs/heads/main' || env.SPOT_SOCIAL_LIVE !== 'true') return false;
-  if (env.GITHUB_EVENT_NAME === 'schedule') return true;
   return env.GITHUB_EVENT_NAME === 'workflow_dispatch' && env.SPOT_MANUAL_LIVE === 'true';
 }
