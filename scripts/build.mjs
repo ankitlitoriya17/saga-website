@@ -26,6 +26,14 @@ for (const page of pages) {
     .replaceAll('{{RENT_PHONE}}', phone('rent', { assetPrefix: prefix }))
     .replaceAll('{{ROOT}}', prefix));
   const canonical = `${site.origin}${pagePath(page)}`;
+  const image = `${site.origin}/${site.socialImage.file}`;
+  const structuredData = page.file === 'index.html' ? `  <script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'Organization', '@id': `${site.origin}/#organization`, name: site.publisher, url: `${site.origin}/`, logo: `${site.origin}/resource/app/brand.png`, email: site.supportEmail },
+      { '@type': 'MobileApplication', '@id': `${site.origin}/#app`, name: site.name, url: `${site.origin}/`, description: page.description, operatingSystem: 'ANDROID', applicationCategory: 'LifestyleApplication', downloadUrl: site.playUrl, installUrl: site.playUrl, image: image, publisher: { '@id': `${site.origin}/#organization` } },
+    ],
+  }).replaceAll('<', '\\u003c')}</script>\n` : '';
   const link = (file, label) => `<a href="${prefix}${file}"${pagePath(page).slice(1) === file || page.file === file ? ' aria-current="page"' : ''}>${label}</a>`;
   const navigation = site.navigation.map(item => item.href ? link(item.href, item.label) : `<a href="${prefix}index.html#${item.id}"${page.file === 'index.html' ? ' data-nav' : ''}>${item.label}</a>`).join('');
   const output = `<!DOCTYPE html>
@@ -43,10 +51,20 @@ for (const page of pages) {
   <meta property="og:title" content="${escape(page.title)}">
   <meta property="og:description" content="${escape(page.description)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${site.origin}/resource/app/brand.png">
+  <meta property="og:site_name" content="${site.name}">
+  <meta property="og:locale" content="${site.locale}">
+  <meta property="og:image" content="${image}">
+  <meta property="og:image:width" content="${site.socialImage.width}">
+  <meta property="og:image:height" content="${site.socialImage.height}">
+  <meta property="og:image:alt" content="${escape(site.socialImage.alt)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escape(page.title)}">
+  <meta name="twitter:description" content="${escape(page.description)}">
+  <meta name="twitter:image" content="${image}">
+  <meta name="robots" content="${page.noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large'}">
   <link rel="icon" type="image/png" href="${prefix}resource/app/brand.png">
   <link rel="apple-touch-icon" href="${prefix}resource/app/brand.png">
-  <link rel="preload" href="${prefix}resource/fonts/outfit-regular.ttf" as="font" type="font/ttf" crossorigin>
+${structuredData}  <link rel="preload" href="${prefix}resource/fonts/outfit-regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="${prefix}styles/shared.css?v=${version}">
 ${page.stylesheet ? `  <link rel="stylesheet" href="${prefix}${page.stylesheet}?v=${version}">\n` : ''}\
   <script type="module" src="${prefix}scripts/site.mjs?v=${version}"></script>
@@ -80,5 +98,15 @@ ${content.trimEnd()}
     await mkdir(new URL('./', destination), { recursive: true });
     await writeFile(destination, output);
   }
+}
+const crawlerOutputs = {
+  'robots.txt': `User-agent: *\nAllow: /\n\nSitemap: ${site.origin}/sitemap.xml\n`,
+  'sitemap.xml': `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter(page => !page.noindex).map(page => `  <url><loc>${site.origin}${pagePath(page)}</loc></url>\n`).join('')}</urlset>\n`,
+};
+for (const [file, output] of Object.entries(crawlerOutputs)) {
+  const destination = new URL(file, root);
+  if (check) {
+    if (await readFile(destination, 'utf8').catch(() => null) !== output) throw new Error(`${file} needs regeneration: npm run build`);
+  } else await writeFile(destination, output);
 }
 console.log(check ? 'All generated pages are current.' : `Built ${pages.length} static pages in ${fileURLToPath(root)}`);

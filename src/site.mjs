@@ -5,6 +5,9 @@ export const site = Object.freeze({
   playUrl: 'https://play.google.com/store/apps/details?id=com.apnaghar.saga',
   supportEmail: 'apnagharapnasheher@gmail.com',
   themeColor: '#101312',
+  publisher: 'Apna Sheher',
+  locale: 'en_IN',
+  socialImage: { file: 'resource/app/social-preview.png', width: 1200, height: 630, alt: 'SPoT app for finding rentals and managing properties, tenants and rent records.' },
   navigation: [
     { id: 'experience', label: 'The experience' },
     { id: 'renters', label: 'For renters' },
@@ -22,7 +25,7 @@ export const pages = [
   { file: 'landlords/index.html', stylesheet: 'styles/landlords.css', title: 'Landlord App for Tenant & Rent Management | SPoT', description: 'List rental properties, manage tenants and track rent payment records with SPoT for Android. Property aur kiraye ka hisaab, ek jagah.' },
   { file: 'career.html', title: 'Careers | SPoT', description: 'Connect with the SPoT team about opportunities to improve the rental experience.' },
   { file: 'privacy.html', title: 'Privacy Policy | SPoT', description: 'Read the SPoT privacy policy and find privacy and account support.' },
-  { file: 'delete-account.html', title: 'Request account deletion | SPoT', description: 'Prepare an account deletion email for the SPoT support team.' },
+  { file: 'delete-account.html', noindex: true, title: 'Request account deletion | SPoT', description: 'Prepare an account deletion email for the SPoT support team.' },
 ];
 
 // Directory indexes work on GitHub Pages without a rewrite or client router.
