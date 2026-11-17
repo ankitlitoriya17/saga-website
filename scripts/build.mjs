@@ -68,6 +68,7 @@ ${structuredData}  <link rel="preload" href="${prefix}resource/fonts/outfit-regu
   <link rel="stylesheet" href="${prefix}styles/shared.css?v=${version}">
 ${page.stylesheet ? `  <link rel="stylesheet" href="${prefix}${page.stylesheet}?v=${version}">\n` : ''}\
   <script type="module" src="${prefix}scripts/site.mjs?v=${version}"></script>
+  <script defer src="${site.analytics.src}" data-cf-beacon="${escape(JSON.stringify({ token: site.analytics.token }))}"></script>
 ${page.file === 'delete-account.html' ? '  <script src="scripts/deletion.js" defer></script>\n' : ''}\
 </head>
 <body id="top">
