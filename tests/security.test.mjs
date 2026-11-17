@@ -18,6 +18,11 @@ test('every page enforces local assets and blocks inline code and network connec
     assert.match(html, /name="referrer" content="no-referrer"/);
     assert.doesNotMatch(html, /<style\b|\sstyle=|\son\w+\s*=|javascript:|<iframe\b|<object\b/i);
     for (const script of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
+      if (script[1].trim() === 'type="application/ld+json"') {
+        // Structured data is an inert JSON block (not executable); require valid JSON.
+        assert.doesNotThrow(() => JSON.parse(script[2]));
+        continue;
+      }
       assert.match(script[1], /src="(?:\.\.\/)*scripts\/[\w.-]+\.m?js(?:\?v=[a-f0-9]{12})?"/);
       assert.equal(script[2].trim(), '');
     }

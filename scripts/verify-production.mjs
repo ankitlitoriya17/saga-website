@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { site, pages, pagePath } from '../src/site.mjs';
-import { publicAssets } from '../src/public-assets.mjs';
+import { publicAssets, crawlerFiles } from '../src/public-assets.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const git = (...args) => execFileSync('git', ['-c', `safe.directory=${root}`, '-C', root, ...args], { maxBuffer: 10 * 1024 * 1024 });
@@ -23,6 +23,7 @@ const checks = [
   { path: '/property-share-assets/property.css', file: 'property-share-assets/property.css', type: 'text/css' },
   { path: '/.well-known/assetlinks.json', file: '.well-known/assetlinks.json', type: 'application/json' },
   { path: '/app-ads.txt', file: 'app-ads.txt', type: 'text/plain' },
+  ...crawlerFiles.map(asset => ({ path: `/${asset.file}`, ...asset })),
 ];
 
 const results = await Promise.all(checks.map(async check => {
