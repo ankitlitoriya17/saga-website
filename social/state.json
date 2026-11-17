@@ -151,6 +151,14 @@
         "updated_at": "2026-11-16T22:59:27.941Z",
         "post_id": "18111447907908989"
       }
+    },
+    "morning": {
+      "facebook": {
+        "status": "pending",
+        "slug": "rent-reminders",
+        "content_id": "3b166a595a5b88ad8b5e2c9b596d20d8d3a96b57ad6f124572ddc83dbc3ae535",
+        "updated_at": "2026-11-17T01:51:07.854Z"
+      }
     }
   }
 }
