@@ -1,7 +1,7 @@
-<section class="section-wrap page-intro"><p class="eyebrow">YOUR INFORMATION</p><h1>Privacy policy.</h1><p class="lead">Read the SPoT privacy policy below. For privacy questions, contact <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>.</p><p class="policy-meta">Policy last updated: [PUBLICATION DATE].</p></section>
+<section class="section-wrap page-intro"><p class="eyebrow">YOUR INFORMATION</p><h1>Privacy policy.</h1><p class="lead">Read the SPoT privacy policy below. For privacy questions, contact <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>.</p><p class="policy-meta">Policy last updated: 17 November 2026.</p></section>
 <section id="privacy-policy" class="section-wrap policy" aria-labelledby="policy-heading">
       <h2 id="policy-heading">Privacy Policy</h2>
-      <p><strong>Last updated:</strong> [PUBLICATION DATE]</p>
+      <p><strong>Last updated:</strong> 17 November 2026</p>
       <p><strong>Developer:</strong> apnasheher</p>
 
       <h3>1. Introduction</h3>
@@ -19,9 +19,10 @@
       <p><strong>b. Tenant Aadhaar documents (sensitive)</strong></p>
       <p>As a tenant, you may choose to upload the front and back of your Aadhaar card, as an image or PDF, from your stay in the app so that your landlord can verify your stay. Uploading is optional.</p>
       <ul>
-        <li>Aadhaar documents are stored privately in Google Firebase Storage. They are not public and do not have shareable download links.</li>
-        <li>Only you and the landlord who manages your stay, for the property linked to that stay, can view them. The app shows a temporary preview through our server, which checks that relationship each time.</li>
-        <li>Before upload, the app runs an on-device image safety check on your phone. Aadhaar documents are not sent to cloud AI services for this check.</li>
+        <li>Aadhaar documents are stored in Google Firebase Storage. They are not published in listings or shown to other users.</li>
+        <li>In the app, only you and the landlord who manages your stay, for the property linked to that stay, can view them. Current versions of the app show a temporary preview through our server, which checks that relationship each time.</li>
+        <li>Documents uploaded with earlier versions of the app were given a private download link. Anyone who has that link can open the file. The link is saved only in your stay record, which only you and your landlord can access in the app.</li>
+        <li>On supported devices, the app runs an on-device image safety check before upload. Aadhaar documents are not sent to cloud AI services for this check.</li>
         <li>SPoT does not perform KYC, does not verify documents with UIDAI or any government system, and does not read or store your Aadhaar number as a separate field.</li>
         <li>Never send your Aadhaar number, passwords, OTPs or banking details by email or in chat.</li>
       </ul>
@@ -37,7 +38,7 @@
         <li>Information a landlord enters about a tenant or stay, such as name, phone number, address, occupation, number of family members, move-in and exit dates, rent, dues, meter readings, payments and complaints</li>
         <li>Rental applications, visit requests, favourites and rent agreement requests</li>
       </ul>
-      <p>If a landlord adds you as a tenant, the landlord provides this information to us. Landlords must have a lawful basis and your permission to add your details.</p>
+      <p>If a landlord adds you as a tenant, the landlord provides this information to us. Landlords should add a tenant's details only with the tenant's permission.</p>
 
       <p><strong>e. Messages and notifications</strong></p>
       <ul>
@@ -56,8 +57,8 @@
         <li>Advertising ID and other identifiers used by Google Mobile Ads (see section 6)</li>
       </ul>
 
-      <p><strong>h. Payments</strong></p>
-      <p>Where the app offers a UPI payment, the payment is completed in your own UPI app. SPoT records the payment request, its status and transaction reference. SPoT does not receive your card numbers, bank account numbers or UPI PIN.</p>
+      <p><strong>h. Payment records</strong></p>
+      <p>SPoT does not process payments. Landlords and tenants can record rent payments, payment methods, dues and approvals in the app; these are records only. If you made a listing payment through UPI in an earlier version of the app, we keep its record (amount, status and transaction reference) for administration. SPoT does not receive your card numbers, bank account numbers or UPI PIN.</p>
 
       <h3>3. How We Use Information</h3>
       <ul>
@@ -84,7 +85,7 @@
         <li><strong>Google Cloud Vertex AI</strong>: property photo moderation</li>
         <li><strong>Google Places API</strong>: place and city suggestions</li>
         <li><strong>Google Mobile Ads (AdMob) and User Messaging Platform</strong>: advertising and consent</li>
-        <li><strong>Supabase (legacy)</strong>: some older listing photos were stored with Supabase before we moved to Google Cloud. These older photos may still be stored there and shown in listings. New photos are not uploaded to Supabase.</li>
+        <li><strong>Supabase (legacy)</strong>: some older listing photos were stored with Supabase before we moved to Google Cloud. These older photos may still be stored there and shown in listings. They were not checked by Vertex AI, and anyone who has their link can open them. Current versions of the app do not upload photos to Supabase.</li>
       </ul>
       <p>Property photos are served through our server only after their approval is checked; they are not stored in a public bucket. Profile photos you add can be viewed by anyone who has the photo's link.</p>
       <p><strong>Sharing with other users.</strong> Information is shared with other users when the feature requires it: published listings and approved photos are visible to app users; your messages go to the person you message; applications go to the landlord; tenancy, rent and billing records are visible to the landlord and the linked tenant; Aadhaar documents are visible only as described in section 2b.</p>
@@ -103,10 +104,10 @@
       <p>This data is used to serve ads, apply frequency capping, measure performance, prevent fraud and debug ad delivery. You can reset or delete your device's Advertising ID, opt out of ad personalization in your device settings, and adjust Google ad settings.</p>
 
       <h3>7. Data Security</h3>
-      <p>Data is sent over encrypted connections (HTTPS/TLS). Access to stored data is restricted by Firebase security rules and server checks, and Aadhaar documents and property photos are not given public download links. No digital system is completely secure.</p>
+      <p>Data is sent over encrypted connections (HTTPS/TLS). Access to stored data is restricted by Firebase security rules and server checks. New property photos are kept in private storage and served only after approval. No digital system is completely secure.</p>
 
       <h3>8. Device Backup and Transfer</h3>
-      <p>SPoT supports Android Auto Backup and device-to-device transfer. Your phone may back up app data such as saved listing drafts, pending edits, photos waiting to upload, cached app data and settings to your Google account, or transfer them to a new phone. Cloud backup is used only on devices that support encrypted backup. Sign-in sessions and authentication keys are excluded, so you must sign in again after restoring. Restored pending changes are held for your review before they are sent. Temporary Aadhaar previews are not included in backups. Backups are managed by Android and Google under your Google account settings.</p>
+      <p>SPoT allows Android Auto Backup and device-to-device transfer. Depending on your device and settings, Android may back up SPoT app data, such as saved drafts, pending changes, cached app data and settings, to your Google account, or move it to a new phone. SPoT's own saved sign-in session is not backed up, and temporary Aadhaar previews are not backed up. Backups are managed by Android and Google under your Google account settings, and you can turn backup off in your device settings.</p>
 
       <h3>Safety, Report &amp; Block (Abuse Prevention)</h3>
       <p>SPoT includes features that allow users to report or block other users and/or content to help maintain a safe platform.</p>
@@ -137,17 +138,17 @@
       <ul>
         <li>We keep personal data only as long as needed to provide SPoT, or as required by law.</li>
         <li>You can replace your Aadhaar documents in the app. To have them deleted, contact support at the email below.</li>
-        <li>Landlords can remove listing photos and delete listings in the app. Deleting a listing removes its photos from our storage.</li>
+        <li>Landlords can remove listing photos and delete listings in the app. Deleting a listing removes its photos from our Google Cloud storage. Older Supabase photos may not be removed automatically; contact support to request their deletion.</li>
         <li>Property photos that are rejected, or that cannot be checked, are deleted. Uploaded property photos that are not used in a listing are deleted automatically after about 7 days.</li>
-        <li>To delete your account, open Settings &gt; Delete account in the app, or visit <a href="delete-account.html">Delete my account</a>. Support will verify your account and delete your account and associated data. We will tell you about any data we must keep, for example for legal, security or fraud-prevention reasons.</li>
+        <li>To delete your account, open Settings &gt; Delete account in the app, or visit <a href="delete-account.html">Delete my account</a>. Support will verify that you own the account and then process the deletion of your account and associated data. Support will tell you about any data that must be kept, for example for legal, security or fraud-prevention reasons. Account deletion is permanent once completed.</li>
         <li>Information a landlord entered about a tenant, and shared tenancy, rent or chat records, may also be held in the other party's account.</li>
       </ul>
 
       <h3>10. Children's Privacy</h3>
       <p>SPoT is not intended for users under the age of 18. We do not knowingly collect personal data from children.</p>
 
-      <h3>11. Payments and Bookings</h3>
-      <p>SPoT does not process card or bank payments and does not take bookings. Rent discussions and payments happen directly between users. Where a UPI payment is offered, it is completed in your UPI app as described in section 2h.</p>
+      <h3>11. No Payments or Bookings</h3>
+      <p>SPoT does not process payments and does not take bookings. Rent discussions and payments happen directly between users. Payment records are described in section 2h.</p>
 
       <h3>Website analytics (added November 2026)</h3>
       <p>This website (not the mobile app) uses Cloudflare Web Analytics to count page views and understand which pages and referring sites bring visitors. It is cookieless and does not require you to sign in. It may process technical information such as the page visited, referrer, browser, device type and approximate country. We use it only to improve the website. The provider's practices are described in Cloudflare's own privacy documentation.</p>
