@@ -2,7 +2,8 @@
 
 ## Implemented locally
 
-- Same-origin scripts, styles and images; no CDN fonts, external JavaScript or trackers.
+- Same-origin scripts, styles and images; no CDN fonts. The only external script is the
+  cookieless Cloudflare Web Analytics beacon (`src/site.mjs`); no other trackers.
 - Meta CSP denies unspecified resources, inline code, backend connections, objects,
   base URL overrides and form submissions. The deletion action uses an explicit,
   encoded `mailto:` navigation with a fixed recipient and subject.
