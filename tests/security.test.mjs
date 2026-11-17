@@ -18,6 +18,12 @@ test('every page enforces local assets and blocks inline code and network connec
     assert.match(html, /name="referrer" content="no-referrer"/);
     assert.doesNotMatch(html, /<style\b|\sstyle=|\son\w+\s*=|javascript:|<iframe\b|<object\b/i);
     for (const script of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
+      if (script[1].includes(`src="${site.analytics.src}"`)) {
+        // The only third-party script: Cloudflare's analytics beacon, with an empty body.
+        assert.equal(script[2].trim(), '');
+        assert.match(script[1], new RegExp(`data-cf-beacon="[^"]*${site.analytics.token}[^"]*"`));
+        continue;
+      }
       if (script[1].trim() === 'type="application/ld+json"') {
         // Structured data is an inert JSON block (not executable); require valid JSON.
         assert.doesNotThrow(() => JSON.parse(script[2]));
@@ -29,7 +35,7 @@ test('every page enforces local assets and blocks inline code and network connec
     for (const asset of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
       const value = asset[1].replaceAll('&amp;', '&');
       if (/^https:/.test(value)) {
-        assert.ok([site.origin, 'https://play.google.com'].includes(new URL(value).origin), value);
+        assert.ok([site.origin, 'https://play.google.com', new URL(site.analytics.src).origin].includes(new URL(value).origin), value);
       } else if (!value.startsWith('mailto:') && !value.startsWith('#')) {
         await access(new URL(value.split(/[?#]/)[0], new URL(file, root)));
       }

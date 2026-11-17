@@ -6,6 +6,8 @@ export const site = Object.freeze({
   supportEmail: 'apnagharapnasheher@gmail.com',
   themeColor: '#101312',
   publisher: 'Apna Sheher',
+  // Cloudflare Web Analytics (cookieless). The site token is public by design.
+  analytics: { src: 'https://static.cloudflareinsights.com/beacon.min.js', token: '6edd351065834147aa5f910334df8116' },
   locale: 'en_IN',
   socialImage: { file: 'resource/app/social-preview.png', width: 1200, height: 630, alt: 'SPoT app for finding rentals and managing properties, tenants and rent records.' },
   navigation: [
@@ -18,7 +20,7 @@ export const site = Object.freeze({
 
 // GitHub Pages supports the meta form below. frame-ancestors requires an HTTP
 // response header; do not claim this meta policy prevents framing.
-export const contentSecurityPolicy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
+export const contentSecurityPolicy = "default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src https://cloudflareinsights.com; object-src 'none'; base-uri 'none'; form-action 'none'";
 
 export const pages = [
   { file: 'index.html', title: 'SPoT | A place for your next chapter', description: 'Find homes, rooms, PGs and shops. Manage properties, tenants and rent records with SPoT for Android.' },
