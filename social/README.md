@@ -1,4 +1,4 @@
-# SPoT — zero-subscription Facebook + Instagram automation
+# SPoT — zero-subscription Facebook + Instagram (+ YouTube Shorts) automation
 
 The SPoT website repository hosts an automated, template-driven social publisher.
 It creates a **different 1080×1080 JPEG and Hinglish caption** for each scheduled
@@ -44,6 +44,39 @@ social/angles.json. Each slot's generated artwork is stored as
 social/images/YYYY-MM-DD-morning.jpg or social/images/YYYY-MM-DD-evening.jpg.
 The no-repeat ledger is social/state.json, public in this public repo and
 intended to contain **no tokens, tenant records or other private data**.
+
+## Feature-ad campaigns (social/campaigns.json)
+
+A campaign post is a dated ad that **takes over one slot** (date + morning/evening) while its
+campaign is `"active": true`. It has its own Hinglish caption, a landing `link` on
+spot.apnasheher.com, a dedicated artwork layout (mini To-Let poster whose QR opens the
+campaign page) and a vertical **YouTube Short**. The rotation post for that slot is skipped,
+never repeated later. Campaign captions are hashed and ledgered exactly like rotation posts.
+
+- Pause a campaign: set `"active": false` and merge. Future slots return to the rotation.
+- Add a post: one entry per slot; `node --test tests/social-post.test.mjs` validates lengths,
+  links, duplicates and uniqueness against all 1,568 rotation posts.
+
+Current campaign: `qr-poster-launch` (QR To-Let poster + ₹999 COD printed board), six posts
+between 2026-11-24 and 2026-12-04. Only run it while the app version with the feature is live
+on Google Play.
+
+## YouTube Shorts (campaign posts only)
+
+On campaign slots the workflow installs ffmpeg, renders an 11-second 1080×1920 Short from three
+frames and, when live, uploads it with the YouTube Data API v3 (resumable upload, public,
+not made for kids). Daily rotation tips are not posted to YouTube.
+
+| Type | Key | Purpose |
+| --- | --- | --- |
+| Secret | YT_CLIENT_ID | OAuth client ID (Google Cloud project with YouTube Data API v3 enabled) |
+| Secret | YT_CLIENT_SECRET | OAuth client secret |
+| Secret | YT_REFRESH_TOKEN | Refresh token for the channel owner with scope `https://www.googleapis.com/auth/youtube.upload` |
+
+Without all three secrets YouTube is skipped and Facebook/Instagram still publish. Important:
+videos uploaded through an **unverified** API project are locked as private until Google's
+YouTube API compliance audit approves the project. An upload uses 1,600 of the default
+10,000 daily quota units.
 
 ## Safe activation
 

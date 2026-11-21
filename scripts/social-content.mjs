@@ -3,6 +3,8 @@ import { createHash } from 'node:crypto';
 const LAUNCH = Date.parse('2026-11-09T00:00:00Z');
 const DAY = 86_400_000;
 const SLOTS = Object.freeze(['morning', 'evening']);
+export const CHANNELS = Object.freeze(['facebook', 'instagram', 'youtube']);
+const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.apnaghar.saga';
 
 export function indiaDate(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-GB', {
@@ -34,7 +36,47 @@ export function backupWindowAllowed(now = new Date(), slot) {
   return minutes >= start && minutes <= end;
 }
 
-export function selectPost(posts, angles, date, slot) {
+/**
+ * A dated feature-ad post from an active campaign takes over its slot. Campaign posts carry
+ * their own caption, landing link and a vertical video for YouTube Shorts. The rotation post
+ * that would have run in that slot is simply skipped, never repeated later.
+ */
+export function campaignPost(campaigns, date, slot) {
+  for (const campaign of campaigns?.campaigns || []) {
+    if (campaign.active !== true) continue;
+    const entry = (campaign.posts || []).find(post => post.date === date && post.slot === slot);
+    if (entry) return { campaign, entry };
+  }
+  return null;
+}
+
+export function validateCampaigns(campaigns) {
+  const seen = new Set();
+  for (const campaign of campaigns?.campaigns || []) {
+    if (!/^[a-z0-9-]{3,40}$/.test(campaign.id || '')) throw new Error('Invalid campaign id');
+    if (!/^https:\/\/spot\.apnasheher\.com\/[a-z0-9/-]*$/.test(campaign.link || '')) {
+      throw new Error('Campaign link must be a spot.apnasheher.com page');
+    }
+    if (typeof campaign.hashtags !== 'string' || !campaign.hashtags.includes('#SPoTApp')) {
+      throw new Error('Campaign hashtags must include #SPoTApp');
+    }
+    for (const post of campaign.posts || []) {
+      const key = post.date + '/' + post.slot;
+      if (seen.has(key)) throw new Error('Two campaign posts claim ' + key);
+      seen.add(key);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(post.date) || !SLOTS.includes(post.slot)) throw new Error('Invalid campaign slot');
+      if (!Array.isArray(post.headline) || post.headline.length !== 2 || post.headline.some(line => !line || line.length > 26)) {
+        throw new Error('Campaign headline needs two short lines: ' + key);
+      }
+      if (!post.subline || post.subline.length > 40) throw new Error('Campaign subline too long: ' + key);
+      if (!post.caption || post.caption.length > 600) throw new Error('Campaign caption missing or too long: ' + key);
+      if (!post.youtubeTitle || post.youtubeTitle.length > 80) throw new Error('YouTube title missing or too long: ' + key);
+    }
+  }
+  return true;
+}
+
+export function selectPost(posts, angles, date, slot, campaigns = null) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !SLOTS.includes(slot)) {
     throw new Error('Invalid date or posting slot');
   }
@@ -56,6 +98,18 @@ export function selectPost(posts, angles, date, slot) {
       !posts.every(post => angles.topics?.[post.slug]?.length === tipCount) ||
       !Array.isArray(angles.hooks) || angles.hooks.length < 1) {
     throw new Error('Content bank is incomplete');
+  }
+  const special = campaignPost(campaigns, date, slot);
+  if (special) {
+    const { campaign, entry } = special;
+    const lead = entry.caption;
+    const contentId = createHash('sha256').update(lead + '\n' + campaign.hashtags).digest('hex');
+    return {
+      date, slot, index, slug: 'campaign-' + campaign.id, headline: entry.headline,
+      subline: entry.subline, lead, hashtags: campaign.hashtags, contentId,
+      filename: date + '-' + slot + '.jpg', campaign: campaign.id, link: campaign.link,
+      video: date + '-' + slot + '.mp4', youtubeTitle: entry.youtubeTitle,
+    };
   }
   const variation = Math.floor(index / posts.length);
   const tipIndex = variation % tipCount;
@@ -79,7 +133,7 @@ export function selectPost(posts, angles, date, slot) {
 }
 
 export function shouldPublish(state, date, slot, channel) {
-  if (!SLOTS.includes(slot) || !['facebook', 'instagram'].includes(channel)) return false;
+  if (!SLOTS.includes(slot) || !CHANNELS.includes(channel)) return false;
   const day = state[date] || {};
   // Old one-post-per-day state represents the existing evening campaign.
   if (slot === 'evening' && Object.hasOwn(day, channel)) return false;
@@ -91,7 +145,7 @@ export function contentAlreadyUsed(state, post) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !record || typeof record !== 'object') continue;
     for (const slot of SLOTS) {
       if (day === post.date && slot === post.slot) continue;
-      for (const channel of ['facebook', 'instagram']) {
+      for (const channel of CHANNELS) {
         if (record[slot]?.[channel]?.content_id === post.contentId) return true;
       }
     }
@@ -100,10 +154,26 @@ export function contentAlreadyUsed(state, post) {
 }
 
 export function captionFor(post, channel) {
+  if (post.link) {
+    const suffix = channel === 'instagram'
+      ? '\n\nUpdate SPoT from Google Play.\nDetails: ' + post.link
+      : '\n\nDetails: ' + post.link + '\nDownload SPoT: ' + PLAY_URL;
+    return post.lead + suffix + '\n\n' + post.hashtags;
+  }
   const suffix = channel === 'facebook'
-    ? '\n\nDownload SPoT: https://play.google.com/store/apps/details?id=com.apnaghar.saga\nWebsite: https://spot.apnasheher.com'
+    ? '\n\nDownload SPoT: ' + PLAY_URL + '\nWebsite: https://spot.apnasheher.com'
     : '\n\nSearch SPoT on Google Play.\nhttps://spot.apnasheher.com';
   return post.lead + suffix + '\n\n' + post.hashtags;
+}
+
+/** YouTube Shorts metadata: titles must stay under 100 characters and include #Shorts. */
+export function youtubeMetadata(post) {
+  if (!post.video || !post.youtubeTitle) throw new Error('This post has no YouTube video');
+  return {
+    title: (post.youtubeTitle + ' #Shorts').slice(0, 100),
+    description: captionFor(post, 'youtube'),
+    tags: post.hashtags.split(/\s+/).map(tag => tag.replace(/^#/, '')).filter(Boolean).slice(0, 10),
+  };
 }
 
 export function isLive(env) {
