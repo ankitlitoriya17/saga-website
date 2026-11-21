@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 const LAUNCH = Date.parse('2026-11-09T00:00:00Z');
 const DAY = 86_400_000;
 const SLOTS = Object.freeze(['morning', 'evening']);
-export const CHANNELS = Object.freeze(['facebook', 'instagram', 'youtube']);
+export const CHANNELS = Object.freeze(['facebook', 'instagram']);
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.apnaghar.saga';
 
 export function indiaDate(now = new Date()) {
@@ -38,7 +38,7 @@ export function backupWindowAllowed(now = new Date(), slot) {
 
 /**
  * A dated feature-ad post from an active campaign takes over its slot. Campaign posts carry
- * their own caption, landing link and a vertical video for YouTube Shorts. The rotation post
+ * their own caption, landing link and artwork. The rotation post
  * that would have run in that slot is simply skipped, never repeated later.
  */
 export function campaignPost(campaigns, date, slot) {
@@ -70,7 +70,6 @@ export function validateCampaigns(campaigns) {
       }
       if (!post.subline || post.subline.length > 40) throw new Error('Campaign subline too long: ' + key);
       if (!post.caption || post.caption.length > 600) throw new Error('Campaign caption missing or too long: ' + key);
-      if (!post.youtubeTitle || post.youtubeTitle.length > 80) throw new Error('YouTube title missing or too long: ' + key);
     }
   }
   return true;
@@ -108,7 +107,6 @@ export function selectPost(posts, angles, date, slot, campaigns = null) {
       date, slot, index, slug: 'campaign-' + campaign.id, headline: entry.headline,
       subline: entry.subline, lead, hashtags: campaign.hashtags, contentId,
       filename: date + '-' + slot + '.jpg', campaign: campaign.id, link: campaign.link,
-      video: date + '-' + slot + '.mp4', youtubeTitle: entry.youtubeTitle,
     };
   }
   const variation = Math.floor(index / posts.length);
@@ -166,15 +164,6 @@ export function captionFor(post, channel) {
   return post.lead + suffix + '\n\n' + post.hashtags;
 }
 
-/** YouTube Shorts metadata: titles must stay under 100 characters and include #Shorts. */
-export function youtubeMetadata(post) {
-  if (!post.video || !post.youtubeTitle) throw new Error('This post has no YouTube video');
-  return {
-    title: (post.youtubeTitle + ' #Shorts').slice(0, 100),
-    description: captionFor(post, 'youtube'),
-    tags: post.hashtags.split(/\s+/).map(tag => tag.replace(/^#/, '')).filter(Boolean).slice(0, 10),
-  };
-}
 
 export function isLive(env) {
   if (env.GITHUB_REF !== 'refs/heads/main' || env.SPOT_SOCIAL_LIVE !== 'true') return false;

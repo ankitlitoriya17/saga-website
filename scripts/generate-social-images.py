@@ -2,13 +2,11 @@
 """Render one date/slot-specific SPoT JPEG using the prepared Node content.
 
 Campaign (feature-ad) posts use a dedicated layout with a mini To-Let poster whose QR opens the
-campaign page, and also get a 1080x1920 YouTube Short rendered with ffmpeg.
+campaign page.
 """
 import json
 import os
 import re
-import shutil
-import subprocess
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -134,70 +132,7 @@ def render_campaign_square():
     return canvas
 
 
-def render_short_frames():
-    """Three 1080x1920 frames: the promise, the poster, the call to action."""
-    frames = []
-    for step in range(3):
-        canvas = Image.new("RGB", (1080, 1920), PALETTE["dark"])
-        draw = ImageDraw.Draw(canvas)
-        draw.rounded_rectangle((54, 60, 1026, 1860), radius=56, fill=PALETTE["surface"], outline="#343C34", width=3)
-        brand_row(canvas, draw, 110, 140)
-        if step == 0:
-            draw.rounded_rectangle((110, 560, 300, 620), radius=30, fill=PALETTE["gold"])
-            centered(draw, "NEW", 205, 568, font(36, True), PALETTE["dark"])
-            headline_font = shared_fit(draw, DATA["headline"], 84, 860)
-            for row, line in enumerate(DATA["headline"]):
-                draw.text((110, 700 + row * 120), line, fill=PALETTE["ivory"], font=headline_font)
-            draw.text((110, 1020), DATA["subline"], fill=PALETTE["gold"], font=fit_text(draw, DATA["subline"], 46, 860))
-        elif step == 1:
-            poster = poster_mock(640)
-            canvas.paste(poster, ((1080 - poster.width) // 2, 400))
-            centered(draw, "Scan → listing opens on SPoT", 540, 1380, fit_text(draw, "Scan → listing opens on SPoT", 52, 860, True), PALETTE["ivory"])
-        else:
-            lines = ["SPoT app → Property", "→ Generate QR poster"]
-            for row, line in enumerate(lines):
-                draw.text((110, 640 + row * 110), line, fill=PALETTE["ivory"], font=fit_text(draw, line, 76, 860, True))
-            draw.text((110, 920), "Printed board: ₹999, cash on delivery", fill=PALETTE["gold"],
-                      font=fit_text(draw, "Printed board: ₹999, cash on delivery", 44, 860))
-            draw.text((110, 1040), "Update SPoT on Google Play", fill=PALETTE["muted"], font=font(40))
-        draw.text((110, 1740), "spot.apnasheher.com/qr-poster", fill=PALETTE["muted"], font=font(38))
-        frames.append(canvas)
-    return frames
-
-
-def render_short(video_name):
-    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}-(morning|evening)\.mp4", video_name):
-        raise ValueError("Invalid video path")
-    work = ROOT / "social/.video"
-    work.mkdir(parents=True, exist_ok=True)
-    paths = []
-    for index, frame in enumerate(render_short_frames()):
-        path = work / f"frame-{index}.png"
-        frame.save(path)
-        paths.append(path)
-    ffmpeg = shutil.which("ffmpeg")
-    if not ffmpeg:
-        if os.environ.get("CI"):
-            raise RuntimeError("ffmpeg is required to render the YouTube Short")
-        print("ffmpeg not found: Short frames written, video skipped (local preview)")
-        return
-    output = work / video_name
-    command = [ffmpeg, "-y", "-loglevel", "error"]
-    for path in paths:
-        command += ["-loop", "1", "-t", "4", "-i", str(path)]
-    command += ["-f", "lavfi", "-t", "11", "-i", "anullsrc=r=44100:cl=stereo",
-                "-filter_complex",
-                "[0][1]xfade=transition=fade:duration=0.5:offset=3.5[a];"
-                "[a][2]xfade=transition=fade:duration=0.5:offset=7,format=yuv420p[v]",
-                "-map", "[v]", "-map", "3", "-c:v", "libx264", "-r", "30", "-c:a", "aac",
-                "-shortest", "-movflags", "+faststart", str(output)]
-    subprocess.run(command, check=True)
-    print("Prepared " + str(output.relative_to(ROOT)))
-
-
 canvas = render_campaign_square() if DATA.get("campaign") else render_rotation()
 destination = TARGET / FILE
 canvas.save(destination, format="JPEG", quality=90, subsampling=0, optimize=True)
 print("Prepared " + str(destination.relative_to(ROOT)))
-if DATA.get("video"):
-    render_short(DATA["video"])

@@ -63,24 +63,16 @@ jobs:
         run: python -m pip install -r social/requirements.txt
       - name: Validate social content and uniqueness checks
         run: node --test tests/social-post.test.mjs
-      - name: Render a sample campaign Short (pull requests only)
+      - name: Render a sample campaign creative (pull requests only)
         if: github.event_name == 'pull_request'
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           node scripts/social-post.mjs --sample-campaign
           python scripts/generate-social-images.py
-          ls -la social/.video/*.mp4
-          ffprobe -v error -select_streams v:0 -show_entries stream=width,height,codec_name -of csv=p=0 social/.video/*.mp4
       - name: Prepare unique slot content
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           SPOT_POST_SLOT: ${{ inputs.slot }}
         run: node scripts/social-post.mjs --prepare
-      - name: Install ffmpeg for campaign YouTube Shorts
-        run: |
-          if node -e "process.exit(require('./social/.prepared.json').video ? 0 : 1)"; then
-            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          fi
       - name: Generate unique square JPEG for this slot
         run: |
           python scripts/generate-social-images.py
@@ -95,18 +87,12 @@ jobs:
               assert img.format == 'JPEG'
               assert img.size == (1080, 1080)
           print('Validated unique image: ' + str(file))
-          if data.get('video'):
-              video = Path('social/.video') / data['video']
-              assert video.is_file() and video.stat().st_size > 10000
-              print('Validated YouTube Short: ' + str(video))
           PY
       - name: Save reviewable creative
         uses: actions/upload-artifact@v4
         with:
           name: spot-social-artwork
-          path: |
-            social/images/*.jpg
-            social/.video/*.mp4
+          path: social/images/*.jpg
           retention-days: 7
       - name: Dry run or publish to Meta
         env:
@@ -121,7 +107,4 @@ jobs:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_PAGE_TOKEN: ${{ secrets.IG_PAGE_TOKEN }}
-          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
-          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
-          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: node scripts/social-post.mjs
