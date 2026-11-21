@@ -43,6 +43,11 @@ def fit_text(draw, line, max_size, width, bold=False, min_size=18):
     raise ValueError("Artwork text is too long: " + line)
 
 
+def shared_fit(draw, lines, max_size, width):
+    """One font size for every line, so a two-line headline reads as one block."""
+    return min((fit_text(draw, line, max_size, width, True) for line in lines), key=lambda f: f.size)
+
+
 def centered(draw, text, center_x, y, f, fill):
     bounds = draw.textbbox((0, 0), text, font=f)
     draw.text((center_x - (bounds[2] - bounds[0]) / 2, y), text, fill=fill, font=f)
@@ -116,8 +121,9 @@ def render_campaign_square():
     brand_row(canvas, draw, 104, 164)
     draw.rounded_rectangle((104, 330, 270, 378), radius=24, fill=PALETTE["gold"])
     centered(draw, "NEW", 187, 336, font(30, True), PALETTE["dark"])
+    headline_font = shared_fit(draw, DATA["headline"], 60, 520)
     for row, line in enumerate(DATA["headline"]):
-        draw.text((104, 420 + row * 86), line, fill=PALETTE["ivory"], font=fit_text(draw, line, 60, 520, True))
+        draw.text((104, 420 + row * 86), line, fill=PALETTE["ivory"], font=headline_font)
     draw.rounded_rectangle((104, 640, 624, 760), radius=28, fill="#283029")
     draw.text((128, 682), DATA["subline"], fill=PALETTE["gold"], font=fit_text(draw, DATA["subline"], 32, 470))
     poster = poster_mock(300)
@@ -139,8 +145,9 @@ def render_short_frames():
         if step == 0:
             draw.rounded_rectangle((110, 560, 300, 620), radius=30, fill=PALETTE["gold"])
             centered(draw, "NEW", 205, 568, font(36, True), PALETTE["dark"])
+            headline_font = shared_fit(draw, DATA["headline"], 84, 860)
             for row, line in enumerate(DATA["headline"]):
-                draw.text((110, 700 + row * 120), line, fill=PALETTE["ivory"], font=fit_text(draw, line, 84, 860, True))
+                draw.text((110, 700 + row * 120), line, fill=PALETTE["ivory"], font=headline_font)
             draw.text((110, 1020), DATA["subline"], fill=PALETTE["gold"], font=fit_text(draw, DATA["subline"], 46, 860))
         elif step == 1:
             poster = poster_mock(640)
