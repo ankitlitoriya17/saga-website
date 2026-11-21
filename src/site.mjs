@@ -25,6 +25,7 @@ export const contentSecurityPolicy = "default-src 'none'; script-src 'self' http
 export const pages = [
   { file: 'index.html', title: 'SPoT | A place for your next chapter', description: 'Find homes, rooms, PGs and shops. Manage properties, tenants and rent records with SPoT for Android.' },
   { file: 'landlords/index.html', stylesheet: 'styles/landlords.css', title: 'Landlord App for Tenant & Rent Management | SPoT', description: 'List rental properties, manage tenants and track rent payment records with SPoT for Android. Property aur kiraye ka hisaab, ek jagah.' },
+  { file: 'qr-poster/index.html', stylesheet: 'styles/landlords.css', title: 'QR To-Let Poster & Printed Board for Landlords | SPoT', description: 'Turn your SPoT listing into a QR To-Let poster, or order a printed board for ₹999 cash on delivery. Scan karein, property dekhein.' },
   { file: 'career.html', title: 'Careers | SPoT', description: 'Connect with the SPoT team about opportunities to improve the rental experience.' },
   { file: 'privacy.html', title: 'Privacy Policy | SPoT', description: 'Read the SPoT privacy policy and find privacy and account support.' },
   { file: 'delete-account.html', noindex: true, title: 'Request account deletion | SPoT', description: 'Prepare an account deletion email for the SPoT support team.' },

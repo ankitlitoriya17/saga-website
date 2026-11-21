@@ -1,0 +1,60 @@
+{
+  "campaigns": [
+    {
+      "id": "qr-poster-launch",
+      "active": true,
+      "link": "https://spot.apnasheher.com/qr-poster/",
+      "hashtags": "#SPoTApp #ToLet #QRPoster #LandlordIndia #RentalProperty",
+      "posts": [
+        {
+          "date": "2026-11-24",
+          "slot": "evening",
+          "headline": ["Your To-Let poster,", "now with a QR."],
+          "subline": "Scan karo, listing dekho",
+          "youtubeTitle": "To-Let poster with a QR that opens your listing",
+          "caption": "Naya SPoT update: apni published property se ek tap mein QR wala To-Let poster banayein. Koi bhi raah chalta phone camera se scan kare aur seedha aapki listing dekhe — photos, rent aur details ke saath. A4 par print karein ya WhatsApp par share karein."
+        },
+        {
+          "date": "2026-11-26",
+          "slot": "morning",
+          "headline": ["Gate par lagayein,", "address chhupayein."],
+          "subline": "QR-only poster for your own gate",
+          "youtubeTitle": "QR-only To-Let poster for your own gate",
+          "caption": "Apne ghar ke gate ke liye 'QR only' poster chunein — poster par rent aur address nahi chhapta, bas TO-LET aur bada QR. Jo scan kare, wahi aapki published listing dekhe. Hindi, English ya dono bhashaon mein."
+        },
+        {
+          "date": "2026-11-28",
+          "slot": "evening",
+          "headline": ["Printed To-Let board,", "₹999 cash on delivery."],
+          "subline": "Weather-resistant, ghar tak delivery",
+          "youtubeTitle": "Printed To-Let board for ₹999, cash on delivery",
+          "caption": "Print karwane ka jhanjhat nahi? SPoT app se apne QR poster ka mazboot, weather-resistant To-Let board order karein — ₹999 mein delivery shamil, payment delivery par cash mein. Printing se pehle hum call karke confirm karte hain."
+        },
+        {
+          "date": "2026-11-30",
+          "slot": "morning",
+          "headline": ["Generate. Print.", "Stick it up."],
+          "subline": "Property → Generate QR poster",
+          "youtubeTitle": "Make a QR To-Let poster in 3 steps",
+          "caption": "3 steps mein To-Let poster: 1) SPoT app mein apni published property kholein. 2) 'Generate QR poster' dabayein aur layout, colour aur bhasha chunein. 3) A4 par 100% size mein print karke gate ke paas aankhon ki unchai par lagayein."
+        },
+        {
+          "date": "2026-12-02",
+          "slot": "evening",
+          "headline": ["Photocopy wala poster,", "phir bhi scan hoga."],
+          "subline": "Black & white option, sasta print",
+          "youtubeTitle": "Black & white To-Let poster that still scans",
+          "caption": "Sasta print chahiye? QR poster ka Black & White option chunein — colour fills hat jaate hain, photocopy mein bhi QR saaf aata hai. Poster par aapka phone number ya pura address kabhi nahi chhapta."
+        },
+        {
+          "date": "2026-12-04",
+          "slot": "morning",
+          "headline": ["Board order kiya?", "Status app mein dekho."],
+          "subline": "Placed → Printing → Delivered",
+          "youtubeTitle": "Track your printed To-Let board order",
+          "caption": "Printed board order karne ke baad 'My board orders' mein har step dekhein — accepted, printing, shipped, delivered. Printing shuru hone tak order free mein cancel kar sakte hain. Board ₹999, cash on delivery."
+        }
+      ]
+    }
+  ]
+}

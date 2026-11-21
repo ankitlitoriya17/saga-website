@@ -14,6 +14,8 @@ export const publicAssets = [
   { file: 'resource/app/brand.png', type: 'image/png' },
   { file: 'resource/app/social-preview.png', type: 'image/png' },
   { file: 'resource/app/living-room.jpg', type: 'image/jpeg' },
+  { file: 'resource/app/poster/sample-gate.jpg', type: 'image/jpeg' },
+  { file: 'resource/app/poster/sample-detailed.jpg', type: 'image/jpeg' },
   ...screens.map(screen => ({ file: `resource/app/screens/${screen.key}.png`, type: 'image/png' })),
 ];
 
