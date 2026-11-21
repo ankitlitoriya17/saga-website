@@ -3,12 +3,11 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 import { indiaDate, resolveSlot, selectPost, shouldPublish, contentAlreadyUsed,
-  captionFor, isLive, backupWindowAllowed, validateCampaigns, youtubeMetadata } from './social-content.mjs';
+  captionFor, isLive, backupWindowAllowed, validateCampaigns } from './social-content.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const STATE_PATH = resolve(ROOT, 'social/state.json');
 const PREVIEW_PATH = resolve(ROOT, 'social/.prepared.json');
-const VIDEO_DIR = resolve(ROOT, 'social/.video');
 const ORIGIN = 'https://spot.apnasheher.com';
 const GRAPH_VERSION = process.env.META_GRAPH_VERSION || 'v27.0';
 if (!/^v\d+\.\d+$/.test(GRAPH_VERSION)) throw new Error('Invalid META_GRAPH_VERSION');
@@ -36,8 +35,7 @@ async function report(message) {
 }
 function safeError(error) {
   let message = String(error?.message || error);
-  for (const token of [process.env.FB_PAGE_TOKEN, process.env.IG_PAGE_TOKEN, process.env.YT_CLIENT_SECRET,
-    process.env.YT_REFRESH_TOKEN, youtubeAccessToken]) {
+  for (const token of [process.env.FB_PAGE_TOKEN, process.env.IG_PAGE_TOKEN]) {
     if (token) message = message.replaceAll(token, '[REDACTED]');
   }
   return message.slice(0, 400);
@@ -108,65 +106,11 @@ async function containerStatus(id, token) {
   }
   return data.status_code;
 }
-export function channels(env, post = {}) {
+export function channels(env) {
   return [
     ...(env.FB_PAGE_ID && env.FB_PAGE_TOKEN ? ['facebook'] : []),
     ...(env.IG_USER_ID && (env.IG_PAGE_TOKEN || env.FB_PAGE_TOKEN) ? ['instagram'] : []),
-    // YouTube gets Shorts only for campaign posts that carry a rendered vertical video.
-    ...(post.video && env.YT_CLIENT_ID && env.YT_CLIENT_SECRET && env.YT_REFRESH_TOKEN ? ['youtube'] : []),
   ];
-}
-let youtubeAccessToken = '';
-async function youtubeToken() {
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: process.env.YT_CLIENT_ID, client_secret: process.env.YT_CLIENT_SECRET,
-      refresh_token: process.env.YT_REFRESH_TOKEN, grant_type: 'refresh_token',
-    }),
-    signal: AbortSignal.timeout(30000),
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok || !data.access_token) {
-    throw new Error('YouTube OAuth refresh failed HTTP ' + response.status + ' ' + (data.error || ''));
-  }
-  youtubeAccessToken = data.access_token;
-  return data.access_token;
-}
-/** Resumable upload of the prepared Short; returns the new video id. */
-async function uploadYouTube(post) {
-  if (!/^\d{4}-\d{2}-\d{2}-(morning|evening)\.mp4$/.test(post.video)) throw new Error('Untrusted video filename');
-  const file = await readFile(resolve(VIDEO_DIR, post.video));
-  if (file.length < 10_000) throw new Error('Prepared Short is missing or empty');
-  const token = await youtubeToken();
-  const meta = youtubeMetadata(post);
-  const start = await fetch('https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + token, 'Content-Type': 'application/json; charset=UTF-8',
-      'X-Upload-Content-Type': 'video/mp4', 'X-Upload-Content-Length': String(file.length),
-    },
-    body: JSON.stringify({
-      snippet: { title: meta.title, description: meta.description, tags: meta.tags, categoryId: '22',
-        defaultLanguage: 'hi', defaultAudioLanguage: 'hi' },
-      status: { privacyStatus: 'public', selfDeclaredMadeForKids: false, embeddable: true },
-    }),
-    signal: AbortSignal.timeout(30000),
-  });
-  const session = start.headers.get('location');
-  if (!start.ok || !session) throw new Error('YouTube upload session failed HTTP ' + start.status);
-  const upload = await fetch(session, {
-    method: 'PUT',
-    headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'video/mp4' },
-    body: file,
-    signal: AbortSignal.timeout(300000),
-  });
-  const data = await upload.json().catch(() => ({}));
-  if (!upload.ok || !data.id) {
-    throw new Error('YouTube upload failed HTTP ' + upload.status + ' ' + (data.error?.message || ''));
-  }
-  return data.id;
 }
 async function loadCampaigns() {
   try {
@@ -190,12 +134,8 @@ async function buildPreview() {
     'Creative: ' + publicImageUrl(post));
   await report('Facebook caption:\n\n' + captionFor(post, 'facebook'));
   await report('Instagram caption:\n\n' + captionFor(post, 'instagram'));
-  if (post.video) {
-    const meta = youtubeMetadata(post);
-    await report('YouTube Short: ' + meta.title + '\n\n' + meta.description);
-  }
 }
-/** CI-only: prepare the first active campaign post so pull requests render a real Short. */
+/** CI-only: prepare the first active campaign post so pull requests render its artwork. */
 async function buildCampaignSample() {
   const campaigns = await loadCampaigns();
   const entry = campaigns?.campaigns?.find(campaign => campaign.active)?.posts?.[0];
@@ -236,8 +176,8 @@ async function run() {
     await report('Preview only. No post published; no media or state uploaded.');
     return;
   }
-  const platformList = channels(process.env, post);
-  if (platformList.length === 0) throw new Error('No publishing accounts configured');
+  const platformList = channels(process.env);
+  if (platformList.length === 0) throw new Error('No Meta publishing accounts configured');
   const state = await loadState();
   if (contentAlreadyUsed(state, post)) {
     throw new Error('Exact content has already been used in another slot');
@@ -274,25 +214,6 @@ async function run() {
   for (const channel of platformList) {
     if (!shouldPublish(state, post.date, post.slot, channel)) {
       await report(channel + ': SKIPPED (duplicate claim)');
-      continue;
-    }
-    if (channel === 'youtube') {
-      try {
-        // Durable claim before the upload; an unknown outcome is reviewed, never retried blindly.
-        await save(channel, 'pending');
-        const videoId = await uploadYouTube(post);
-        await save(channel, 'published', { post_id: videoId });
-        await report('youtube: PUBLISHED https://youtube.com/shorts/' + videoId);
-      } catch (error) {
-        failures++;
-        const message = safeError(error);
-        try {
-          if (state[post.date]?.[post.slot]?.[channel]) await save(channel, 'needs_review', { reason: message });
-        } catch (ledgerError) {
-          await report(channel + ': ledger error — ' + safeError(ledgerError));
-        }
-        await report('youtube: NEEDS REVIEW: ' + message + ' (check the channel before manual retry)');
-      }
       continue;
     }
     const token = channel === 'facebook'

@@ -119,8 +119,8 @@ test('creative captions contain real install links and branded tags', () => {
   assert.throws(() => selectPost(posts, angles, '2026-02-30', 'morning'), /Invalid/);
 });
 
-// ---- Feature-ad campaigns and YouTube Shorts ----
-import { validateCampaigns, youtubeMetadata, campaignPost } from '../scripts/social-content.mjs';
+// ---- Feature-ad campaigns ----
+import { validateCampaigns, campaignPost } from '../scripts/social-content.mjs';
 import { channels } from '../scripts/social-post.mjs';
 const campaigns = JSON.parse(readFileSync(new URL('../social/campaigns.json', import.meta.url), 'utf8'));
 
@@ -131,18 +131,15 @@ test('campaign bank is valid and every campaign post takes over exactly its slot
   for (const entry of entries) {
     const post = selectPost(posts, angles, entry.date, entry.slot, campaigns);
     assert.equal(post.lead, entry.caption);
-    assert.equal(post.video, entry.date + '-' + entry.slot + '.mp4');
+    assert.equal(post.link, 'https://spot.apnasheher.com/qr-poster/');
     assert.match(post.slug, /^campaign-/);
     assert.match(captionFor(post, 'facebook'), /spot\.apnasheher\.com\/qr-poster\//);
     assert.match(captionFor(post, 'facebook'), /play\.google\.com\/store\/apps/);
     assert.match(captionFor(post, 'instagram'), /qr-poster/);
-    const meta = youtubeMetadata(post);
-    assert.ok(meta.title.length <= 100 && meta.title.endsWith('#Shorts'));
-    assert.ok(meta.tags.includes('SPoTApp'));
     // Non-campaign slots stay on the normal rotation.
     const other = entry.slot === 'morning' ? 'evening' : 'morning';
     if (!campaignPost(campaigns, entry.date, other)) {
-      assert.equal(selectPost(posts, angles, entry.date, other, campaigns).video, undefined);
+      assert.equal(selectPost(posts, angles, entry.date, other, campaigns).link, undefined);
     }
   }
 });
@@ -159,7 +156,7 @@ test('campaign content never collides with the rotation or with itself', () => {
 test('inactive or invalid campaigns are ignored or rejected', () => {
   const entry = campaigns.campaigns[0].posts[0];
   const paused = { campaigns: campaigns.campaigns.map(campaign => ({ ...campaign, active: false })) };
-  assert.equal(selectPost(posts, angles, entry.date, entry.slot, paused).video, undefined);
+  assert.equal(selectPost(posts, angles, entry.date, entry.slot, paused).link, undefined);
   const bad = structuredClone(campaigns);
   bad.campaigns[0].link = 'https://evil.example/';
   assert.throws(() => validateCampaigns(bad), /link/);
@@ -167,16 +164,9 @@ test('inactive or invalid campaigns are ignored or rejected', () => {
   twice.campaigns[0].posts.push({ ...twice.campaigns[0].posts[0] });
   assert.throws(() => validateCampaigns(twice), /Two campaign posts/);
 });
-test('YouTube publishes only campaign Shorts and only with all OAuth secrets', () => {
-  const entry = campaigns.campaigns[0].posts[0];
-  const campaign = selectPost(posts, angles, entry.date, entry.slot, campaigns);
-  const rotation = selectPost(posts, angles, '2026-11-09', 'morning');
+test('campaign posts publish only to the configured Meta channels', () => {
   const env = { FB_PAGE_ID: '1', FB_PAGE_TOKEN: 't', YT_CLIENT_ID: 'c', YT_CLIENT_SECRET: 's', YT_REFRESH_TOKEN: 'r' };
-  assert.deepEqual(channels(env, campaign), ['facebook', 'youtube']);
-  assert.deepEqual(channels(env, rotation), ['facebook']);
-  assert.deepEqual(channels({ ...env, YT_REFRESH_TOKEN: '' }, campaign), ['facebook']);
-  assert.throws(() => youtubeMetadata(rotation), /no YouTube video/);
-  const state = { [campaign.date]: { [campaign.slot]: { youtube: { status: 'pending', content_id: campaign.contentId } } } };
-  assert.equal(shouldPublish(state, campaign.date, campaign.slot, 'youtube'), false);
-  assert.equal(contentAlreadyUsed(state, { ...campaign, date: '2027-01-01' }), true);
+  assert.deepEqual(channels(env), ['facebook']);
+  assert.deepEqual(channels({ ...env, IG_USER_ID: '2' }), ['facebook', 'instagram']);
+  assert.equal(shouldPublish({}, '2026-11-24', 'evening', 'youtube'), false);
 });
