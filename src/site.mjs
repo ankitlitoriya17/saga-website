@@ -14,6 +14,7 @@ export const site = Object.freeze({
     { id: 'experience', label: 'The experience' },
     { id: 'renters', label: 'For renters' },
     { href: 'landlords/', label: 'For landlords' },
+    { href: 'qr-poster/', label: 'QR poster' },
     { id: 'inside', label: 'Inside the app' },
   ],
 });
