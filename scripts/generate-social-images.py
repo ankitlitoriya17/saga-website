@@ -51,9 +51,13 @@ def centered(draw, text, center_x, y, f, fill):
     draw.text((center_x - (bounds[2] - bounds[0]) / 2, y), text, fill=fill, font=f)
 
 
-def identifier_label():
-    label = "AM" if DATA["slot"] == "morning" else "PM"
-    return f"{label}  {DATA['index'] + 1:04d}"
+# Bottom-right call to action (replaces the old internal AM/PM serial number).
+STORE_LABEL = "On Google Play"
+
+
+def store_label(draw):
+    f = font(28, True)
+    draw.text((976 - draw.textlength(STORE_LABEL, font=f), 942), STORE_LABEL, fill=PALETTE["gold"], font=f)
 
 
 def brand_row(canvas, draw, x, y, scale=1.0):
@@ -90,24 +94,99 @@ def poster_mock(width):
     return poster
 
 
+# Each theme has its own colours and real app screen, so the profile grid does not look like
+# one post repeated. Screens are the website's demo screenshots (fictional data only).
+THEMES = {
+    "get-started":       {"bg": "#0F3B3A", "panel": "#185150", "text": "#F4F1E8", "accent": "#F2C46D", "muted": "#A9C6C2", "screen": "discover"},
+    "list-property":     {"bg": "#F6EFE3", "panel": "#EADFCB", "text": "#1E2A24", "accent": "#A8571A", "muted": "#6B6457", "screen": "details"},
+    "rent-reminders":    {"bg": "#1E2350", "panel": "#2B3170", "text": "#F4F1E8", "accent": "#FFB86B", "muted": "#B3B7DA", "screen": "dashboard"},
+    "payment-tracking":  {"bg": "#13241B", "panel": "#1E3828", "text": "#F4F1E8", "accent": "#7BD389", "muted": "#A7BFAE", "screen": "rent"},
+    "tenant-management": {"bg": "#E7F0F7", "panel": "#D3E3F0", "text": "#13253A", "accent": "#235FA3", "muted": "#566A80", "screen": "tenants"},
+    "rent-receipts":     {"bg": "#2B1630", "panel": "#41224A", "text": "#F7EEF5", "accent": "#F0A6CA", "muted": "#C7AFC5", "screen": "rent"},
+    "landlord-tips":     {"bg": "#1B211C", "panel": "#283029", "text": "#F4F1E8", "accent": "#E8CDA5", "muted": "#ADB4AB", "screen": "dashboard"},
+}
+LAYOUTS = ("phone-side", "big-tip", "phone-centre")
+
+
+def rounded(image, radius):
+    mask = Image.new("L", image.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, image.width - 1, image.height - 1), radius=radius, fill=255)
+    out = image.convert("RGBA")
+    out.putalpha(mask)
+    return out
+
+
+def phone(screen, width, visible_height):
+    """A simple phone frame showing the top of a real app screen; it bleeds off the bottom."""
+    shot = Image.open(ROOT / "resource/app/screens" / (screen + ".png")).convert("RGB")
+    bezel = max(8, width // 28)
+    inner = width - 2 * bezel
+    shot = shot.resize((inner, int(shot.height * inner / shot.width)), Image.Resampling.LANCZOS)
+    height = min(visible_height + 60, shot.height + bezel)  # never show an empty frame
+    body = Image.new("RGB", (width, height), "#0B0D0C")
+    body.paste(shot.crop((0, 0, inner, height - bezel)), (bezel, bezel))
+    return rounded(body, width // 7)
+
+
+def brand_small(canvas, draw, x, y, theme):
+    icon = BRAND.resize((76, 76), Image.Resampling.LANCZOS)
+    canvas.paste(icon, (x, y), icon)
+    draw.text((x + 94, y + 4), "SPoT", fill=theme["text"], font=font(44, True))
+    draw.text((x + 96, y + 54), "EASY RENTAL SOLUTION", fill=theme["accent"], font=font(18))
+
+
+def label(draw, text, x, y, theme, anchor_right=False):
+    f = font(28, True)
+    if anchor_right:
+        x -= draw.textlength(text, font=f)
+    draw.text((x, y), text, fill=theme["accent"], font=f)
+
+
 def render_rotation():
-    canvas = Image.new("RGB", (1080, 1080), PALETTE["dark"])
+    theme = THEMES.get(DATA["slug"], THEMES["landlord-tips"])
+    layout = LAYOUTS[(DATA["index"] // 7) % len(LAYOUTS)]
+    canvas = Image.new("RGB", (1080, 1080), theme["bg"])
     draw = ImageDraw.Draw(canvas)
-    draw.rounded_rectangle((54, 52, 1026, 1026), radius=46,
-                           fill=PALETTE["surface"], outline="#343C34", width=3)
-    draw.rounded_rectangle((98, 104, 982, 117), radius=7, fill=PALETTE["gold"])
-    brand_row(canvas, draw, 104, 164)
-    for row, line in enumerate(DATA["headline"]):
-        draw.text((104, 416 + row * 107), line, fill=PALETTE["ivory"],
-                  font=fit_text(draw, line, 72, 868, True))
-    draw.rounded_rectangle((104, 741, 976, 884), radius=28, fill="#283029")
-    draw.text((132, 775), DATA["subline"], fill=PALETTE["gold"],
-              font=fit_text(draw, DATA["subline"], 36, 815))
-    draw.text((104, 939), "spot.apnasheher.com", fill=PALETTE["muted"], font=font(31))
-    # Identity changes for every slot: distinct creative even when a topic recurs.
-    identifier = identifier_label()
-    draw.text((760, 942), identifier, fill=PALETTE["gold"],
-              font=fit_text(draw, identifier, 28, 250, True))
+    headline, tip = DATA["headline"], DATA["subline"]
+
+    if layout == "phone-side":
+        draw.ellipse((640, 200, 1240, 800), fill=theme["panel"])
+        shot = phone(theme["screen"], 390, 1080 - 360)
+        canvas.paste(shot, (660, 360), shot)
+        brand_small(canvas, draw, 72, 72, theme)
+        f = shared_fit(draw, headline, 64, 560)
+        for row, line in enumerate(headline):
+            draw.text((72, 300 + row * int(f.size * 1.3)), line, fill=theme["text"], font=f)
+        draw.rounded_rectangle((72, 560, 632, 720), radius=28, fill=theme["panel"])
+        draw.text((104, 586), "TIP", fill=theme["accent"], font=font(24, True))
+        draw.text((104, 630), tip, fill=theme["text"], font=fit_text(draw, tip, 38, 500, True))
+        draw.text((72, 920), "spot.apnasheher.com", fill=theme["muted"], font=font(30))
+        label(draw, STORE_LABEL, 72, 966, theme)
+    elif layout == "big-tip":
+        draw.ellipse((700, -220, 1300, 380), fill=theme["panel"])
+        draw.ellipse((-260, 820, 260, 1340), fill=theme["panel"])
+        brand_small(canvas, draw, 72, 72, theme)
+        draw.rounded_rectangle((72, 330, 236, 380), radius=25, fill=theme["accent"])
+        centered(draw, "TIP", 154, 336, font(30, True), theme["bg"])
+        tip_font = fit_text(draw, tip, 92, 936, True)
+        draw.text((72, 420), tip, fill=theme["accent"], font=tip_font)
+        draw.rounded_rectangle((72, 590, 200, 598), radius=4, fill=theme["accent"])
+        f = shared_fit(draw, headline, 76, 936)
+        for row, line in enumerate(headline):
+            draw.text((72, 650 + row * int(f.size * 1.3)), line, fill=theme["text"], font=f)
+        draw.text((72, 960), "spot.apnasheher.com", fill=theme["muted"], font=font(30))
+        label(draw, STORE_LABEL, 1008, 960, theme, anchor_right=True)
+    else:  # phone-centre
+        draw.ellipse((190, 470, 890, 1170), fill=theme["panel"])
+        brand_small(canvas, draw, 72, 64, theme)
+        label(draw, STORE_LABEL, 1008, 92, theme, anchor_right=True)
+        f = shared_fit(draw, headline, 64, 936)
+        for row, line in enumerate(headline):
+            centered(draw, line, 540, 205 + row * int(f.size * 1.3), f, theme["text"])
+        tip_font = fit_text(draw, tip, 36, 860)
+        centered(draw, tip, 540, 205 + 2 * int(f.size * 1.3) + 22, tip_font, theme["accent"])
+        shot = phone(theme["screen"], 360, 1080 - 480)
+        canvas.paste(shot, (360, 500), shot)
     return canvas
 
 
@@ -127,8 +206,7 @@ def render_campaign_square():
     poster = poster_mock(300)
     canvas.paste(poster, (668, 300))
     draw.text((104, 939), "spot.apnasheher.com/qr-poster", fill=PALETTE["muted"], font=font(31))
-    identifier = identifier_label()
-    draw.text((780, 942), identifier, fill=PALETTE["gold"], font=fit_text(draw, identifier, 28, 220, True))
+    store_label(draw)
     return canvas
 
 

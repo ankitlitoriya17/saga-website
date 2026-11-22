@@ -60,6 +60,31 @@ test('every post is unique across full 1,568-post capacity', () => {
   assert.throws(() => selectPost(posts, angles, dateAt(784), 'morning'),
     /exhausted/i);
 });
+test('hooks change on every post and themes rotate headline/opening variants', () => {
+  for (const p of posts) {
+    assert.ok(p.variants.length >= 4, p.slug + ' needs at least 4 variants');
+    assert.equal(new Set(p.variants.map(v => v.caption)).size, p.variants.length);
+    for (const v of p.variants) {
+      assert.equal(v.headline.length, 2);
+      assert.ok(v.headline.every(line => line.length > 0 && line.length <= 22), v.headline.join(' '));
+      assert.ok(v.caption.length <= 400);
+    }
+  }
+  let previous = null;
+  const seenBySlug = {};
+  for (let day = 0; day < 60; day++) {
+    for (const slot of ['morning', 'evening']) {
+      const post = selectPost(posts, angles, dateAt(day), slot);
+      const hook = angles.hooks.find(h => post.lead.includes('\n\n' + h + ' '));
+      assert.ok(hook, 'Hook missing at ' + post.filename);
+      if (previous) assert.notEqual(hook, previous, 'Same hook twice in a row at ' + post.filename);
+      previous = hook;
+      const last = seenBySlug[post.slug];
+      if (last) assert.notDeepEqual(post.headline, last, 'Theme headline repeated back to back: ' + post.slug);
+      seenBySlug[post.slug] = post.headline;
+    }
+  }
+});
 test('durable content IDs prohibit reuse on a later date or another slot', () => {
   const post = selectPost(posts, angles, dateAt(3), 'evening');
   const state = { [post.date]: { evening: {
