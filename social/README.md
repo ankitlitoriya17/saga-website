@@ -26,6 +26,13 @@ Each slot publishes the selected creative to all connected eligible channels
 
 - A 7-topic bank combines 98 individually authored rental tips and 16 phrasing
   variations to produce **1,568 distinct caption/creative pairs**.
+- Each topic has four headline + opening-paragraph `variants` in posts.json that
+  rotate each time the topic comes round, and the hook line changes on every
+  post, so neighbouring posts never share a headline or hook.
+- Artwork: each topic has its own colour palette and real app screen
+  (resource/app/screens, demo data only), and posts rotate through three layouts
+  (phone beside text, big tip, centred phone). See THEMES in
+  scripts/generate-social-images.py.
 - Two daily posts are different and have unique, date/slot-specific image URLs.
 - A content SHA-256 hash, computed from the actual caption content **without date
   or serial numbers**, is checked against the long-term publication ledger

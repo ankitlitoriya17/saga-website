@@ -111,20 +111,32 @@ export function selectPost(posts, angles, date, slot, campaigns = null) {
   }
   const variation = Math.floor(index / posts.length);
   const tipIndex = variation % tipCount;
-  const hookIndex = Math.floor(variation / tipCount);
-  if (hookIndex >= angles.hooks.length) {
+  const round = Math.floor(variation / tipCount);
+  if (round >= angles.hooks.length) {
     throw new Error('Unique content exhausted: add new editorial topics before scheduling more posts');
   }
+  // The hook changes on every post (the theme offset separates neighbouring posts). For a fixed
+  // theme and tip, (themeIndex + tipIndex - round) mod hooks visits each hook exactly once
+  // across the rounds, so every theme/tip/hook combination is still used exactly once.
+  const hookCount = angles.hooks.length;
+  const hookIndex = (((themeIndex + tipIndex - round) % hookCount) + hookCount) % hookCount;
   const tip = tips[tipIndex];
   const hook = angles.hooks[hookIndex];
-  if (!tip?.short || !tip?.text || !hook) throw new Error('Incomplete content bank entry');
-  const lead = template.caption + '\n\n' + hook + ' ' + tip.text;
+  // The headline and opening paragraph rotate too, so a theme does not look identical
+  // every time it comes round.
+  const variants = template.variants;
+  const variant = variants?.[variation % (variants?.length || 1)];
+  if (!tip?.short || !tip?.text || !hook || !variant?.caption ||
+      !Array.isArray(variant.headline) || variant.headline.length !== 2) {
+    throw new Error('Incomplete content bank entry');
+  }
+  const lead = variant.caption + '\n\n' + hook + ' ' + tip.text;
   // Content IDs do NOT include the date or a serial number. A reused caption
   // cannot pass uniqueness checks just because the day has changed.
   const contentId = createHash('sha256').update(lead + '\n' + template.hashtags)
     .digest('hex');
   return {
-    date, slot, index, slug: template.slug, headline: template.headline,
+    date, slot, index, slug: template.slug, headline: variant.headline,
     subline: tip.short, lead, hashtags: template.hashtags, contentId,
     filename: date + '-' + slot + '.jpg',
   };
