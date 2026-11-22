@@ -85,7 +85,7 @@ ${content.trimEnd()}
   </main>
   <footer class="footer">
     <div class="footer-top"><a class="footer-wordmark" href="${prefix}index.html">SPoT<span>A place for every next chapter.</span></a>
-      <nav aria-label="Footer navigation">${link('landlords/', 'For landlords')}${link('career.html', 'Careers')}${link('privacy.html', 'Privacy policy')}${link('delete-account.html', 'Delete my account')}<a href="mailto:${site.supportEmail}">Contact support</a></nav>
+      <nav aria-label="Footer navigation">${link('landlords/', 'For landlords')}${link('qr-poster/', 'QR To-Let poster')}${link('career.html', 'Careers')}${link('privacy.html', 'Privacy policy')}${link('delete-account.html', 'Delete my account')}<a href="mailto:${site.supportEmail}">Contact support</a></nav>
     </div>
     <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p><a href="#top">Back to top ${icon('arrow')}</a></div>
   </footer>
