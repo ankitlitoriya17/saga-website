@@ -365,10 +365,11 @@
         "post_id": "926683933861110_122151927999189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "list-property",
         "content_id": "47787c24102e710bb2afef9f05f82991d5ccbe01af06ee63eb4465de7f72d912",
-        "updated_at": "2026-11-23T13:51:21.382Z"
+        "updated_at": "2026-11-23T13:51:27.434Z",
+        "container_id": "17895874389617462"
       }
     }
   }
