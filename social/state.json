@@ -358,10 +358,11 @@
     },
     "evening": {
       "facebook": {
-        "status": "pending",
+        "status": "published",
         "slug": "list-property",
         "content_id": "47787c24102e710bb2afef9f05f82991d5ccbe01af06ee63eb4465de7f72d912",
-        "updated_at": "2026-11-23T13:51:13.225Z"
+        "updated_at": "2026-11-23T13:51:19.472Z",
+        "post_id": "926683933861110_122151927999189778"
       }
     }
   }
