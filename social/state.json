@@ -376,10 +376,11 @@
   "2026-11-24": {
     "morning": {
       "facebook": {
-        "status": "pending",
+        "status": "published",
         "slug": "rent-reminders",
         "content_id": "bd8267613f0106ae804c5005709b984b073e924fee64cb9dc79d2b6f3538bc95",
-        "updated_at": "2026-11-24T01:51:11.063Z"
+        "updated_at": "2026-11-24T01:51:18.458Z",
+        "post_id": "926683933861110_122151978585189778"
       }
     }
   }
