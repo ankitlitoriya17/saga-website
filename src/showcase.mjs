@@ -8,19 +8,24 @@ export const screens = Object.freeze([
 ]);
 
 export const experiences = Object.freeze([
-  { key: 'renter', label: 'I’m finding a place', eyebrow: 'YOUR SEARCH, WITH A LITTLE MORE CLARITY', title: 'A place that fits.<br>A next step that feels right.', copy: 'From the first shortlist to the everyday details of your stay, keep the journey together.', screen: 'details', features: [
-    { icon: 'search', title: 'Explore your options', copy: 'Find rentals by city and compare the details that matter to you.' },
+  { key: 'renter', label: 'I’m renting', eyebrow: 'FIND A HOME, ROOM, PG OR SHOP', title: 'A place that fits.<br>A next step that feels right.', copy: 'From the first shortlist to the everyday details of your stay, keep the journey together.', screen: 'details', features: [
+    { icon: 'search', title: 'Explore your options', copy: 'Find rentals by city and compare rent, amenities and available units.' },
     { icon: 'chat', title: 'Make the connection', copy: 'Save a shortlist, apply and continue the conversation in Inbox.' },
-    { icon: 'key', title: 'Settle into My Stay', copy: 'See your tenancy details, report rent and raise a complaint.' },
+    { icon: 'key', title: 'Settle into My Stay', copy: 'See your tenancy, report rent, get due reminders and raise a complaint.' },
   ] },
-  { key: 'owner', label: 'I’m managing a property', eyebrow: 'YOUR RENTAL DAY, A LITTLE MORE ORGANISED', title: 'More of the picture.<br>Fewer scattered details.', copy: 'Give every property, unit and tenant record a place in your day.', screen: 'dashboard', features: [
-    { icon: 'building', title: 'Organise your inventory', copy: 'Create listings and manage units, availability and rental details.' },
-    { icon: 'people', title: 'Keep people connected', copy: 'Review applicants and organise active and past tenant records.' },
+  { key: 'owner', label: 'I’m a landlord', eyebrow: 'PROPERTIES, TENANTS AND RENT IN ONE PLACE', title: 'More of the picture.<br>Fewer scattered details.', copy: 'Give every property, unit and tenant record a place in your day.', screen: 'dashboard', features: [
+    { icon: 'building', title: 'Organise your inventory', copy: 'Create listings, manage units and availability, and create a QR To-Let poster.' },
+    { icon: 'people', title: 'Keep people connected', copy: 'Review applicants, organise tenants and request a rent agreement.' },
     { icon: 'receipt', title: 'Keep track of rent', copy: 'Review payment submissions, electricity charges and rent receipts.' },
   ] },
-  { key: 'sale', label: 'I’m buying or selling', eyebrow: 'NEW · BUY &amp; SELL PROPERTY', title: 'Buy or sell a property.<br>Talk to the owner first.', copy: 'Houses, flats, shops, plots and land for sale, in the same app you use for rentals.', art: 'sale', features: [
-    { icon: 'search', title: 'Browse the Buy tab', copy: 'Pick a city and category, see photos, facts and an EMI estimate, and save up to 5 listings.' },
-    { icon: 'chat', title: 'Chat and book a visit', copy: 'Message the seller in Inbox and request a site visit with up to 3 time slots.' },
-    { icon: 'building', title: 'Post your property for sale', copy: 'Owners and agents can list it, answer inquiries, share their number when ready and mark it sold.' },
+  { key: 'buyer', label: 'I’m buying', eyebrow: 'HOUSES, FLATS, SHOPS, PLOTS AND LAND', title: 'Find the right property.<br>Talk to the owner first.', copy: 'Browse properties for sale by city, compare the price per sq ft and see an EMI estimate before you visit.', art: 'card', features: [
+    { icon: 'search', title: 'Search and filter', copy: 'Filter by type, budget and direct owners, and sort by price or ₹ per sq ft.' },
+    { icon: 'chat', title: 'Chat with the seller', copy: 'Message from the listing. Call once the seller shares their number.' },
+    { icon: 'key', title: 'Book a site visit', copy: 'Propose up to 3 times. The owner picks one and both get a reminder.' },
+  ] },
+  { key: 'seller', label: 'I’m selling', eyebrow: 'FOR OWNERS, AGENTS AND DEALERS', title: 'List it in five steps.<br>Stay in control.', copy: 'Post a house, flat, shop, plot or land for sale. Your phone number and full address stay private until you choose.', art: 'seller', features: [
+    { icon: 'building', title: 'Post your listing', copy: 'Add photos, price, area and the papers you have ready. AI can draft the description.' },
+    { icon: 'people', title: 'Answer buyer inquiries', copy: 'See who wrote, chat, and share your number only with the buyers you choose.' },
+    { icon: 'check', title: 'Pause, renew or mark sold', copy: 'Listings stay live for a year. Confirm it is still available, or close it.' },
   ] },
 ]);
