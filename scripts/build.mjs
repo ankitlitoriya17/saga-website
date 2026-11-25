@@ -24,9 +24,10 @@ for (const page of pages) {
     .replaceAll('{{LANDLORD_PHONE}}', phone('dashboard', { priority: true, assetPrefix: prefix }))
     .replaceAll('{{TENANTS_PHONE}}', phone('tenants', { assetPrefix: prefix }))
     .replaceAll('{{RENT_PHONE}}', phone('rent', { assetPrefix: prefix }))
-    .replaceAll('{{SALE_ART}}', saleArt({ variant: 'stack' }))
-    .replaceAll('{{VISIT_CARD}}', saleArt({ variant: 'visit' }))
-    .replaceAll('{{SELLER_CARD}}', saleArt({ variant: 'seller' }))
+    .replaceAll('{{SALE_PHONE}}', phone('sale-details'))
+    .replaceAll('{{BUY_PHONE}}', phone('buy', { priority: true, assetPrefix: prefix }))
+    .replaceAll('{{SELL_PHONE}}', phone('sell-editor', { assetPrefix: prefix }))
+    .replaceAll('{{VISIT_CARD}}', saleArt())
     .replaceAll('{{ROOT}}', prefix));
   const canonical = `${site.origin}${pagePath(page)}`;
   const image = `${site.origin}/${site.socialImage.file}`;
