@@ -13,12 +13,22 @@ export function phone(key, { priority = false, assetPrefix = '' } = {}) {
   return `<div class="device-frame"><img src="${assetPrefix}resource/app/screens/${item.key}.png" width="1080" height="2160" ${priority ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'} alt="${escape(item.alt)}"></div>`;
 }
 
+// Illustration only (no sale screenshot yet): a fictional listing card, clearly labelled.
+const saleArt = () => `<figure class="experience-screen sale-art"><div class="sale-card" aria-hidden="true">
+        <span class="sale-tag">For sale · Plot</span>
+        <strong>Corner plot near the main road</strong>
+        <span class="sale-meta">Datia · 1,200 sq ft</span>
+        <span class="sale-price">₹18,00,000</span>
+        <span class="sale-emi">EMI estimate shown in the app</span>
+        <span class="sale-actions"><span>${icon('chat')} Chat</span><span>${icon('key')} Book visit</span></span>
+      </div><figcaption>Illustration · Fictional listing</figcaption></figure>`;
+
 export function experience() {
   return `<div class="experience" data-tabs>
-    <div class="persona-tabs" data-tablist aria-label="Explore the renter or owner experience">${experiences.map(item => `<a id="tab-${item.key}" href="#view-${item.key}" data-tab>${escape(item.label)} ${icon('arrow')}</a>`).join('')}</div>
+    <div class="persona-tabs" data-tablist aria-label="Explore the renter, owner or buy and sell experience">${experiences.map(item => `<a id="tab-${item.key}" href="#view-${item.key}" data-tab>${escape(item.label)} ${icon('arrow')}</a>`).join('')}</div>
     <div class="experience-panels">${experiences.map(item => `<section id="view-${item.key}" class="experience-panel" data-panel aria-labelledby="tab-${item.key}">
       <div class="experience-copy"><p class="eyebrow">${item.eyebrow}</p><h3>${item.title}</h3><p>${item.copy}</p><div class="experience-features">${item.features.map(feature => `<article><span class="feature-icon">${icon(feature.icon)}</span><div><h4>${feature.title}</h4><p>${feature.copy}</p></div></article>`).join('')}</div></div>
-      <figure class="experience-screen">${phone(item.screen)}<figcaption>Actual Android screen · Fictional demo data</figcaption></figure>
+      ${item.screen ? `<figure class="experience-screen">${phone(item.screen)}<figcaption>Actual Android screen · Fictional demo data</figcaption></figure>` : saleArt()}
     </section>`).join('')}</div>
   </div>`;
 }
