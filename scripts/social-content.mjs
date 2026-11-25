@@ -50,6 +50,9 @@ export function campaignPost(campaigns, date, slot) {
   return null;
 }
 
+// Real app screens a campaign may show instead of the mini To-Let poster (resource/app/screens).
+export const CAMPAIGN_SCREENS = Object.freeze(['buy', 'sale-details', 'sell-choice', 'sell-editor', 'discover', 'details', 'dashboard', 'rent', 'tenants']);
+
 export function validateCampaigns(campaigns) {
   const seen = new Set();
   for (const campaign of campaigns?.campaigns || []) {
@@ -70,6 +73,8 @@ export function validateCampaigns(campaigns) {
       }
       if (!post.subline || post.subline.length > 40) throw new Error('Campaign subline too long: ' + key);
       if (!post.caption || post.caption.length > 600) throw new Error('Campaign caption missing or too long: ' + key);
+      const screen = post.screen ?? campaign.screen;
+      if (screen !== undefined && !CAMPAIGN_SCREENS.includes(screen)) throw new Error('Unknown campaign screen: ' + key);
     }
   }
   return true;
@@ -107,6 +112,7 @@ export function selectPost(posts, angles, date, slot, campaigns = null) {
       date, slot, index, slug: 'campaign-' + campaign.id, headline: entry.headline,
       subline: entry.subline, lead, hashtags: campaign.hashtags, contentId,
       filename: date + '-' + slot + '.jpg', campaign: campaign.id, link: campaign.link,
+      ...((entry.screen ?? campaign.screen) ? { screen: entry.screen ?? campaign.screen } : {}),
     };
   }
   const variation = Math.floor(index / posts.length);
