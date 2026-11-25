@@ -39,7 +39,7 @@ test('landlord content and native FAQ remain complete without JavaScript', async
   }
   const faq = main.slice(main.indexOf('id="landlord-faq"'));
   const entries = [...faq.matchAll(/<details><summary(?: lang="hi-Latn")?>([\s\S]+?)<\/summary><p(?: lang="hi-Latn")?>([\s\S]+?)<\/p><\/details>/g)];
-  assert.equal(entries.length, 7);
+  assert.equal(entries.length, 9);
   assert.ok(entries.every(entry => entry[1].length > 20 && entry[2].length > 50));
   assert.doesNotMatch(main, /tabindex="-1"|role="button"|<button/);
   assert.match(main, /does not transfer money/);

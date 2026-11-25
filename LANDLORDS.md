@@ -145,3 +145,15 @@ Optional later: organic search impressions/clicks se impact review karein if
 existing read-only Search Console access available ho. Is page mein tracking
 add karne ki zaroorat nahi. SEO outcome review skip karne se growth impact
 unmeasured rahega.
+
+## Update — 25 November 2026: agreement request and rent reminders
+
+Copy added to `/landlords/` (tenants section, rent section, two new FAQs; FAQ count 7 → 9).
+Evidence from `ankitlitoriya17/SAGA` `master` at `6db8291`:
+
+| Page claim | Source evidence |
+| --- | --- |
+| Rent agreement request from the app; request only, no document issued | `domain/agreement/RentAgreementRequest.kt`, `data/agreement/FirebaseRentAgreementRepository.kt`; string `rent_agreement_form_subtitle`: "Submitting saves a request; it does not issue a document." |
+| Tenants get rent due reminders | `functions/src/notifications/rentPayments.ts`: scheduled `rent_due_tenant` notifications ahead of the due day; `docs/operations/tenant-rent-reminder-eligibility.md` |
+
+No stamping, signing, delivery or reminder timing is promised on the page.
