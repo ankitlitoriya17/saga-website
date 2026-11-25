@@ -64,9 +64,14 @@ never repeated later. Campaign captions are hashed and ledgered exactly like rot
 - Add a post: one entry per slot; `node --test tests/social-post.test.mjs` validates lengths,
   links, duplicates and uniqueness against all 1,568 rotation posts.
 
-Current campaign: `qr-poster-launch` (QR To-Let poster + ₹999 COD printed board), six posts
-between 2026-11-24 and 2026-12-04. Only run it while the app version with the feature is live
-on Google Play.
+Current campaigns: `qr-poster-launch` (QR To-Let poster + ₹999 COD printed board), six posts
+between 2026-11-24 and 2026-12-04, and `buy-sell-launch` (Buy & Sell, linking /buy-sell/), six
+posts between 2026-11-27 and 2026-12-07 on the free slots. Only run a campaign while the app version
+with the feature is live on Google Play.
+
+A campaign (or one of its posts) can set `"screen"` to a file name from resource/app/screens
+(without .png, see `CAMPAIGN_SCREENS`); the artwork then shows that real app screen in a phone frame
+instead of the mini To-Let poster. Use it for anything that is not a To-Let poster.
 
 ## Safe activation
 

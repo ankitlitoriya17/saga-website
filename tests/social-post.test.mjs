@@ -145,22 +145,24 @@ test('creative captions contain real install links and branded tags', () => {
 });
 
 // ---- Feature-ad campaigns ----
-import { validateCampaigns, campaignPost } from '../scripts/social-content.mjs';
+import { validateCampaigns, campaignPost, CAMPAIGN_SCREENS } from '../scripts/social-content.mjs';
+import { existsSync } from 'node:fs';
 import { channels } from '../scripts/social-post.mjs';
 const campaigns = JSON.parse(readFileSync(new URL('../social/campaigns.json', import.meta.url), 'utf8'));
 
 test('campaign bank is valid and every campaign post takes over exactly its slot', () => {
   assert.equal(validateCampaigns(campaigns), true);
-  const entries = campaigns.campaigns.flatMap(campaign => campaign.posts);
+  const entries = campaigns.campaigns.flatMap(campaign => campaign.posts.map(entry => ({ campaign, entry })));
   assert.ok(entries.length >= 6);
-  for (const entry of entries) {
+  for (const { campaign, entry } of entries) {
     const post = selectPost(posts, angles, entry.date, entry.slot, campaigns);
     assert.equal(post.lead, entry.caption);
-    assert.equal(post.link, 'https://spot.apnasheher.com/qr-poster/');
-    assert.match(post.slug, /^campaign-/);
-    assert.match(captionFor(post, 'facebook'), /spot\.apnasheher\.com\/qr-poster\//);
+    assert.equal(post.link, campaign.link);
+    assert.equal(post.slug, 'campaign-' + campaign.id);
+    assert.equal(post.screen, entry.screen ?? campaign.screen);
+    assert.ok(captionFor(post, 'facebook').includes(campaign.link));
     assert.match(captionFor(post, 'facebook'), /play\.google\.com\/store\/apps/);
-    assert.match(captionFor(post, 'instagram'), /qr-poster/);
+    assert.ok(captionFor(post, 'instagram').includes(campaign.link));
     // Non-campaign slots stay on the normal rotation.
     const other = entry.slot === 'morning' ? 'evening' : 'morning';
     if (!campaignPost(campaigns, entry.date, other)) {
@@ -188,6 +190,17 @@ test('inactive or invalid campaigns are ignored or rejected', () => {
   const twice = structuredClone(campaigns);
   twice.campaigns[0].posts.push({ ...twice.campaigns[0].posts[0] });
   assert.throws(() => validateCampaigns(twice), /Two campaign posts/);
+  const across = structuredClone(campaigns);
+  across.campaigns.push({ ...across.campaigns[0], id: 'copy-of-first' });
+  assert.throws(() => validateCampaigns(across), /Two campaign posts/);
+  const screen = structuredClone(campaigns);
+  screen.campaigns[0].posts[0].screen = '../secret';
+  assert.throws(() => validateCampaigns(screen), /screen/);
+});
+test('campaign screens exist as real app screenshots', () => {
+  for (const name of CAMPAIGN_SCREENS) {
+    assert.ok(existsSync(new URL('../resource/app/screens/' + name + '.png', import.meta.url)), name);
+  }
 });
 test('campaign posts publish only to the configured Meta channels', () => {
   const env = { FB_PAGE_ID: '1', FB_PAGE_TOKEN: 't', YT_CLIENT_ID: 'c', YT_CLIENT_SECRET: 's', YT_REFRESH_TOKEN: 'r' };

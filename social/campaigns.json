@@ -67,6 +67,80 @@
           "caption": "Printed board order karne ke baad 'My board orders' mein har step dekhein — accepted, printing, shipped, delivered. Printing shuru hone tak order free mein cancel kar sakte hain. Board ₹999, cash on delivery."
         }
       ]
+    },
+    {
+      "id": "buy-sell-launch",
+      "active": true,
+      "link": "https://spot.apnasheher.com/buy-sell/",
+      "hashtags": "#SPoTApp #PropertyForSale #BuyProperty #SellProperty #DirectOwner",
+      "posts": [
+        {
+          "date": "2026-11-27",
+          "slot": "evening",
+          "screen": "sell-choice",
+          "headline": [
+            "Ab SPoT pe ghar",
+            "bechein bhi."
+          ],
+          "subline": "Rent ke saath ab Buy & Sell",
+          "caption": "Naya SPoT update: ab sirf rent nahi, property bechna aur kharidna bhi. Ghar, flat, dukaan, plot ya zameen, sab SPoT par list karein. Wahi app jismein aap apne rentals manage karte hain, ab usmein naya Buy tab bhi hai. Owners, agents aur dealers, sab welcome."
+        },
+        {
+          "date": "2026-11-29",
+          "slot": "morning",
+          "screen": "buy",
+          "headline": [
+            "Kharidna hai?",
+            "Seedhe maalik se."
+          ],
+          "subline": "Buy tab: city, budget, type",
+          "caption": "Property kharidni hai? SPoT ka Buy tab kholein, apna sheher chunein aur house, flat, shop, plot ya land ke hisaab se filter karein. Budget set karein, sirf direct owners dekhein, aur ₹ per sq ft se compare karein. Agent listings par Broker label hota hai."
+        },
+        {
+          "date": "2026-12-01",
+          "slot": "evening",
+          "screen": "sell-editor",
+          "headline": [
+            "5 steps mein listing,",
+            "AI likhega description."
+          ],
+          "subline": "Aap review karein, phir live",
+          "caption": "Property bechni hai? 5 steps mein listing banayein: type, price, area, details aur photos. Description likhne ka mann nahi? AI draft bana deta hai, aap padhkar edit karein. Har listing aur photo live hone se pehle check hoti hai, aksar kuch minute mein."
+        },
+        {
+          "date": "2026-12-03",
+          "slot": "morning",
+          "screen": "sale-details",
+          "headline": [
+            "Pehle chat,",
+            "phir site visit."
+          ],
+          "subline": "3 time slots, owner confirm kare",
+          "caption": "Listing pasand aayi? Pehle Chat dabayein aur Inbox mein seller se sawaal poochein. Phir site visit book karein: 3 tak time suggest karein, owner ek confirm karega, aur dono ko visit se 2 ghante pehle reminder milega."
+        },
+        {
+          "date": "2026-12-05",
+          "slot": "evening",
+          "screen": "sale-details",
+          "headline": [
+            "Aapka number,",
+            "aapki marzi."
+          ],
+          "subline": "Sirf chune hue buyers ko share",
+          "caption": "Seller ho? Aapka phone number listing par public nahi hota. Har buyer inquiry app mein dekhein, aur number sirf unhi buyers ke saath share karein jinse aap baat karna chahte hain. Baaki baat chat mein hi chalti rahe."
+        },
+        {
+          "date": "2026-12-07",
+          "slot": "morning",
+          "screen": "buy",
+          "headline": [
+            "Verify karein,",
+            "phir payment."
+          ],
+          "subline": "Papers dekhein, site par jaayein",
+          "caption": "Property kharidne se pehle: papers khud verify karein, site par jaakar dekhein, aur token ya advance tabhi dein jab sab clear ho. SPoT buyers aur sellers ko jodta hai, ownership verify nahi karta aur payment handle nahi karta. Galat listing dikhe toh app mein Report karein."
+        }
+      ]
     }
   ]
 }

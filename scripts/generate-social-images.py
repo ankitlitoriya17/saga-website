@@ -2,7 +2,7 @@
 """Render one date/slot-specific SPoT JPEG using the prepared Node content.
 
 Campaign (feature-ad) posts use a dedicated layout with a mini To-Let poster whose QR opens the
-campaign page.
+campaign page, or, when the campaign names a `screen`, a real app screen in a phone frame.
 """
 import json
 import os
@@ -203,9 +203,15 @@ def render_campaign_square():
         draw.text((104, 420 + row * 86), line, fill=PALETTE["ivory"], font=headline_font)
     draw.rounded_rectangle((104, 640, 624, 760), radius=28, fill="#283029")
     draw.text((128, 682), DATA["subline"], fill=PALETTE["gold"], font=fit_text(draw, DATA["subline"], 32, 470))
-    poster = poster_mock(300)
-    canvas.paste(poster, (668, 300))
-    draw.text((104, 939), "spot.apnasheher.com/qr-poster", fill=PALETTE["muted"], font=font(31))
+    if DATA.get("screen"):
+        if not re.fullmatch(r"[a-z-]{2,30}", DATA["screen"]):
+            raise ValueError("Invalid campaign screen")
+        shot = phone(DATA["screen"], 330, 590)  # ends above the store label
+        canvas.paste(shot, (662, 250), shot)
+    else:
+        canvas.paste(poster_mock(300), (668, 300))
+    page = re.sub(r"^https://", "", DATA["link"]).rstrip("/")
+    draw.text((104, 939), page, fill=PALETTE["muted"], font=fit_text(draw, page, 31, 520))
     store_label(draw)
     return canvas
 
