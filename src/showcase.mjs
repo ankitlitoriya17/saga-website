@@ -18,4 +18,9 @@ export const experiences = Object.freeze([
     { icon: 'people', title: 'Keep people connected', copy: 'Review applicants and organise active and past tenant records.' },
     { icon: 'receipt', title: 'Keep track of rent', copy: 'Review payment submissions, electricity charges and rent receipts.' },
   ] },
+  { key: 'sale', label: 'I’m buying or selling', eyebrow: 'NEW · BUY &amp; SELL PROPERTY', title: 'Buy or sell a property.<br>Talk to the owner first.', copy: 'Houses, flats, shops, plots and land for sale, in the same app you use for rentals.', art: 'sale', features: [
+    { icon: 'search', title: 'Browse the Buy tab', copy: 'Pick a city and category, see photos, facts and an EMI estimate, and save up to 5 listings.' },
+    { icon: 'chat', title: 'Chat and book a visit', copy: 'Message the seller in Inbox and request a site visit with up to 3 time slots.' },
+    { icon: 'building', title: 'Post your property for sale', copy: 'Owners and agents can list it, answer inquiries, share their number when ready and mark it sold.' },
+  ] },
 ]);
