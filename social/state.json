@@ -410,10 +410,11 @@
   "2026-11-25": {
     "morning": {
       "facebook": {
-        "status": "pending",
+        "status": "published",
         "slug": "tenant-management",
         "content_id": "54192d723133adb5ceee3578cf17bdf863bfbd1972ff01e9c23a5ce41f93c7c4",
-        "updated_at": "2026-11-25T01:51:12.553Z"
+        "updated_at": "2026-11-25T01:51:18.748Z",
+        "post_id": "926683933861110_122152082997189778"
       }
     }
   }
