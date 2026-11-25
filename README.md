@@ -58,6 +58,10 @@ The displayed screenshots in `resource/app/screens/` are copied byte-for-byte fr
 | `details.png` | `02_property_details.png` |
 | `dashboard.png` | `03_landlord_dashboard.png` |
 | `tenants.png` | `04_tenant_management.png` |
+
+Buy & Sell screens (`buy.png`, `sale-details.png`, `sell-choice.png`, `sell-editor.png`) were captured over adb from a phone on
+25 November 2026 (1080 × 2400), with the status bar removed and padded to 1080 × 2160. The visit
+request is still a labelled HTML illustration because no visit screenshot exists yet.
 | `rent.png` | `05_rent_tracking.png` |
 
 The app's `playstore/SCREENSHOT_GUIDE.md` and `VALIDATION_REPORT.md` describe their

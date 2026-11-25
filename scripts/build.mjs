@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { site, pages, pagePath, contentSecurityPolicy } from '../src/site.mjs';
 import { renderIcons, icon } from '../src/icons.mjs';
-import { experience, gallery, phone } from '../src/components.mjs';
+import { experience, gallery, phone, saleArt } from '../src/components.mjs';
 import { publicAssets } from '../src/public-assets.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -24,6 +24,10 @@ for (const page of pages) {
     .replaceAll('{{LANDLORD_PHONE}}', phone('dashboard', { priority: true, assetPrefix: prefix }))
     .replaceAll('{{TENANTS_PHONE}}', phone('tenants', { assetPrefix: prefix }))
     .replaceAll('{{RENT_PHONE}}', phone('rent', { assetPrefix: prefix }))
+    .replaceAll('{{SALE_PHONE}}', phone('sale-details'))
+    .replaceAll('{{BUY_PHONE}}', phone('buy', { priority: true, assetPrefix: prefix }))
+    .replaceAll('{{SELL_PHONE}}', phone('sell-editor', { assetPrefix: prefix }))
+    .replaceAll('{{VISIT_CARD}}', saleArt())
     .replaceAll('{{ROOT}}', prefix));
   const canonical = `${site.origin}${pagePath(page)}`;
   const image = `${site.origin}/${site.socialImage.file}`;
@@ -74,7 +78,7 @@ ${page.file === 'delete-account.html' ? '  <script src="scripts/deletion.js" def
 <body id="top">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
-    <a class="logo" href="${prefix}index.html" aria-label="SPoT home"><img src="${prefix}resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Easy rental solution</small></span></a>
+    <a class="logo" href="${prefix}index.html" aria-label="SPoT home"><img src="${prefix}resource/app/brand.png" width="48" height="48" alt=""><span>SPoT<small>Rent · Buy · Sell</small></span></a>
     <nav class="primary-nav" aria-label="Main navigation">${navigation}</nav>
     <div class="header-actions"><a class="button button-small" href="${escape(site.playUrl)}" target="_blank" rel="noopener noreferrer">Get the app ${icon('arrow')}<span class="sr-only">on Google Play (opens a new tab)</span></a>
       <details class="mobile-navigation"><summary aria-label="Navigation menu">${icon('menu')}</summary><nav aria-label="Mobile navigation">${navigation}<a href="mailto:${site.supportEmail}">Contact support ${icon('arrow')}</a></nav></details>
@@ -85,9 +89,9 @@ ${content.trimEnd()}
   </main>
   <footer class="footer">
     <div class="footer-top"><a class="footer-wordmark" href="${prefix}index.html">SPoT<span>A place for every next chapter.</span></a>
-      <nav aria-label="Footer navigation">${link('landlords/', 'For landlords')}${link('qr-poster/', 'QR To-Let poster')}${link('career.html', 'Careers')}${link('privacy.html', 'Privacy policy')}${link('delete-account.html', 'Delete my account')}<a href="mailto:${site.supportEmail}">Contact support</a></nav>
+      <nav aria-label="Footer navigation">${link('buy-sell/', 'Buy &amp; sell property')}${link('landlords/', 'For landlords')}${link('qr-poster/', 'QR To-Let poster')}${link('career.html', 'Careers')}${link('privacy.html', 'Privacy policy')}${link('delete-account.html', 'Delete my account')}<a href="mailto:${site.supportEmail}">Contact support</a></nav>
     </div>
-    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Made for everyday rentals. Made in India.</p><a href="#top">Back to top ${icon('arrow')}</a></div>
+    <div class="footer-bottom"><p>© <span data-year>2026</span> SPoT by Apna Sheher</p><p>Rent it. Buy it. Sell it. Made in India.</p><a href="#top">Back to top ${icon('arrow')}</a></div>
   </footer>
 </body>
 </html>

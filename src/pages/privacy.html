@@ -1,17 +1,17 @@
-<section class="section-wrap page-intro"><p class="eyebrow">YOUR INFORMATION</p><h1>Privacy policy.</h1><p class="lead">Read the SPoT privacy policy below. For privacy questions, contact <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>.</p><p class="policy-meta">Policy last updated: 17 November 2026.</p></section>
+<section class="section-wrap page-intro"><p class="eyebrow">YOUR INFORMATION</p><h1>Privacy policy.</h1><p class="lead">Read the SPoT privacy policy below. For privacy questions, contact <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>.</p><p class="policy-meta">Policy last updated: 25 November 2026.</p></section>
 <section id="privacy-policy" class="section-wrap policy" aria-labelledby="policy-heading">
       <h2 id="policy-heading">Privacy Policy</h2>
-      <p><strong>Last updated:</strong> 17 November 2026</p>
+      <p><strong>Last updated:</strong> 25 November 2026</p>
       <p><strong>Developer:</strong> apnasheher</p>
 
       <h3>1. Introduction</h3>
-      <p>This Privacy Policy explains how SPoT Easy Rental Solution (“SPoT”, “we”, “our”, or “us”) collects, uses, stores, shares and protects information when you use the SPoT Android app and this website. It applies to landlords, tenants and other people who use SPoT, and to information that landlords enter about their tenants.</p>
+      <p>This Privacy Policy explains how SPoT by Apna Sheher (“SPoT”, “we”, “our”, or “us”) collects, uses, stores, shares and protects information when you use the SPoT Android app and this website. SPoT lets people rent, buy and sell property. This policy applies to landlords, tenants, buyers, sellers, agents and other people who use SPoT, and to information that landlords enter about their tenants.</p>
 
       <h3>2. Information We Collect</h3>
       <p><strong>a. Account information</strong></p>
       <ul>
         <li>Name and email address from Google Sign-In</li>
-        <li>Phone number, used to identify your account and to let a landlord link a stay to a verified tenant account</li>
+        <li>Phone number, used to identify your account and to let a landlord link a stay to a verified tenant account. Your account phone number is not shown on sale listings.</li>
         <li>Account role (for example landlord or tenant), city and profile details you choose to add</li>
         <li>Profile photo, if you add one</li>
       </ul>
@@ -31,6 +31,18 @@
       <ul>
         <li>Listing details such as address, city, rent, units, availability and contact preferences</li>
         <li>Property photos you upload. Property photos are processed by our server and checked by Google Cloud Vertex AI before they can appear in a listing (see section 4).</li>
+      </ul>
+
+      <p><strong>c2. Sale listings, buyer inquiries, phone number sharing and site visits</strong></p>
+      <ul>
+        <li>Sale listing details you enter, such as property type, title, description, city, state, locality, full address, asking price, area, property details, ownership type, the documents you say are ready, whether you post as an owner or as an agent or dealer, and an agency name and RERA number if you add them</li>
+        <li>A mobile number you add to a sale listing. The full address and this mobile number are private: they are not shown on the listing.</li>
+        <li>Sale listing photos. These are processed and checked in the same way as property photos (see section 4).</li>
+        <li>Listing status and history, such as draft, being checked, live, needs changes, paused, sold or expired, the date it went live and when you last confirmed it is still available</li>
+        <li><strong>Buyer inquiries.</strong> When a buyer taps Chat on a sale listing, we record an inquiry that links the buyer, the seller and the listing, with the time of first and latest contact. The seller can see a list of buyers who have written and whether their number has been shared with each one.</li>
+        <li><strong>Phone number sharing.</strong> When a seller taps Share my number for a buyer, the mobile number on that listing is shown to that buyer, who can call or copy it. We record that it was shared, the number shared and the time. In the app, sharing cannot be undone for that buyer. The number is not shown to buyers the seller has not chosen.</li>
+        <li><strong>Site visits.</strong> When a buyer requests a site visit, we store the listing, the buyer and seller, up to 3 proposed times, an optional note, the time the seller confirms, the request status (for example waiting, confirmed, declined or cancelled) and whether a reminder was sent. Both people get notifications about the request, and a reminder 2 hours before a confirmed visit.</li>
+        <li>Sale listings you save (up to 5), and reports you make about a sale listing, including the reason you choose</li>
       </ul>
 
       <p><strong>d. Tenancy, rent and billing records</strong></p>
@@ -66,6 +78,7 @@
         <li>To publish listings, manage properties, units, tenants, stays, rent and billing records</li>
         <li>To let tenants share Aadhaar documents with their landlord for stay verification</li>
         <li>To enable messaging, applications, visits and notifications</li>
+        <li>To publish sale listings and to enable buyer inquiries, phone number sharing chosen by the seller, site visit requests and visit reminders</li>
         <li>To check property photos and other uploads for explicit or unsafe content</li>
         <li>To keep the app secure, prevent fraud and abuse, and review reports</li>
         <li>To improve app performance and diagnose crashes</li>
@@ -75,20 +88,22 @@
 
       <h3>4. Artificial Intelligence (AI) Processing</h3>
       <p><strong>Cloud AI for property photos.</strong> When you add a property photo, the app sends it to our Firebase Cloud Functions server. The server converts the photo to a standard JPEG, resizes it and removes embedded image metadata, then sends that copy to Google Cloud Vertex AI (a Gemini model) to check for explicit nudity. Only approved photos can appear in listings. Photos that are rejected, or that cannot be checked, are deleted from storage and are not published. Vertex AI is used only to check the photo; it is not used to identify people.</p>
-      <p><strong>On-device AI.</strong> On supported devices, the app uses Google's on-device Gemini Nano model through ML Kit to check images (including profile photos and Aadhaar documents) for unsafe content and to help draft listing titles and descriptions. This processing happens on your phone; the images and text are not sent to SPoT's servers or to a cloud AI service for these features. If the on-device model is unavailable, the check is skipped. AI-suggested text is shown to you for review before you save it.</p>
+      <p><strong>Cloud AI for sale listing text.</strong> When you publish a sale listing, our server sends its title and description to Google Cloud Vertex AI (a Gemini model) to check them against our listing policy, for example for sexual, hateful, violent, illegal, scam or unrelated content. The server also checks the text for phone numbers, links and email addresses. A listing that does not pass is held until you change it.</p>
+      <p><strong>On-device AI.</strong> On supported devices, the app uses Google's on-device Gemini Nano model through ML Kit to check images (including profile photos and Aadhaar documents) for unsafe content and to help draft listing titles and descriptions. The image checks happen on your phone; those images are not sent to SPoT's servers or to a cloud AI service for this check. If the on-device model is unavailable, the image check is skipped.</p>
+      <p><strong>AI listing text.</strong> When you ask the app to write a listing title or description, it uses the on-device model where it is available. On phones without it, the listing details you entered are sent to our server, which uses Google Cloud Vertex AI (a Gemini model) to draft the text, up to 5 times a day. If neither is available, the app writes the text from your details using a template. AI-suggested text is shown to you for review before you save it.</p>
 
       <h3>5. Storage, Service Providers and Sharing</h3>
       <p>SPoT uses the following service providers, which process data on our behalf:</p>
       <ul>
         <li><strong>Google Firebase</strong>: Authentication, Cloud Firestore, Realtime Database, Cloud Functions, Cloud Storage (profile photos and Aadhaar documents), Cloud Messaging, Remote Config, Analytics, Crashlytics and App Check</li>
         <li><strong>Google Cloud Storage</strong>: private storage of property photos and thumbnails</li>
-        <li><strong>Google Cloud Vertex AI</strong>: property photo moderation</li>
+        <li><strong>Google Cloud Vertex AI</strong>: property and sale listing photo moderation, sale listing text checks, and listing text drafts on phones without on-device AI</li>
         <li><strong>Google Places API</strong>: place and city suggestions</li>
         <li><strong>Google Mobile Ads (AdMob) and User Messaging Platform</strong>: advertising and consent</li>
         <li><strong>Supabase (legacy)</strong>: some older listing photos were stored with Supabase before we moved to Google Cloud. These older photos may still be stored there and shown in listings. They were not checked by Vertex AI, and anyone who has their link can open them. Current versions of the app do not upload photos to Supabase.</li>
       </ul>
       <p>Property photos are served through our server only after their approval is checked; they are not stored in a public bucket. Profile photos you add can be viewed by anyone who has the photo's link.</p>
-      <p><strong>Sharing with other users.</strong> Information is shared with other users when the feature requires it: published listings and approved photos are visible to app users; your messages go to the person you message; applications go to the landlord; tenancy, rent and billing records are visible to the landlord and the linked tenant; Aadhaar documents are visible only as described in section 2b.</p>
+      <p><strong>Sharing with other users.</strong> Information is shared with other users when the feature requires it: published listings and approved photos are visible to app users; your messages go to the person you message; applications go to the landlord; published sale listings are visible to app users without the private address and mobile number; a buyer inquiry and site visit request go to the seller; the seller's mobile number goes only to the buyers the seller chooses; tenancy, rent and billing records are visible to the landlord and the linked tenant; Aadhaar documents are visible only as described in section 2b.</p>
       <p>We do not sell personal information. We may disclose information if required by law or to protect users and the platform.</p>
       <p>See the Google Privacy Policy and “How Google uses information from sites or apps that use our services.”</p>
 
@@ -141,14 +156,15 @@
         <li>Landlords can remove listing photos and delete listings in the app. Deleting a listing removes its photos from our Google Cloud storage. Older Supabase photos may not be removed automatically; contact support to request their deletion.</li>
         <li>Property photos that are rejected, or that cannot be checked, are deleted. Uploaded property photos that are not used in a listing are deleted automatically after about 7 days.</li>
         <li>To delete your account, open Settings &gt; Delete account in the app, or visit <a href="delete-account.html">Delete my account</a>. Support will verify that you own the account and then process the deletion of your account and associated data. Support will tell you about any data that must be kept, for example for legal, security or fraud-prevention reasons. Account deletion is permanent once completed.</li>
-        <li>Information a landlord entered about a tenant, and shared tenancy, rent or chat records, may also be held in the other party's account.</li>
+        <li>Sale listings stay live for 365 days after they go live and then expire unless renewed. A listing that is paused, sold or expired is no longer shown to buyers. A sale listing that receives reports from three different users is hidden while we review it.</li>
+        <li>Information a landlord entered about a tenant, and shared tenancy, rent, chat, buyer inquiry or site visit records, may also be held in the other party's account. A mobile number a seller has shared with a buyer remains visible to that buyer.</li>
       </ul>
 
       <h3>10. Children's Privacy</h3>
       <p>SPoT is not intended for users under the age of 18. We do not knowingly collect personal data from children.</p>
 
       <h3>11. No Payments or Bookings</h3>
-      <p>SPoT does not process payments and does not take bookings. Rent discussions and payments happen directly between users. Payment records are described in section 2h.</p>
+      <p>SPoT does not process payments and does not take bookings. Rent and property sale discussions and payments happen directly between users. A site visit request only arranges a time to see a property; it is not a booking or reservation. SPoT does not verify property ownership or documents. Payment records are described in section 2h.</p>
 
       <h3>Website analytics (added November 2026)</h3>
       <p>This website (not the mobile app) uses Cloudflare Web Analytics to count page views and understand which pages and referring sites bring visitors. It is cookieless and does not require you to sign in. It may process technical information such as the page visited, referrer, browser, device type and approximate country. We use it only to improve the website. The provider's practices are described in Cloudflare's own privacy documentation.</p>
