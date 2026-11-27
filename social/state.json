@@ -485,10 +485,11 @@
         "post_id": "926683933861110_122152325211189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "list-property",
         "content_id": "0185e20455fe22ba52642719a424921fbb252612430643ade9db094895d11256",
-        "updated_at": "2026-11-27T01:51:18.290Z"
+        "updated_at": "2026-11-27T01:51:23.914Z",
+        "container_id": "17896247109617462"
       }
     }
   }
