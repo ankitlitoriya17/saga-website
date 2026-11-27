@@ -478,10 +478,11 @@
   "2026-11-27": {
     "morning": {
       "facebook": {
-        "status": "pending",
+        "status": "published",
         "slug": "list-property",
         "content_id": "0185e20455fe22ba52642719a424921fbb252612430643ade9db094895d11256",
-        "updated_at": "2026-11-27T01:51:08.629Z"
+        "updated_at": "2026-11-27T01:51:16.709Z",
+        "post_id": "926683933861110_122152325211189778"
       }
     }
   }
