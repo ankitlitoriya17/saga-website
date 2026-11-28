@@ -519,10 +519,11 @@
         "post_id": "926683933861110_122152420467189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "payment-tracking",
         "content_id": "f6c292fa26427b4d3ba9c0af708d0c356de8c91e4ca762466f6f3428adb17b29",
-        "updated_at": "2026-11-28T01:51:19.522Z"
+        "updated_at": "2026-11-28T01:51:25.025Z",
+        "container_id": "17896353048617462"
       }
     }
   }
