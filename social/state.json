@@ -535,10 +535,11 @@
         "post_id": "926683933861110_122152478043189778"
       },
       "instagram": {
-        "status": "pending",
+        "status": "container_created",
         "slug": "campaign-qr-poster-launch",
         "content_id": "a7ad8b39ac1e8c5033018df3d7696530b4cf3f97e509afd15d46ac54c06fe0d1",
-        "updated_at": "2026-11-28T13:51:16.324Z"
+        "updated_at": "2026-11-28T13:51:21.764Z",
+        "container_id": "17896405269617462"
       }
     }
   }
